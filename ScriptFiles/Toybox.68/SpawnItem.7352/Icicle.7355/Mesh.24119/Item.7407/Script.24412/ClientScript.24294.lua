@@ -14,30 +14,30 @@ function Script:PreFire(playerID, bullet, targetPos, stPos, endPos, speed, force
     ProjectileModule:Launcher(bullet, stPos, endPos, speed, force)
     bullet:LookAt(targetPos)
     PID = playerID
-    print(PID)
 end
 
-
+ 
 
 local function CollisionEvent(self, target)
     if target == nil or not target:IsCharacter() then;    return;    end;
     
     if PID == 0 then;
-        PID = target:GetPlayer()
+        PID = target:GetPlayerID()
         return;
     end
     if PID ~= target:GetPlayerID() then
         if target:IsMyCharacter() then
-            Camera:PlayCameraShake(0.5, 1)
+            g_Player:HitMyPlayer(target, Object.ItemNum)
         end
     end
     
     local fx = Game:CreateFX(FX, self.Location)
     fx:Play()
     
+    Game:DeleteObject(self)
+
     wait(3)
     Game:DeleteFX(fx)
-    Game:DeleteObject(self)
     
 end
 Object.HitCollider.Collision.OnBeginOverlapEvent:Connect(CollisionEvent)

@@ -55,6 +55,7 @@ end
 
 
 --!---------------------------- 데미지 로직 ------------------------------
+function cc_Icicle:GetDamage(); return self.Damage; end;
 
 return cc_Icicle;
 

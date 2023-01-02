@@ -45,6 +45,8 @@ end
 
 
 --!---------------------------- 데미지 로직 ------------------------------
+function cc_SnowCrystal:GetDamage(); return self.Damage; end;
+
 
 
 

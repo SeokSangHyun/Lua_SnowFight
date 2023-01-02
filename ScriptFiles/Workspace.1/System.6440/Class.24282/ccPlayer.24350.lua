@@ -12,6 +12,7 @@ cc_Player.__index = cc_Player
 local SnowBallModule = require(Workspace.System.Class.ccSnowBallModule)
 local SnowCrystalModule = require(Workspace.System.Class.ccSnowCrystalsModule)
 local IcicleModule = require(Workspace.System.Class.ccIcicleModule)
+local DamageModule = require(ScriptModule.DefaultModules.DamageManager)
 
 
 
@@ -37,6 +38,18 @@ function cc_Player:Fire(playerID, num, forX, forY, forZ)
     
     self.weapons[num]:FireObject(playerID, forX, forY, forZ)
 end
+
+
+--# 목적 : 투사체 피격
+function cc_Player:HitMyPlayer(character, index)
+    local weaponDamage = self.weapons[index]:GetDamage()
+    Camera:PlayCameraShake(0.5, 2)
+    DamageModule:ApplyDamage(character, weaponDamage)
+    
+end
+
+
+
 
 
 return cc_Player;

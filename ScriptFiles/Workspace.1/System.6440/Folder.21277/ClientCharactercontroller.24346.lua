@@ -27,3 +27,8 @@ end
 Game:ConnectEventFunction("BulletFire", BulletFire)
 
 
+
+local function HitProcess(playerID)
+    
+end
+Game:ConnectEventFunction("HitProcess_sToc", HitProcess)

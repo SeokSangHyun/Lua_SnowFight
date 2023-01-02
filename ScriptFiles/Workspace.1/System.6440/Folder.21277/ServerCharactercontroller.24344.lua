@@ -33,4 +33,7 @@ Game:ConnectEventFunction("WeaponFire_cTos", WeaponFire)
 
 
 
-
+local function HitProcess(player)
+    
+end
+Game:ConnectEventFunction("HitProcess_cTos", HitProcess)
