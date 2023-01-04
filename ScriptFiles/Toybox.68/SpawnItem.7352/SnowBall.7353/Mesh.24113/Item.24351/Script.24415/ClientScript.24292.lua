@@ -15,7 +15,7 @@ function Script:PreFire(playerID, bullet, targetPos, stPos, endPos, speed, force
     bullet:LookAt(targetPos)
     PID = playerID
 end
- 
+
 
 
 local function CollisionEvent(self, target)

@@ -42,6 +42,7 @@ end
 
 --# 목적 : 투사체 피격
 function cc_Player:HitMyPlayer(character, index)
+    print(tostring(character.Name) .. tostring(index))
     local weaponDamage = self.weapons[index]:GetDamage()
     Camera:PlayCameraShake(0.5, 2)
     DamageModule:ApplyDamage(character, weaponDamage)
