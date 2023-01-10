@@ -1,0 +1,5 @@
+
+
+g_ConnectGate = nil
+
+
