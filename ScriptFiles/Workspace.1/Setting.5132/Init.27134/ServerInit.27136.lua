@@ -1,5 +1,5 @@
 
-GameRegistChair = Workspace.World.Trigger.RegistChair:GetChildList()
+GameRegistChair = Workspace.World.Lobby.Trigger.RegistChair:GetChildList()
 
 
 

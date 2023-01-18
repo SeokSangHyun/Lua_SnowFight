@@ -31,7 +31,7 @@ module.ResultPhase.EnterEvent:Connect(EnterRewardState)
 --! ------------------------------ Phase Change------------------------------
 --# 스크립트 제일 아래에 상태가 바뀔때마다 관련된 Phase 함수가 호출될 수 있도록 연결해요.
 local function ChangedPhase(self, value)
-    module:ChangePhase(Game.GameState)
+    --module:ChangePhase(Game.GameState)
 end
 Game:ConnectChangeEventFunction("GameState", ChangedPhase)
 

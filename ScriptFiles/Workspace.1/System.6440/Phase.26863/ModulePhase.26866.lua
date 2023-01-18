@@ -23,7 +23,12 @@ end
 
 --! ---------- ServerPhase 스크립트에서 사용
 function PhaseModule:NextPhase()
-    Game:ChangeToNextPhase()
+    local st = Game:GetCurPhase()
+    if Game:GetCurPhase().Name == "Result" then
+        Game:ChangePhaseByName("Lobby")
+    else
+        Game:ChangeToNextPhase()
+    end
 end
 
 

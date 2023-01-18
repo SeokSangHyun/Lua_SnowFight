@@ -50,7 +50,16 @@ SnowCrystalButton.OnUpEvent:Connect(SnowCrystalButtonEvent)
 
 
 --!---------------------------- UI 처리 ------------------------------
---# 목적 : ㅁ
+--# 목적 : ㅁㄴㅇㄻㄴ
+function Update_InformUI()
+    local toy = Root_Infomation.Model.BellGroup
+    local clock = math.floor(Game.GameTime * 10) /10
+    toy.SurfaceUI_Condition.Text:SetText(clock)
+end
+
+
+
+--# 목적 : 공격 버튼 UI
 local function SnowBall_UIUpdate(num)
     local toyRoot = Toybox.SpawnItem:GetChildList()
     for i=1, #toyRoot do
@@ -105,7 +114,7 @@ AskPopup.NoButton.OnUpEvent:Connect(ButtonEvent_StardardPopupNo)
 --# 게임 준비 등록 후 팝업
 --? 
 local buttonlist = ListPopup.ButtonList:GetChildList()
-for i = 2 , #buttonlist do
+for i = 3 , #buttonlist do
     buttonlist[i].Visible = false
 end
 
@@ -122,7 +131,13 @@ end
 buttonlist[1].OnUpEvent:Connect(ButtonEvent_ReadyPopup)
 
 
-
+local function ButtonEvent_ReadyPopup(self)
+    Toggle_ListPopup(false)
+    
+    Game:SendEventToServer("ReadySleighAction")
+    ReadySleighMoveLoop()
+end
+buttonlist[2].OnUpEvent:Connect(ButtonEvent_ReadyPopup)
 
 
 
