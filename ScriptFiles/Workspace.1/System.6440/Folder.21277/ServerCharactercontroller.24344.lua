@@ -10,7 +10,7 @@ g_PlayerList = {}
 
 function InitPlayer(player)
     local playerID = player:GetPlayerID()
-    local info = PlayerModule.new(player, Toybox.SpawnItem:GetChildList())
+    local info = PlayerModule.new(player, Toybox.SP:GetChildList())
     
     g_PlayerList[ tostring(playerID) ] = info
     Game:SendEventToClient(playerID, "InitPlayer_sToc", playerID)

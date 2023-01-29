@@ -61,7 +61,7 @@ end
 
 --# 목적 : 공격 버튼 UI
 local function SnowBall_UIUpdate(num)
-    local toyRoot = Toybox.SpawnItem:GetChildList()
+    local toyRoot = Toybox.SP:GetChildList()
     for i=1, #toyRoot do
         if i == num then
             local remaincnt = SnowBallButton.Img_TextBackground.T_Count

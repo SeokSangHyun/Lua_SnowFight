@@ -10,7 +10,7 @@ g_Player = {}
 
 local function InitPlayer(playerID)
 
-    local info = PlayerModule.new(playerID, Toybox.SpawnItem:GetChildList())
+    local info = PlayerModule.new(playerID, Toybox.SP:GetChildList())
     --table.insert(g_PlayerList, info)
     
     g_Player = info
