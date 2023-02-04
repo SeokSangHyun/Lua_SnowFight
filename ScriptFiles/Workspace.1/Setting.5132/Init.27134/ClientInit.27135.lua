@@ -2,6 +2,11 @@
 GameRegistChair = Workspace.World.Lobby.Trigger.RegistChair:GetChildList()
 
 
+
+UIRoot = Workspace.UI.MainUI
+--버튼
+BulletButtonList = UIRoot.BulletHUD:GetChildList()
+
 --[[
 for i = 1, #GameRegistChair do
     GameRegistChair[i].BoxCollider.Collision:SetCharacterCollisionResponse(Enum.CollisionResponse.Overlap)

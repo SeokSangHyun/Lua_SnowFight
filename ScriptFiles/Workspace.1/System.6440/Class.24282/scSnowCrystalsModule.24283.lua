@@ -39,11 +39,12 @@ end
 --? 내용 : 아이템을 획득하는 처리
 function sc_SnowCrystal:GetItem(player)
     if (self.NowBulletCount) <= 0 then;
-        player:GiveItem(Item)
+        player:GiveItem(self.WeaponObject)
         player:EquipInventoryItem(self.InvenIndex)
     end
 
     self.NowBulletCount = self.NowBulletCount + self.OneTurnBulletCount
+    return self.NowBulletCount
 end
 
 

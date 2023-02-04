@@ -9,9 +9,12 @@
 sc_Player = {}
 sc_Player.__index = sc_Player
 
+
+
 local SnowBallModule = require(Workspace.System.Class.scSnowBallModule)
 local SnowCrystalModule = require(Workspace.System.Class.scSnowCrystalsModule)
 local IcicleModule = require(Workspace.System.Class.scIcicleModule)
+local DamageModule = require(ScriptModule.DefaultModules.DamageManager)
 
 
 
@@ -83,9 +86,10 @@ end
 --!---------------------------- 아이템 획득/사용 처리 ------------------------------
 --# 목적 : 아이템을 획득하면 인벤토리에 추가하는처리
 function sc_Player:GetItem(player, ItemNum)
-    self.weapons[ItemNum]:GetItem(player)
+    local bulletcnt = self.weapons[ItemNum]:GetItem(player)
 
     --Game:DeleteObject(self)
+    return bulletcnt
 end
 
 

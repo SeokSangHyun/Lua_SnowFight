@@ -31,8 +31,16 @@ function cc_Player.new(playerID, object_path)
     return t
 end
 
+--!---------------------------- Getter/Setter ------------------------------
+--# 목적 : 아이템 획득
+function cc_Player:Set(playerID, num, forX, forY, forZ)
+    
+    self.weapons[num]:FireObject(playerID, forX, forY, forZ)
+end
 
 
+
+--!---------------------------- 기능 ------------------------------
 --# 목적 : 아이템 발사
 function cc_Player:Fire(playerID, num, forX, forY, forZ)
     

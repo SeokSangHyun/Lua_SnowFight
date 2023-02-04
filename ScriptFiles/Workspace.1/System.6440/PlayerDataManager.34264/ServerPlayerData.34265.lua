@@ -12,7 +12,7 @@ local function Init_PlayerData(character)
 
     g_PlayerData[playerID] = {["A"] = 100, ["B"] = 4, ["C"] = 7, ["D"] = 6, ["F"] = 1}
 end
-Game.OnSpawnCharacter:Connect(Init_PlayerData)
+--Game.OnSpawnCharacter:Connect(Init_PlayerData)
 
 
 
@@ -26,7 +26,7 @@ local function LeavePlayer(player)
     end
 
 end
-Game.OnLeavePlayer:Connect(LeavePlayer)
+--Game.OnLeavePlayer:Connect(LeavePlayer)
 
 
 

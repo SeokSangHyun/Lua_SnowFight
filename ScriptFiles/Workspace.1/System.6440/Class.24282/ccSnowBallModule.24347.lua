@@ -24,6 +24,13 @@ function cc_SnowBall.new(object)
 end
 
 
+--!---------------------------- Getter/Setter ------------------------------
+--# 목적 : 아이템 획득
+function cc_SnowBall:GetBulletCount()
+    return 
+end
+
+
 
 --!---------------------------- 발사 로직 ------------------------------
 function cc_SnowBall:FireObject(playerID, forX, forY, forZ)

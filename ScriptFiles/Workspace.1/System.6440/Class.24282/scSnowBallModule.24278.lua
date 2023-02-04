@@ -11,7 +11,7 @@ function sc_SnowBall.new(object)
     t.InvenIndex = 1
     
     t.OneTurnBulletCount = 30
-    t.NowBulletCount = 100
+    t.NowBulletCount = 0
     
     return t
 end
@@ -38,6 +38,7 @@ function sc_SnowBall:GetItem(player)
     end
 
     self.NowBulletCount = self.NowBulletCount + self.OneTurnBulletCount
+    return self.NowBulletCount
 end
 
 

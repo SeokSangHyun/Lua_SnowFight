@@ -10,7 +10,7 @@ local function CollisionEvent(self, target)
        return
    end
    
-   Game:DeleteObject(self.Parent)
+   --Game:DeleteObject(self.Parent)
    --Item:BroadcastEvent("GetFX", target:GetPlayerID())
 end
 Collisier.Collision.OnBeginOverlapEvent:Connect(CollisionEvent)

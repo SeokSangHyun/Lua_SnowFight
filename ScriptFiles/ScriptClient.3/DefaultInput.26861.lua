@@ -52,7 +52,6 @@ DefaultInput:AddAxisKeyEvent("FreeCamUpDown", Enum.Key.Q, -1)
 DefaultInput:AddAxisKeyEvent("ZoomInOut", Enum.Key.MouseWheelAxis, -50)
 DefaultInput:AddActionKeyEvent("Jump", Enum.Key.SpaceBar)
 
-
 --모바일 환경에서 사용할 조작키 이벤트
 DefaultInput:AddAxisKeyEvent("MoveForward_M", Enum.Key.Touch_DpadY, 1)
 DefaultInput:AddAxisKeyEvent("MoveRight_M", Enum.Key.Touch_DpadX, 1)
