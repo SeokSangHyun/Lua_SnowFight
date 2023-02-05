@@ -3,12 +3,14 @@
 g_ConnectGate = nil
 Root_Infomation = Workspace.System.InformSystem
 
---총알 전역 객체
---[[
-g_BulletSnowBall = Game:CreateObject(Toybox.SpawnItem.SnowBall.Mesh.Item)
-g_BulletIcicle = Game:CreateObject(Toybox.SpawnItem.Icicle.Mesh.Item)
-g_BulletSnowCrystals = Game:CreateObject(Toybox.SpawnItem.SnowCrystals.Mesh.Item)
-]]--
+
+local IsActionKey = false
+
+function SetActionKey(act)    IsActionKey = act;    end;
+function GetActionKey()    return IsActionKey;    end;
+
+
+
 
 wait(3)
 local function ChangeReplicateValue(self, value) -- value : 변화한 값
@@ -24,5 +26,14 @@ Game:ConnectChangeEventFunction("GameTime", ChangeReplicateValue)
 --!----------------------------  ------------------------------
 
 
+
+
+
+--GetCameraForward : 카메라가 바라보는 방향
+local function BulletFire(playerID, num, forX, forY, forZ)
+    
+    g_Player:Fire(playerID, num, forX, forY, forZ)
+end
+Game:ConnectEventFunction("BulletFire", BulletFire)
 
 

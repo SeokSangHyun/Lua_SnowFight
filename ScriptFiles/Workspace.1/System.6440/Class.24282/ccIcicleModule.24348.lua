@@ -35,7 +35,7 @@ function cc_Icicle:FireObject(playerID, forX, forY, forZ)
     print(Vector.new(forX, forY, forZ))
     print(Vector.new(math.deg(forX), math.deg(forY), math.deg(forZ)))
 ]]--
-    local item = self.WeaponObjects.Mesh.Item
+    local item = self.WeaponObjects
     local rot = item.Rotation
     rot = Vector.new(0, -90, math.deg(forX) + math.deg(forY))
     item.Rotation = rot
@@ -49,7 +49,7 @@ function cc_Icicle:FireObject(playerID, forX, forY, forZ)
     local speed = 10
     local force = Vector.new(self.Force * forX, self.Force * forY, forZ * 5000)
     
-    self.WeaponObjects.Mesh.Item.Script.ClientScript:PreFire(playerID, item, target, stPos, endPos, speed, force)
+    self.WeaponObjects:PreFire(playerID, item, target, stPos, endPos, speed, force)
 end
 
 

@@ -2,15 +2,24 @@
 local PlayerModule = require(Workspace.System.Class.ccPlayer)
 local WeaponList = {Script.SnowBall , Script.Icicle , Script.SnowCrystal}
 
+local WeaponIndex = 1
+
 
 g_Player = {}
 
 
 
+--! ------------------------------  ------------------------------
+function SetWeaponIndex(index); WeaponIndex = index;    end;
+function GetWeaponIndex();  return WeaponIndex;    end;
 
+
+
+
+--! ------------------------------  ------------------------------
 local function InitPlayer(playerID)
 
-    local info = PlayerModule.new(playerID, Toybox.SP:GetChildList())
+    local info = PlayerModule.new(playerID, Toybox.Bullet:GetChildList())
     --table.insert(g_PlayerList, info)
     
     g_Player = info
@@ -19,12 +28,7 @@ Game:ConnectEventFunction("InitPlayer_sToc", InitPlayer)
 
 
 
---GetCameraForward : 카메라가 바라보는 방향
-local function BulletFire(playerID, num, forX, forY, forZ)
-    
-    g_Player:Fire(playerID, num, forX, forY, forZ)
-end
-Game:ConnectEventFunction("BulletFire", BulletFire)
+
 
 
 
@@ -32,3 +36,5 @@ local function HitProcess(playerID)
     
 end
 Game:ConnectEventFunction("HitProcess_sToc", HitProcess)
+
+

@@ -36,14 +36,18 @@ end
 function cc_SnowBall:FireObject(playerID, forX, forY, forZ)
     --(toy, stPos, endPos, speed, force)
     local character = Game:GetRemotePlayerCharacter(playerID)
+    local player = character:GetPlayer()
+    
     local target = Vector.new(0, 0, 0)
-    local stPos = character.Location + Vector.new(forX, forY*40, forZ*50)
+    local targetItem = player:GetEquipItem("EquipSlot_1")
+    
+    local stPos = targetItem.Location + Vector.new(forX, forY*40, forZ*50)
     local endPos = stPos + Vector.new(self.Distance * forX, self.Distance * forY-40, self.Distance * forZ-50)
     local target = endPos
     local speed = 10
     local force = Vector.new(self.Force * forX, self.Force * forY, forZ * 6000)
     
-    self.WeaponObjects.Mesh.Item.Script.ClientScript:PreFire(playerID, self.WeaponObjects.Mesh.Item, target, stPos, endPos, speed, force)
+    self.WeaponObjects:PreFire(playerID, self.WeaponObjects, target, stPos, endPos, speed, force)
 end
 
 

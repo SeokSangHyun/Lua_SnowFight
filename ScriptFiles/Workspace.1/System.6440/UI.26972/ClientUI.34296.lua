@@ -12,9 +12,7 @@ local ListPopup = Workspace.UI.Popup.F_ListPopupPanel
 local function SnowBallButtonEvent(self)
     local player = LocalPlayer:GetRemotePlayer()
     local playerID = player:GetPlayerID()
-    local forward = LocalPlayer:GetCameraForward()
-
-    Game:SendEventToServer( "WeaponFire_cTos", 1, forward.X, forward.Y, forward.Z)
+    SetWeaponIndex(1)
 end
 BulletButtonList[1].OnUpEvent:Connect(SnowBallButtonEvent)
 
@@ -23,9 +21,7 @@ BulletButtonList[1].OnUpEvent:Connect(SnowBallButtonEvent)
 local function IcicleButtonEvent(self)
     local player = LocalPlayer:GetRemotePlayer()
     local playerID = player:GetPlayerID()
-    local forward = LocalPlayer:GetCameraForward()
-
-    Game:SendEventToServer( "WeaponFire_cTos", 2, forward.X, forward.Y, forward.Z)
+    SetWeaponIndex(2)
 end
 BulletButtonList[2].OnUpEvent:Connect(IcicleButtonEvent)
 
@@ -34,9 +30,7 @@ BulletButtonList[2].OnUpEvent:Connect(IcicleButtonEvent)
 local function SnowCrystalButtonEvent(self)
     local player = LocalPlayer:GetRemotePlayer()
     local playerID = player:GetPlayerID()
-    local forward = LocalPlayer:GetCameraForward()
-
-    Game:SendEventToServer( "WeaponFire_cTos", 3, forward.X, forward.Y, forward.Z)
+    SetWeaponIndex(3)
 end
 BulletButtonList[3].OnUpEvent:Connect(SnowCrystalButtonEvent)
 
@@ -55,7 +49,7 @@ end
 
 --# 목적 : 공격 버튼 UI
 local function SnowBall_UIUpdate(num)
-    local toyRoot = Toybox.SP:GetChildList()
+    local toyRoot = Toybox.Bullet:GetChildList()
     for i=1, #toyRoot do
         if i == num then
             local remaincnt = SnowBallButton.Img_TextBackground.T_Count

@@ -100,10 +100,9 @@ function sc_Player:Fire(player, num, forX, forY, forZ)
     local AllPlayer = Game:GetAllPlayer()
     local bullet = self.weapons[num]:UseItem(player)
 
-    for i = 1 , #AllPlayer do
-        Game:SendEventToClient(AllPlayer[i]:GetPlayerID(), "BulletFire", playerID, num, forX, forY, forZ)
 
-    end
+    Game:BroadcastEvent("BulletFire", playerID, num, forX, forY, forZ)
+
 end
 
 
