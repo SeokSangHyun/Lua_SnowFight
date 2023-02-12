@@ -89,9 +89,6 @@ local function CollisionEvent(self, target)
     
     
     Game:DeleteObject(self)
-
-    wait(3)
-    Game:DeleteFX(fx)
 end
 Item.HitCollider.Collision.OnBeginOverlapEvent:Connect(CollisionEvent)
 

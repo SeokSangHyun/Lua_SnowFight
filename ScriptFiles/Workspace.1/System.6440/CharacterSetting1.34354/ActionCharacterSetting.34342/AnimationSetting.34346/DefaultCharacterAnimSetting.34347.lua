@@ -20,9 +20,6 @@ AnimStateMachineSetting.IdleChangeCount = 0
 AnimStateMachineSetting.CheckIdle = GetIdleRandom()
 
 
-
-local cnt = 0
-
 --! ------------------------------ AnimStateMachine 설정 ------------------------------
 local function AnimStateMachineOnUpdate(AnimStateMachine, ElapsedTime)
     if AnimStateMachine == nil then;    return; end;
@@ -35,29 +32,18 @@ local function AnimStateMachineOnUpdate(AnimStateMachine, ElapsedTime)
     if RemotePlayer:GetCharacter() ~= character then;        return;    end;
 
     if character ~= nil and character:GetCurAnimState() ~= nil then
+
         if AnimStateMachine.IsStand and character:GetCurAnimState().Name ~= IdleName then
             AnimStateMachine.IdleChangeCount = AnimStateMachine.IdleChangeCount + ElapsedTime
         end
         
-        if character:GetCurAnimState().Name == Object.Throw then
-            cnt = cnt + 1
-            if cnt == 15 then
-                    local forward = LocalPlayer:GetCameraForward()
-                
-                    Game:SendEventToServer( "WeaponFire_cTos", GetWeaponIndex(), forward.X, forward.Y, forward.Z)
-            end
-            --print(cnt)
-        end
+        --특정 상태 체크
+        CheckActionState(character:GetCurAnimState().Name)
     end
     
-    if nowAnimState ~= character:GetCurAnimState().Name or GetActionKey() then    
+    if ChangeAnimation(nowAnimState, character:GetCurAnimState().Name) then    
         prevAnimState = nowAnimState
         nowAnimState = character:GetCurAnimState().Name
-        cnt = 0
-        SetActionKey(false)
-        --print(prevAnimState)
-        --print(nowAnimState)
-        --print("=======================")
     end
 end
 AnimStateMachineSetting.OnUpdate:Connect(AnimStateMachineOnUpdate)

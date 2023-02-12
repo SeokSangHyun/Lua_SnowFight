@@ -21,6 +21,7 @@ function cc_Player.new(playerID, object_path)
     
     t.HP = 100
     t.PlayerID = playerID
+    t.WeaponIndex = 1
     t.weapons = {SnowBallModule.new(object_path[1]), IcicleModule.new(object_path[2]), SnowCrystalModule.new(object_path[3])}
 --[[
     for i=1, #weapon_module do
@@ -33,14 +34,26 @@ end
 
 --!---------------------------- Getter/Setter ------------------------------
 --# 목적 : 아이템 획득
+
+function cc_Player:SetWeaponIndex(index); self.WeaponIndex = index;    end;
+function cc_Player:GetWeaponIndex();  return self.WeaponIndex;    end;
+
 function cc_Player:Set(playerID, num, forX, forY, forZ)
-    
-    self.weapons[num]:FireObject(playerID, forX, forY, forZ)
+    Game:SendEventToServer( "WeaponFire_cTos", self.WeaponIndex, forward.X, forward.Y, forward.Z)
 end
 
 
 
 --!---------------------------- 기능 ------------------------------
+--# 목적 : 발사 요청 스크립트
+function cc_Player:PreFire()
+    local lookforward = LocalPlayer:GetCameraForward()
+
+    Game:SendEventToServer( "RequestFire_cTos", self.WeaponIndex, lookforward.X, lookforward.Y, lookforward.Z)
+end
+
+
+
 --# 목적 : 아이템 발사
 function cc_Player:Fire(playerID, num, forX, forY, forZ)
     

@@ -45,7 +45,7 @@ local function CharacterHit(player, targetID, hitPosition)
     Item:StaticMeshHit(targetName, hitPosition, targetKey)
  end
  Item:ConnectEventFunction("StaticMeshHit", StaticMeshHit)
- 
+
 
 
 --! ------------------------------ 총알 생성 및 발사 함수 ------------------------------
@@ -91,6 +91,7 @@ local function CharacterHit(player, targetID, hitPosition)
 --! ------------------------------ a ------------------------------
 local function Update(updateTime)
     if EquipPlayerID ~= nil and IsFire then
+        Item:FireBullet(player, FireLocation, FireDir)
         Item:SendEventToClient(EquipPlayerID, "PreFire", true)
         
         if Delay then

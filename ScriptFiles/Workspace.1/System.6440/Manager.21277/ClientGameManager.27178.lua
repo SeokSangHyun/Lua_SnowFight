@@ -34,6 +34,6 @@ local function BulletFire(playerID, num, forX, forY, forZ)
     
     g_Player:Fire(playerID, num, forX, forY, forZ)
 end
-Game:ConnectEventFunction("BulletFire", BulletFire)
+Game:ConnectEventFunction("BulletFire_sToc", BulletFire)
 
 

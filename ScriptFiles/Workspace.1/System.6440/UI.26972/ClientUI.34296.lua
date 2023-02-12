@@ -10,27 +10,21 @@ local ListPopup = Workspace.UI.Popup.F_ListPopupPanel
 --!---------------------------- 버튼 입력 처리 ------------------------------
 --# 목적 : 
 local function SnowBallButtonEvent(self)
-    local player = LocalPlayer:GetRemotePlayer()
-    local playerID = player:GetPlayerID()
-    SetWeaponIndex(1)
+    g_Player:SetWeaponIndex(1)
 end
 BulletButtonList[1].OnUpEvent:Connect(SnowBallButtonEvent)
 
 
 --# 목적 : 
 local function IcicleButtonEvent(self)
-    local player = LocalPlayer:GetRemotePlayer()
-    local playerID = player:GetPlayerID()
-    SetWeaponIndex(2)
+    g_Player:SetWeaponIndex(2)
 end
 BulletButtonList[2].OnUpEvent:Connect(IcicleButtonEvent)
 
 
 --# 목적 : 
 local function SnowCrystalButtonEvent(self)
-    local player = LocalPlayer:GetRemotePlayer()
-    local playerID = player:GetPlayerID()
-    SetWeaponIndex(3)
+    g_Player:SetWeaponIndex(3)
 end
 BulletButtonList[3].OnUpEvent:Connect(SnowCrystalButtonEvent)
 

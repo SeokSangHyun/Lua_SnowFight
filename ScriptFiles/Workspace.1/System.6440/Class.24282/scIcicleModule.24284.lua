@@ -36,12 +36,7 @@ end
 --!---------------------------- 아이템 획득/사용 처리 ------------------------------
 --# 목적 : 아이템을 획득하면 인벤토리에 추가하는처리
 --? 내용 : 아이템을 획득하는 처리
-function sc_Icicle:GetItem(player)
-    if (self.NowBulletCount) <= 0 then;
-        player:GiveItem(self.WeaponObject)
-        player:EquipInventoryItem(self.InvenIndex)
-    end
-
+function sc_Icicle:GetItem()
     self.NowBulletCount = self.NowBulletCount + self.OneTurnBulletCount
     return self.NowBulletCount
 end

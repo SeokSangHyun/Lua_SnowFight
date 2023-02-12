@@ -71,6 +71,8 @@ end
 
 Item:AddToggleAction("CheckAction", Body.FireRate, TogleStart, EndClick)
 
+
+
 ---------------------라이플 재장전 함수-------------------------
 local function OnReloadGun(player)
     local equiObject = player:GetEquipItem("EquipSlot_1")
@@ -164,6 +166,7 @@ Item:AddAction("Reload", 0, ReloadCheck)
 
 ----------------------------------총알 발사 (왼쪽 클릭)---------------------------------------
 local function StartClick(player , playerLocation , playerDir)
+    print(EquipPlayerID)
    if EquipPlayerID == nil then
        return
    end

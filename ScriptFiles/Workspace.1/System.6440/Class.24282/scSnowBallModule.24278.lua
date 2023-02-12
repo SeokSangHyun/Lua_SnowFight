@@ -32,11 +32,6 @@ end
 --# 목적 : 아이템을 획득하면 인벤토리에 추가하는처리
 --? 내용 : 아이템을 획득하는 처리
 function sc_SnowBall:GetItem(player)
-    if (self.NowBulletCount) <= 0 then;
-        player:GiveItem(self.WeaponObject)
-        player:EquipInventoryItem(self.InvenIndex)
-    end
-
     self.NowBulletCount = self.NowBulletCount + self.OneTurnBulletCount
     return self.NowBulletCount
 end
@@ -52,6 +47,7 @@ function sc_SnowBall:UseItem(player)
     else
         self.NowBulletCount = 0
         --player:GetCharacter():DetachObject(self.WeaponObject)
+        return false
     end
 end
 

@@ -2,16 +2,10 @@
 local PlayerModule = require(Workspace.System.Class.ccPlayer)
 local WeaponList = {Script.SnowBall , Script.Icicle , Script.SnowCrystal}
 
-local WeaponIndex = 1
 
 
 g_Player = {}
 
-
-
---! ------------------------------  ------------------------------
-function SetWeaponIndex(index); WeaponIndex = index;    end;
-function GetWeaponIndex();  return WeaponIndex;    end;
 
 
 

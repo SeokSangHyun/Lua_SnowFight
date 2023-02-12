@@ -10,7 +10,7 @@ g_PlayerList = {}
 
 function InitPlayer(player)
     local playerID = player:GetPlayerID()
-    local info = PlayerModule.new(player, Toybox.Bullet:GetChildList())
+    local info = PlayerModule.new(player, Toybox.SnowFight, Toybox.Bullet:GetChildList())
     
     g_PlayerList[ tostring(playerID) ] = info
     Game:SendEventToClient(playerID, "InitPlayer_sToc", playerID)
@@ -18,17 +18,25 @@ function InitPlayer(player)
     --UI
     local remaincnt = info:GetAllBulletCount()
     Game:SendEventToClient(playerID, "SnowBall_UIUpdate", remaincnt[1])
+
+
+    g_PlayerList[ tostring(playerID) ]:EquipItem(player)
 end
 
 
-local function WeaponFire(player, num, forX, forY, forZ)
+
+--!---------------------------- 총알 발사 로직 ------------------------------
+--# 목적 : 총알 생성
+local function RequestFire(player, num, forX, forY, forZ)    
     local playerID = player:GetPlayerID()
+
+
     g_PlayerList[ tostring(playerID) ]:Fire(player, num, forX, forY, forZ)
     
     local remaincnt = g_PlayerList[ tostring(playerID) ]:GetAllBulletCount()
     Game:SendEventToClient(playerID, "SnowBall_UIUpdate", remaincnt[num])
 end
-Game:ConnectEventFunction("WeaponFire_cTos", WeaponFire)
+Game:ConnectEventFunction("RequestFire_cTos", RequestFire)
 
 
 

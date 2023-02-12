@@ -10,7 +10,6 @@ sc_Player = {}
 sc_Player.__index = sc_Player
 
 
-
 local SnowBallModule = require(Workspace.System.Class.scSnowBallModule)
 local SnowCrystalModule = require(Workspace.System.Class.scSnowCrystalsModule)
 local IcicleModule = require(Workspace.System.Class.scIcicleModule)
@@ -18,13 +17,14 @@ local DamageModule = require(ScriptModule.DefaultModules.DamageManager)
 
 
 
-function sc_Player.new(player, object_path)
+function sc_Player.new(player, weapon, object_path)
     local t = setmetatable({}, sc_Player)
     
     t.HP = 100
     t.PlayerID = player:GetPlayerID()
     t.State = 0     -- 0:"Common" , 1:"Ready" , 2:"WaitReady" , 3:"InGame" , 4:"Reward" , 10:"Dead"
     
+    t.Weapon = weapon
     t.weapons = {SnowBallModule.new(object_path[1]), IcicleModule.new(object_path[2]), SnowCrystalModule.new(object_path[3])}
 
     -- 상태 별 변수
@@ -84,9 +84,26 @@ end
 
 
 --!---------------------------- 아이템 획득/사용 처리 ------------------------------
+--# ===== 아이템 착용
+function sc_Player:EquipItem(player)
+    player:GiveItem(self.Weapon)
+    player:EquipInventoryItem(1)
+end
+
+
+--# ===== 아이템 착용 해제
+function sc_Player:unEquipItem(player)
+    player:DeleteItem(i)
+end
+
+
+
+
+
 --# 목적 : 아이템을 획득하면 인벤토리에 추가하는처리
 function sc_Player:GetItem(player, ItemNum)
-    local bulletcnt = self.weapons[ItemNum]:GetItem(player)
+
+    local bulletcnt = self.weapons[ItemNum]:GetItem()
 
     --Game:DeleteObject(self)
     return bulletcnt
@@ -97,11 +114,13 @@ end
 --# 목적 : 아이템 발사
 function sc_Player:Fire(player, num, forX, forY, forZ)
     local playerID = player:GetPlayerID()
-    local AllPlayer = Game:GetAllPlayer()
-    local bullet = self.weapons[num]:UseItem(player)
 
 
-    Game:BroadcastEvent("BulletFire", playerID, num, forX, forY, forZ)
+    local IsCanFire = self.weapons[num]:UseItem(player)
+    Game:BroadcastEvent("BulletFire_sToc", playerID, num, forX, forY, forZ)
+    if IsCanFire then
+    end
+
 
 end
 

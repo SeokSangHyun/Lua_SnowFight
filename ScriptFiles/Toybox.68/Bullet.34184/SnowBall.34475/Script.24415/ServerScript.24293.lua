@@ -48,79 +48,85 @@ local function CharacterHit(player, targetID, hitPosition)
  
 
 
---! ------------------------ ------ 총알 충돌 체크 ------------------------------
- function Item:BulletCollision(player , selfLoction , selfDir)
---* 여기부터
-    local hitList = player:LineTraceList(selfLoction + selfDir * 50, selfDir, 100)
-    local hitResult = hitList[1]
+-- --! ------------------------------ 총알 생성 및 발사 함수 ------------------------------
+--  function Item:FireBullet(player , selfLoction , selfDir)
+-- --* 여기부터
+--     local hitList = player:LineTraceList(selfLoction + selfDir * 50, selfDir, 100)
+--     local hitResult = hitList[1]
     
-        if hitResult.HitObject ~= nil then
-            local dis = nil
-            dis = Utility:VecDistance(playerLocation + playerDir * BulletDistance, hitResult.HitLocation)
-
-            location = hitResult.HitLocation
-            speed = (BulletDistance - dis) * (BulletSpeed / BulletDistance)
+--         if hitResult.HitObject ~= nil then
+--             local dis = nil
+--             if IsStraight then
+--                 dis = Utility:VecDistance(playerCharacter.Location + playerCharacter.Transform:GetForward() * BulletDistance, hitResult.HitLocation)
+--             else
+--                 dis = Utility:VecDistance(playerLocation + playerDir * BulletDistance, hitResult.HitLocation)
+--             end
+--             location = hitResult.HitLocation
+--             speed = (BulletDistance - dis) * (BulletSpeed / BulletDistance)
     
-            local setHit = coroutine.create(function(player, object, locataion, waitTime)
-                wait(waitTime)
-                if not player:IsValid() or not object:IsValid() then
-                    return
-                end
+--             local setHit = coroutine.create(function(player, object, locataion, waitTime)
+--                 wait(waitTime)
+--                 if not player:IsValid() or not object:IsValid() then
+--                     return
+--                 end
                 
-                if object:IsCharacter() then
-                    CharacterHit(player, object:GetPlayerID(), locataion)
-                elseif object:IsNPC() then
-                    NPCHit(player, object.Name, locataion, object:GetKey())
-                else
-                    StaticMeshHit(player, object.Name, locataion, object:GetKey())
-                end
-            end)
+--                 if object:IsCharacter() then
+--                     CharacterHit(player, object:GetPlayerID(), locataion)
+--                 elseif object:IsNPC() then
+--                     NPCHit(player, object.Name, locataion, object:GetKey())
+--                 else
+--                     StaticMeshHit(player, object.Name, locataion, object:GetKey())
+--                 end
+--             end)
     
-            coroutine.resume(setHit, player, hitResult.HitObject, hitResult.HitLocation, speed)
-        end
+--             coroutine.resume(setHit, player, hitResult.HitObject, hitResult.HitLocation, speed)
+--         end
 
- end
-
-
+--  end
 
 
 
---! ------------------------------ a ------------------------------
-local function Update(updateTime)
-    if EquipPlayerID ~= nil and IsFire then
-        Item:SendEventToClient(EquipPlayerID, "PreFire", true)
+
+
+-- --! ------------------------------ a ------------------------------
+-- local function Update(updateTime)
+--     if EquipPlayerID ~= nil and IsFire then
+--         Item:SendEventToClient(EquipPlayerID, "PreFire", true)
         
-        if Delay then
-            DelayCheck = DelayCheck + updateTime
-            if DelayCheck >= InputDelay then
-                Delay = false
-                FirstDelay = false
-                Body.InitBullet = Body.InitBullet - 1
-                if EquipPlayerID ~= nil then
-                    Item:SendEventToClient(EquipPlayerID, "SetBulletUI", Body.InitBullet)
-                    local player = Game:GetPlayer(EquipPlayerID)
-                    Item:FireBullet(player, FireLocation, FireDir)
-                    Count = Count + 1
-                    IsFire = false
-                    DelayCheck = 0
-                end
-            end
-        else
-            if EquipPlayerID ~= nil then
-                Body.InitBullet = Body.InitBullet - 1
-                Item:SendEventToClient(EquipPlayerID, "SetBulletUI", Body.InitBullet)
-                local player = Game:GetPlayer(EquipPlayerID)
-                Item:FireBullet(player, FireLocation, FireDir)
-                Count = Count + 1
-                IsFire = false
-            end
-        end
-    end
+--         if Delay then
+--             DelayCheck = DelayCheck + updateTime
+--             if DelayCheck >= InputDelay then
+--                 Delay = false
+--                 FirstDelay = false
+--                 Body.InitBullet = Body.InitBullet - 1
+--                 if EquipPlayerID ~= nil then
+--                     Item:SendEventToClient(EquipPlayerID, "SetBulletUI", Body.InitBullet)
+--                     local player = Game:GetPlayer(EquipPlayerID)
+--                     Item:FireBullet(player, FireLocation, FireDir)
+--                     Count = Count + 1
+--                     IsFire = false
+--                     DelayCheck = 0
+--                 end
+--             end
+--         else
+--             if EquipPlayerID ~= nil then
+--                 Body.InitBullet = Body.InitBullet - 1
+--                 Item:SendEventToClient(EquipPlayerID, "SetBulletUI", Body.InitBullet)
+--                 local player = Game:GetPlayer(EquipPlayerID)
+--                 Item:FireBullet(player, FireLocation, FireDir)
+--                 Count = Count + 1
+--                 IsFire = false
+--             end
+--         end
+--     end
+-- end
+-- Item.OnUpdateEvent:Connect(Update)
+
+
+
+local function Update(updateTime)
+    print("1")
 end
 Item.OnUpdateEvent:Connect(Update)
-
-
-
-
 
 
