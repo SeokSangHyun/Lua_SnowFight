@@ -127,7 +127,7 @@ Item:AddAction("Fire", 0.5, StartClick)
 local function Update(updateTime)
     if EquipPlayerID ~= nil and IsFire then
         local player = Game:GetPlayer(EquipPlayerID)
-        Item:FireBullet(player, FireLocation, FireDir)
+        Item:FireBullet(player, 1, FireLocation, FireDir)
         IsFire = false
     
         Item:SendEventToClient(EquipPlayerID, "SetBulletUI", Body.MaxBullet, Body.InitBullet)

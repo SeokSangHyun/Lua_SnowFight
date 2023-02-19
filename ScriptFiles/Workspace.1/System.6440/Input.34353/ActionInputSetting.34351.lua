@@ -88,6 +88,31 @@ local function InputProcessEvent()
         
         SetActionKey(true)
     end)
+    
+    
+    
+--# =====  공격 키 입력
+    -- 키를 눌렀을 때
+    DefaultInput:ProcessInputActionEvent("Act", Enum.KeyInputType.Pressed, function()
+            -- 각 공격 버튼에서 처리
+            CheckFire()
+            --IsOnKey = true
+        end)   
+    
+    -- 키를 누르고 있을 때
+    DefaultInput:ProcessInputActionEvent("Act", Enum.KeyInputType.Repeat, function()
+            --여긴 처리하지 않음
+            --IsOnKey = false
+        end)  
+    
+    -- 키를 땠을 때
+    DefaultInput:ProcessInputActionEvent("Act", Enum.KeyInputType.Released, function()
+            --실제 공격 발사
+            --StartFire()
+        end)  
+    --! ------------------------------  ------------------------------
+    
+    
 end
 
 

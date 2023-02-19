@@ -48,8 +48,8 @@ function CheckActionState(AnimName)
 
     if AnimName == nowObject.Throw then
         AnimFrame = AnimFrame + 1
-
-        if AnimFrame == 15 then
+        print(AnimFrame)
+        if AnimFrame == 7 then
             g_Player:PreFire()
         end
 
