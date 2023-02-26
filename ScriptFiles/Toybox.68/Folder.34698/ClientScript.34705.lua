@@ -12,7 +12,7 @@ local MAX_BallOffset = Vector.new(50, 0, 160)
 
 local Is_RollingKey = false
 local Is_RollingMoveForward = false
-local Is_RollingMoveRight = false
+local Is_RollingMoveRight = false 
 
 
 local prev_forwardpos = Vector.new(0,0,0)

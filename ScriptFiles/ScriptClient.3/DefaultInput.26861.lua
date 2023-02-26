@@ -159,10 +159,16 @@ if IsUseMoveControl then
     if IsMobileTouchScreen == false then 
         DefaultInput:ProcessInputAxisEvent("MoveForward", function(value) 
            LocalPlayer:MoveForward(value)
+            if IsMobileTouchScreen == false then
+                CheckRollingForwardState()
+            end
         end)
     
         DefaultInput:ProcessInputAxisEvent("MoveRight", function(value) 
            LocalPlayer:MoveRight(value)
+            if IsMobileTouchScreen == false then
+                CheckRollingRightState()
+            end
         end)
     
     --모바일이면
@@ -171,11 +177,17 @@ if IsUseMoveControl then
         DefaultInput:ProcessInputAxisEvent("MoveForward_M", function(value) 
            local moveSpeed = 2.0
            LocalPlayer:MoveForward(value * moveSpeed)
+            if IsMobileTouchScreen == false then
+                CheckRollingForwardState()
+            end
         end)
         
         DefaultInput:ProcessInputAxisEvent("MoveRight_M", function(value) 
            local moveSpeed = 2.0
-           LocalPlayer:MoveRight(value * moveSpeed)       
+           LocalPlayer:MoveRight(value * moveSpeed)
+            if IsMobileTouchScreen == true then
+                CheckRollingRightState()
+            end
         end)
     end
 end
@@ -253,3 +265,6 @@ if IsUseZoomInOut then
         end)    
     end
 end
+
+
+

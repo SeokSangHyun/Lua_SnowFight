@@ -9,10 +9,17 @@ local ListPopup = Workspace.UI.Popup.F_ListPopupPanel
 
 --!---------------------------- 버튼 입력 처리 ------------------------------
 --# 목적 : 
-local function SnowBallButtonEvent(self)
-    g_Player:SetWeaponIndex(1)
+local function SnowBallButtonDownEvent(self)
+    --g_Player:SetWeaponIndex(1)
+    Toggle_RollingKey(true)
 end
-BulletButtonList[1].OnUpEvent:Connect(SnowBallButtonEvent)
+BulletButtonList[1].OnUpEvent:Connect(SnowBallButtonDownEvent)
+
+local function SnowBallButtonUpEvent(self)
+    --g_Player:SetWeaponIndex(1)
+    Toggle_RollingKey(false)
+end
+BulletButtonList[1].OnUpEvent:Connect(SnowBallButtonDownEvent)
 
 
 --# 목적 : 
