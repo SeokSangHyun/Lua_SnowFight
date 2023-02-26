@@ -82,11 +82,7 @@ local function InputProcessEvent()
 
     --점프 조작키 사용시
     ActionInput:ProcessInputActionEvent("Jump", Enum.KeyInputType.Pressed, function()
-        --LocalPlayer:Jump()
-        local character = LocalPlayer:GetRemotePlayer():GetCharacter()
-        character:ChangeAnimState("Throw")
-        
-        SetActionKey(true)
+        LocalPlayer:Jump()
     end)
     
     

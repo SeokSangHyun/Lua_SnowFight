@@ -1,6 +1,5 @@
 --# 모듈 임포트
 local PlayerModule = require(Workspace.System.Class.ccPlayer)
-local WeaponList = {Script.SnowBall , Script.Icicle , Script.SnowCrystal}
 
 --# 전역 및 대표 참조
 g_Player = {}                   -- 클라이언트 클래스 객체
@@ -112,87 +111,82 @@ end
 
 
 --! ------------------------------ 실행 ------------------------------
-local cor = nil
-local function SnowRolling()
-    if cor == nil then
-        cor = coroutine.create(function()
-            while true do
-                if Is_RollingMoveForward or Is_RollingMoveRight then
-                    if Is_RollingKey then
-                        local size = toy_Rolling.Scale
-                        size.X = size.X + 0.01
-                        size.Y = size.Y + 0.01
-                        size.Z = size.Z + 0.01
-                        toy.Scale = size
-                        
-                        local pos = toy.Location
-                        pos.Z = pos.Z * 1.004
-                        toy.Location = pos
+local function RollingSystem()
+    if Is_RollingMoveForward or Is_RollingMoveRight then
+        if Is_RollingKey then
+            local size = toy_Rolling.Scale
+            size.X = size.X + 0.01
+            size.Y = size.Y + 0.01
+            size.Z = size.Z + 0.01
+            toy.Scale = size
+            
+            local pos = toy.Location
+            pos.Z = pos.Z * 1.004
+            toy.Location = pos
 
-                        if size.Z > 0.9 then
-                            toy.ClientScript:Run()
-                            Init_SnowBall()
-                            return
-                        end
-                    end    
-                end
-
-                wait(0.05)
+            if size.Z > 0.9 then
+                toy.ClientScript:Run()
+                Init_SnowBall()
+                return
             end
-
-            cor = nil
-        end)
-        coroutine.resume(cor)    
+        end    
     end
-
-
 end
-SnowRolling()
 
 
-
+-- local character = LocalPlayer:GetRemotePlayer():GetCharacter()
+-- character:ChangeAnimState("Throw")
+-- SetActionKey(true)
 
 
 --# ===== 공격 버튼을 눌렀을 때 처리
 local cor1 = nil
-local BulletIndex = 1
-local MAX_WAITTIME = 5
+local MAX_INPUTTIME = 0.4
+local MAX_ROLLINGTIME = 5
 local SnowBallState = 1     -- (1:던지는지 확인 , 2:눈덩이 굴리기 확인)
 function CheckRollingStart()
-    if BulletIndex == 1 then
+    if g_Player:GetWeaponIndex() == 1 then
         if cor1 == nil then
             cor1 = coroutine.create(function()
                 StandardTime = time()
-                
                 while true do
                     WaitTime = time() - StandardTime
-                    print(WaitTime)
-                    
+--* 눈덩이 커지는 로직
                     if SnowBallState == 2 then
-                        RollingUI.ProgressBar:SetPercent(WaitTime / MAX_WAITTIME)
-                        if WaitTime > MAX_WAITTIME then
+                        if WaitTime > MAX_ROLLINGTIME then
                             RollingUI.Visible = false
-
                             --toy.ClientScript:Run()
-                            Init_SnowBall()
-                            return
+                            goto Continue
+                        else
+                            RollingUI.ProgressBar:SetPercent(WaitTime / MAX_ROLLINGTIME)
+                            RollingSystem()
+                            if not Is_RollingKey then
+                                goto Continue
+                            end
                         end
+
+--* 굴리기인지 던지기인지 판별
                     elseif SnowBallState == 1 then
-                        if WaitTime > 1 then
+                        if WaitTime > MAX_INPUTTIME then
                             RollingUI.ProgressBar:SetPercent(0)
                             RollingUI.Visible = true
-
-                            Is_RollingKey = true
                             WaitTime = 0
                             StandardTime = time()
-
                             SnowBallState = 2
+                            g_Player:PreFire()
+                        else
+                            if not Is_RollingKey then
+                                local character = LocalPlayer:GetRemotePlayer():GetCharacter()
+                                character:ChangeAnimState("Throw")
+                                goto Continue
+                            end
                         end
-                    else
-                        return
-                    end
+
+                    else;   return; end;
                     wait(0.05)
                 end
+                ::Continue::
+                Init_SnowBall()
                 cor1 = nil
             end)
 

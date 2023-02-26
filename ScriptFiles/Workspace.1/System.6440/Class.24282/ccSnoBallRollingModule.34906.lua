@@ -1,11 +1,11 @@
 
-cc_SnowBall = {}
-cc_SnowBall.__index = cc_SnowBall
+cc_SnowBallRoiing = {}
+cc_SnowBallRoiing.__index = cc_SnowBallRoiing
 
 --!---------------------------- 초기화 ------------------------------
 --# 목적 : 생성시 정보 초기화
-function cc_SnowBall.new(object)
-    local t = setmetatable({}, cc_SnowBall)
+function cc_SnowBallRoiing.new(object)
+    local t = setmetatable({}, cc_SnowBallRoiing)
     
     t.WeaponObjects = Game:CreateObject(object, Vector.new(0,0,-5000))
     
@@ -26,15 +26,23 @@ end
 
 --!---------------------------- Getter/Setter ------------------------------
 --# 목적 : 아이템 획득
-function cc_SnowBall:GetBulletCount()
+function cc_SnowBallRoiing:GetBulletCount()
     return 
 end
 
 
 
 --!---------------------------- 발사 로직 ------------------------------
+--# 시작 전 세팅
+function cc_SnowBallRoiing:Rolling()
+end
+
+
+
+--!---------------------------- 발사 로직 ------------------------------
 --# 아이템 발사 전 처리
-function cc_SnowBall:PreFireObject(playerID, forX, forY, forZ)
+function cc_SnowBallRoiing:PreFireObject(playerID, forX, forY, forZ)
+    
 end
 
 --# 목적 : 아이템 발사
@@ -58,9 +66,9 @@ end
 
 
 --!---------------------------- 데미지 로직 ------------------------------
-function cc_SnowBall:GetDamage(); return self.Damage; end;
+function cc_SnowBallRoiing:GetDamage(); return self.Damage; end;
 
 
 
-return cc_SnowBall;
+return cc_SnowBallRoiing;
 

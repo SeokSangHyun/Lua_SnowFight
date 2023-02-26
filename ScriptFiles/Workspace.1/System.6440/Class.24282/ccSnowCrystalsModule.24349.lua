@@ -29,6 +29,11 @@ end
 
 
 --!---------------------------- 발사 로직 ------------------------------
+--# 아이템 발사 전 처리
+function cc_SnowCrystal:PreFireObject(playerID, forX, forY, forZ)
+end
+
+--# 목적 : 아이템 발사
 function cc_SnowCrystal:FireObject(playerID, forX, forY, forZ)
     --(toy, stPos, endPos, speed, force)
     local character = Game:GetRemotePlayerCharacter(playerID)

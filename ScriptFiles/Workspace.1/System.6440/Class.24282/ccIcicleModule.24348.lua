@@ -29,6 +29,11 @@ end
 
 
 --!---------------------------- 발사 로직 ------------------------------
+--# 아이템 발사 전 처리
+function cc_Icicle:PreFireObject(playerID, forX, forY, forZ)
+end
+
+--# 목적 : 아이템 발사
 function cc_Icicle:FireObject(playerID, forX, forY, forZ)
 --[[
     print(self.WeaponObjects.Mesh.Item.Rotation)

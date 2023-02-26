@@ -10,11 +10,14 @@ local ListPopup = Workspace.UI.Popup.F_ListPopupPanel
 --!---------------------------- 버튼 입력 처리 ------------------------------
 --# 목적 : 
 local function SnowBallButtonDownEvent(self)
-    --g_Player:SetWeaponIndex(1)
+    g_Player:ActionInput(1)
+    g_Player:SetWeaponIndex(1)
+    CheckRollingStart()
     Toggle_RollingKey(true)
 end
 BulletButtonList[1].OnUpEvent:Connect(SnowBallButtonDownEvent)
 
+--# 눈덩이 
 local function SnowBallButtonUpEvent(self)
     --g_Player:SetWeaponIndex(1)
     Toggle_RollingKey(false)
@@ -24,14 +27,14 @@ BulletButtonList[1].OnUpEvent:Connect(SnowBallButtonDownEvent)
 
 --# 목적 : 
 local function IcicleButtonEvent(self)
-    g_Player:SetWeaponIndex(2)
+    g_Player:ActionInput(2)
 end
 BulletButtonList[2].OnUpEvent:Connect(IcicleButtonEvent)
 
 
 --# 목적 : 
 local function SnowCrystalButtonEvent(self)
-    g_Player:SetWeaponIndex(3)
+    g_Player:ActionInput(3)
 end
 BulletButtonList[3].OnUpEvent:Connect(SnowCrystalButtonEvent)
 
