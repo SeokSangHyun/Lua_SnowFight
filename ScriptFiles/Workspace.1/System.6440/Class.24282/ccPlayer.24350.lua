@@ -80,7 +80,7 @@ end
 
 --# 목적 : 아이템 발사
 function cc_Player:RollingSystem(playerID, size)
-    self.weapons[num]:Rolling()
+
 end
 
 

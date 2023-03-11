@@ -32,7 +32,11 @@ local WaitTime = 0
 local StandardTime = time()
 
 
-
+--# ===== 공격 버튼을 눌렀을 때 처리
+local cor1 = nil
+local MAX_INPUTTIME = 0.4
+local MAX_ROLLINGTIME = 5
+local SnowBallState = 1     -- (1:던지는지 확인 , 2:눈덩이 굴리기 확인)
 
 
 
@@ -63,11 +67,15 @@ Game:ConnectEventFunction("HitProcess_sToc", HitProcess)
 
 --! ------------------------------ 눈 굴리기 로직 ------------------------------
 --# 변수 초기화
-function Init_SnowBall()
+function Init_SnowBallRolling()
     Is_RollingKey = false
     Is_RollingMoveForward = false
     Is_RollingMoveRight = false
+    SnowBallState = 1
+    RollingUI.ProgressBar:SetPercent(0 / MAX_ROLLINGTIME)
 end
+
+
 
 
 
@@ -111,10 +119,12 @@ end
 
 
 --! ------------------------------ 실행 ------------------------------
-local function RollingSystem()
+local function RollingSystem(waittime)
     if Is_RollingMoveForward or Is_RollingMoveRight then
         if Is_RollingKey then
-            Game:SendEventToServer("RollingScallingUp_cTos")
+            local forward = LocalPlayer:GetCameraForward()
+            Game:SendEventToServer("RollingScallingUp_cTos", waittime, forward.X, forward.Y)
+            RollingUI.ProgressBar:SetPercent(WaitTime / MAX_ROLLINGTIME)
             -- local size = toy_Rolling.Scale
             -- size.X = size.X + 0.01
             -- size.Y = size.Y + 0.01
@@ -135,16 +145,7 @@ local function RollingSystem()
 end
 
 
--- local character = LocalPlayer:GetRemotePlayer():GetCharacter()
--- character:ChangeAnimState("Throw")
--- SetActionKey(true)
 
-
---# ===== 공격 버튼을 눌렀을 때 처리
-local cor1 = nil
-local MAX_INPUTTIME = 0.4
-local MAX_ROLLINGTIME = 5
-local SnowBallState = 1     -- (1:던지는지 확인 , 2:눈덩이 굴리기 확인)
 function CheckRollingStart()
     if g_Player:GetWeaponIndex() == 1 then
         if cor1 == nil then
@@ -156,13 +157,16 @@ function CheckRollingStart()
                     if SnowBallState == 2 then
                         if WaitTime > MAX_ROLLINGTIME then
                             RollingUI.Visible = false
-                            --toy.ClientScript:Run()
-                            goto Continue
+                            local forward = LocalPlayer:GetCameraForward()
+                            Game:SendEventToServer("RollingThrow_cTos", forward.X, forward.Y, forward.Z)
+                            break;
                         else
-                            RollingUI.ProgressBar:SetPercent(WaitTime / MAX_ROLLINGTIME)
-                            RollingSystem()
+                            
+                            RollingSystem(WaitTime)
                             if not Is_RollingKey then
-                                goto Continue
+                                local forward = LocalPlayer:GetCameraForward()
+                                Game:SendEventToServer("RollingThrow_cTos", forward.X, forward.Y, forward.Z)
+                                break;
                             end
                         end
 
@@ -180,15 +184,15 @@ function CheckRollingStart()
                             if not Is_RollingKey then
                                 local character = LocalPlayer:GetRemotePlayer():GetCharacter()
                                 character:ChangeAnimState("Throw")
-                                goto Continue
+                                break;
                             end
                         end
 
                     else;   return; end;
                     wait(0.05)
                 end
-                ::Continue::
-                Init_SnowBall()
+                --::Continue::
+                Init_SnowBallRolling()
                 cor1 = nil
             end)
 

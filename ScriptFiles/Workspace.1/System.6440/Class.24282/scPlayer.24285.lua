@@ -102,9 +102,9 @@ end
 
 
 --# 목적 : 아이템을 획득하면 인벤토리에 추가하는처리
-function sc_Player:GetItem(player, ItemNum)
+function sc_Player:GetItem(player, ItemNum, forX, forY)
 
-    local bulletcnt = self.weapons[ItemNum]:GetItem()
+    local bulletcnt = self.weapons[ItemNum]:GetItem(forX, forY)
 
     --Game:DeleteObject(self)
     return bulletcnt
@@ -122,14 +122,19 @@ end
 --# 목적 : 아이템 발사
 function sc_Player:Fire(player, num, forX, forY, forZ)
     local playerID = player:GetPlayerID()
+    local IsCanFire = self.weapons[num]:UseItem(player, forX, forY, forZ)
 
-
-    local IsCanFire = self.weapons[num]:UseItem(player)
-    Game:BroadcastEvent("BulletFire_sToc", playerID, num, forX, forY, forZ)
-    if IsCanFire then
+    if num ~= 4 then
+        Game:BroadcastEvent("BulletFire_sToc", playerID, num, forX, forY, forZ)
+        if IsCanFire then
+        end
     end
 
+end
 
+
+function sc_Player:Rolling(waitTime, forX, forY)
+    self.weapons[4]:CheckInitialize(self.PlayerID, waitTime, forX, forY)
 end
 
 

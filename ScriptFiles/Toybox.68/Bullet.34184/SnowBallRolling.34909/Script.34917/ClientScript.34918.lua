@@ -2,8 +2,11 @@
 local ProjectileModule = require(ScriptModule.DefaultModules.Projectile)
 
 local Item = Script.Parent.Parent
+local model = Item.Model
 local FX = Toybox.FX.HitFX
 local PID = 0
+
+
 
 
 function Item:PreFire(playerID, bullet, targetPos, stPos, endPos, speed, force)
@@ -11,9 +14,9 @@ function Item:PreFire(playerID, bullet, targetPos, stPos, endPos, speed, force)
     -- Firecheck = false
     
     -- Launcher(발사할 발사체, 시작지점, 끝지점, 발사체 속도, 곡사방향으로 줄 힘)
-    ProjectileModule:Launcher(bullet, stPos, endPos, speed, force)
-    bullet:LookAt(targetPos)
-    PID = playerID
+    --ProjectileModule:Launcher(bullet, stPos, endPos, speed, force)
+    --bullet:LookAt(targetPos)
+    --PID = playerID
 end
 -- local function FireBullet(playerLocation , speed)
 --     if Equip == false then
@@ -90,7 +93,7 @@ local function CollisionEvent(self, target)
     
     Game:DeleteObject(self)
 end
-Item.HitCollider.Collision.OnBeginOverlapEvent:Connect(CollisionEvent)
+model.HitCollider.Collision.OnBeginOverlapEvent:Connect(CollisionEvent)
 
 
 -- local function BulletCollision(self, object)

@@ -5,9 +5,6 @@ local WeaponList = {Script.SnowBall , Script.Icicle , Script.SnowCrystal , Scrip
 
 g_PlayerList = {}
 
-
-
-
 function InitPlayer(player)
     local playerID = player:GetPlayerID()
     local info = PlayerModule.new(player, Toybox.SnowFight, Toybox.Bullet:GetChildList())
@@ -55,12 +52,18 @@ local function RollingSystemStart(player)
 end
 Game:ConnectEventFunction("RollingSystemStart_cTos", RollingSystemStart)
 
-local function RollingScallingUp(player)
-    local playerID = player:GetPlayerID()
 
+local function RollingScallingUp(player, waittime, forX, forY)
+    local playerID = player:GetPlayerID()
+    g_PlayerList[ tostring(playerID) ]:Rolling(waittime, forX, forY)
 end
 Game:ConnectEventFunction("RollingScallingUp_cTos", RollingScallingUp)
 
 
+local function RollingThrow(player, forX, forY, forZ)
+    local playerID = player:GetPlayerID()
+    g_PlayerList[ tostring(playerID) ]:Fire(player, 4, forX, forY, forZ)
+end
+Game:ConnectEventFunction("RollingThrow_cTos", RollingThrow)
 
 

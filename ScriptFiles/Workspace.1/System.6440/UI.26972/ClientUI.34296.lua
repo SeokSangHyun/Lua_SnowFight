@@ -11,17 +11,17 @@ local ListPopup = Workspace.UI.Popup.F_ListPopupPanel
 --# 목적 : 
 local function SnowBallButtonDownEvent(self)
     g_Player:ActionInput(1)
-    CheckRollingStart()
     Toggle_RollingKey(true)
+    CheckRollingStart()
 end
-BulletButtonList[1].OnUpEvent:Connect(SnowBallButtonDownEvent)
+BulletButtonList[1].OnPressEvent:Connect(SnowBallButtonDownEvent)
 
 --# 눈덩이 
 local function SnowBallButtonUpEvent(self)
     --g_Player:SetWeaponIndex(1)
     Toggle_RollingKey(false)
 end
-BulletButtonList[1].OnUpEvent:Connect(SnowBallButtonDownEvent)
+BulletButtonList[1].OnUpEvent:Connect(SnowBallButtonUpEvent)
 
 
 --# 목적 : 
