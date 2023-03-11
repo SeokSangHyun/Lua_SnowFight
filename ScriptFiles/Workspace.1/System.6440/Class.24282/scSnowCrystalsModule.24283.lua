@@ -56,6 +56,20 @@ function sc_SnowCrystal:UseItem(player)
 end
 
 
+--!---------------------------- 무기 시스템 처리 ------------------------------
+--# 목적 : 기본 세팅 값
+function sc_SnowCrystal:Initialize()
+end
+
+
+--# 목적 : 초기화 검사
+function sc_SnowCrystal:CheckInitialize()
+end
+
+
+--# 목적 : 종료 시 처리
+function sc_SnowCrystal:FinishSystem()
+end
 
 return sc_SnowCrystal;
 

@@ -1,6 +1,6 @@
 
 local PlayerModule = require(Workspace.System.Class.scPlayer)
-local WeaponList = {Script.SnowBall , Script.Icicle , Script.SnowCrystal}
+local WeaponList = {Script.SnowBall , Script.Icicle , Script.SnowCrystal , Script.SnowBallRolling}
 
 
 g_PlayerList = {}
@@ -45,3 +45,22 @@ local function HitProcess(player)
     
 end
 Game:ConnectEventFunction("HitProcess_cTos", HitProcess)
+
+
+--!---------------------------- 롤링 시스템 ------------------------------
+local function RollingSystemStart(player)
+    local playerID = player:GetPlayerID()
+    g_PlayerList[ tostring(playerID) ]:PreFire(4)
+
+end
+Game:ConnectEventFunction("RollingSystemStart_cTos", RollingSystemStart)
+
+local function RollingScallingUp(player)
+    local playerID = player:GetPlayerID()
+
+end
+Game:ConnectEventFunction("RollingScallingUp_cTos", RollingScallingUp)
+
+
+
+

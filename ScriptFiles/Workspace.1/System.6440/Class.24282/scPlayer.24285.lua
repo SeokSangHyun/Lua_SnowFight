@@ -13,6 +13,7 @@ sc_Player.__index = sc_Player
 local SnowBallModule = require(Workspace.System.Class.scSnowBallModule)
 local SnowCrystalModule = require(Workspace.System.Class.scSnowCrystalsModule)
 local IcicleModule = require(Workspace.System.Class.scIcicleModule)
+local SnowBallRollingModule = require(Workspace.System.Class.scSnowBallRollingModule)
 local DamageModule = require(ScriptModule.DefaultModules.DamageManager)
 
 
@@ -25,7 +26,7 @@ function sc_Player.new(player, weapon, object_path)
     t.State = 0     -- 0:"Common" , 1:"Ready" , 2:"WaitReady" , 3:"InGame" , 4:"Reward" , 10:"Dead"
     
     t.Weapon = weapon
-    t.weapons = {SnowBallModule.new(object_path[1]), IcicleModule.new(object_path[2]), SnowCrystalModule.new(object_path[3])}
+    t.weapons = {SnowBallModule.new(object_path[1]), IcicleModule.new(object_path[2]), SnowCrystalModule.new(object_path[3]), SnowBallRollingModule.new(object_path[4])}
 
     -- 상태 별 변수
     
@@ -109,6 +110,13 @@ function sc_Player:GetItem(player, ItemNum)
     return bulletcnt
 end
 
+
+
+--!---------------------------- 기능 ------------------------------
+--# 목적 : 발사 요청 스크립트
+function sc_Player:PreFire(ItemNum)
+    self.weapons[ItemNum]:Initialize(self.PlayerID)
+end
 
 
 --# 목적 : 아이템 발사

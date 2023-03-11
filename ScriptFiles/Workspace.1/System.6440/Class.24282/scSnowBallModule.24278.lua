@@ -52,6 +52,20 @@ function sc_SnowBall:UseItem(player)
 end
 
 
+--!---------------------------- 무기 시스템 처리 ------------------------------
+--# 목적 : 기본 세팅 값
+function sc_SnowBall:Initialize()
+end
+
+
+--# 목적 : 초기화 검사
+function sc_SnowBall:CheckInitialize()
+end
+
+
+--# 목적 : 종료 시 처리
+function sc_SnowBall:FinishSystem()
+end
 
 return sc_SnowBall;
 

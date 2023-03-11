@@ -7,7 +7,7 @@ g_Player = {}                   -- 클라이언트 클래스 객체
 
 --# Rolling 관련 변수
 --* 
-local toy_Rolling = Toybox.Bullet.SnowBallRollimg
+local toy_Rolling = Toybox.Bullet.SnowBallRolling
 
 --* UI 관련 변수
 local RollingUI = UIRoot.F_RollingGuage
@@ -114,21 +114,22 @@ end
 local function RollingSystem()
     if Is_RollingMoveForward or Is_RollingMoveRight then
         if Is_RollingKey then
-            local size = toy_Rolling.Scale
-            size.X = size.X + 0.01
-            size.Y = size.Y + 0.01
-            size.Z = size.Z + 0.01
-            toy.Scale = size
+            Game:SendEventToServer("RollingScallingUp_cTos")
+            -- local size = toy_Rolling.Scale
+            -- size.X = size.X + 0.01
+            -- size.Y = size.Y + 0.01
+            -- size.Z = size.Z + 0.01
+            -- toy.Scale = size
             
-            local pos = toy.Location
-            pos.Z = pos.Z * 1.004
-            toy.Location = pos
+            -- local pos = toy.Location
+            -- pos.Z = pos.Z * 1.004
+            -- toy.Location = pos
 
-            if size.Z > 0.9 then
-                toy.ClientScript:Run()
-                Init_SnowBall()
-                return
-            end
+            -- if size.Z > 0.9 then
+            --     toy.ClientScript:Run()
+            --     Init_SnowBall()
+            --     return
+            -- end
         end    
     end
 end
@@ -173,7 +174,8 @@ function CheckRollingStart()
                             WaitTime = 0
                             StandardTime = time()
                             SnowBallState = 2
-                            g_Player:PreFire()
+                            --g_Player:PreFire()
+                            Game:SendEventToServer("RollingSystemStart_cTos")
                         else
                             if not Is_RollingKey then
                                 local character = LocalPlayer:GetRemotePlayer():GetCharacter()

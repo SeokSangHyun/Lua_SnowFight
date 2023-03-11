@@ -23,7 +23,7 @@ function cc_Player.new(playerID, object_path)
     t.HP = 100
     t.PlayerID = playerID
     t.WeaponIndex = 1
-    t.weapons = {SnowBallModule.new(object_path[1]), IcicleModule.new(object_path[2]), SnowCrystalModule.new(object_path[3], SnowBallRollingModule.new(object_path[4]))}
+    t.weapons = {SnowBallModule.new(object_path[1]), IcicleModule.new(object_path[2]), SnowCrystalModule.new(object_path[3]), SnowBallRollingModule.new(object_path[4]) }
 --[[
     for i=1, #weapon_module do
         table.insert(t.weapons, weapon_module[i].new(object_path[i]) )
