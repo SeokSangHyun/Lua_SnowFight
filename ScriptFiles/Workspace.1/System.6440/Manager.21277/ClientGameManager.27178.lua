@@ -12,8 +12,19 @@ function GetActionKey()    return IsActionKey;    end;
 
 
 
-wait(3)
+--!----------------------------  ------------------------------
+---# 시스템 콜백 함수 처리
+--? 유저 스폰되었을 때 처리
+local function SpawnCharacter(character)
+    local HPBar = HUD.MainUI_Surface
+    local ui = character:AddPlayerHUD("SomeText", HPBar, Enum.UIDisplayType.Billboard) --캐릭터에 HUD를 추가하고 이름으로 등록해요.
+    ui.Visible = true
+end
+Game.OnSpawnCharacter:Connect(SpawnCharacter)
+
+
 local function ChangeReplicateValue(self, value) -- value : 변화한 값
+    wait(1)
     Update_InformUI()
 
 

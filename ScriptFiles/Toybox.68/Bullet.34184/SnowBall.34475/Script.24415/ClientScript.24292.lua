@@ -6,8 +6,8 @@ local FX = Toybox.FX.HitFX
 local PID = 0
 
 
-function Item:Initialize()
-    PID = LocalPlayer:GetRemotePlayer():GetPlayerID()
+function Item:Initialize(playerID)
+    PID = playerID
     print(PID)
 end
 
