@@ -35,7 +35,6 @@ local function MontionChange(self, target)
         nowObject = AnimSetting
 
         nowInput = text
-
 end
 
 colRoot.normal.BoxCollider.Collision.OnBeginOverlapEvent:Connect(MontionChange)
@@ -48,7 +47,7 @@ function CheckActionState(AnimName)
 
     if AnimName == nowObject.Throw then
         AnimFrame = AnimFrame + 1
-        print(AnimFrame)
+        --print(AnimFrame)
         if AnimFrame == 7 then
             g_Player:PreFire()
         end

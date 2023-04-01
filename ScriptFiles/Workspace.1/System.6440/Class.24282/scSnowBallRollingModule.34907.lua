@@ -48,11 +48,10 @@ end
 --# 목적 : 아이템을 사용하는 처리
 function sc_SnowBallRolling:UseItem(player, forX, forY, forZ)
     local pos = player:GetCharacter().Location
-    local target_pos = pos + Vector.new(forX*2000, forY*2000, 0)
-    print(pos)
-    print(target_pos)
+    local target_pos = pos + Vector.new(forX*1000, forY*1000, 0)
+    --print(pos)
+    --print(target_pos)
     self.WeaponObject:MoveToLocation(target_pos)
-
     self.WeaponObject:RunPlay(forZ, forX, forY)
 end
 

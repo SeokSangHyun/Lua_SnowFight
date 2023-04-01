@@ -5,7 +5,7 @@ GameRegistChair = Workspace.World.Lobby.Trigger.RegistChair:GetChildList()
 
 UIRoot = Workspace.UI.MainUI
 --버튼
-BulletButtonList = UIRoot.BulletHUD:GetChildList()
+BulletButtonList = UIRoot.BulletHUD
 
 --[[
 for i = 1, #GameRegistChair do

@@ -6,6 +6,12 @@ local FX = Toybox.FX.HitFX
 local PID = 0
 
 
+function Item:Initialize()
+    PID = LocalPlayer:GetRemotePlayer():GetPlayerID()
+    print(PID)
+end
+
+
 function Item:PreFire(playerID, bullet, targetPos, stPos, endPos, speed, force)
     -- toy.Track:PlayTransformTrack("FireAction", 0, 1)
     -- Firecheck = false
@@ -13,7 +19,6 @@ function Item:PreFire(playerID, bullet, targetPos, stPos, endPos, speed, force)
     -- Launcher(발사할 발사체, 시작지점, 끝지점, 발사체 속도, 곡사방향으로 줄 힘)
     ProjectileModule:Launcher(bullet, stPos, endPos, speed, force)
     bullet:LookAt(targetPos)
-    PID = playerID
 end
 -- local function FireBullet(playerLocation , speed)
 --     if Equip == false then
@@ -72,6 +77,9 @@ end
 
 
 local function CollisionEvent(self, target)
+    print(self)
+    print(target)
+    print(PID)
     if target == nil or not target:IsCharacter() then;    return;    end;
 
     if PID == 0 then;

@@ -1,41 +1,48 @@
 
 UIRoot = Workspace.UI.MainUI
 
+--* UI 관련 변수
+RollingUI = UIRoot.F_RollingGuage
+
+
 --UI
 local AskPopup = Workspace.UI.Popup.F_AskPopupPanel
 local ListPopup = Workspace.UI.Popup.F_ListPopupPanel
 
 
 
---!---------------------------- 버튼 입력 처리 ------------------------------
---# 목적 : 
+--!---------------------------- 공격 버튼 처리 ------------------------------
+--# 목적 : 눈덩이 굴리기
 local function SnowBallButtonDownEvent(self)
     g_Player:ActionInput(1)
     Toggle_RollingKey(true)
     CheckRollingStart()
 end
-BulletButtonList[1].OnPressEvent:Connect(SnowBallButtonDownEvent)
+BulletButtonList.Btn_Snowball.OnPressEvent:Connect(SnowBallButtonDownEvent)
 
 --# 눈덩이 
 local function SnowBallButtonUpEvent(self)
     --g_Player:SetWeaponIndex(1)
     Toggle_RollingKey(false)
 end
-BulletButtonList[1].OnUpEvent:Connect(SnowBallButtonUpEvent)
+BulletButtonList.Btn_Snowball.OnUpEvent:Connect(SnowBallButtonUpEvent)
 
 
 --# 목적 : 
 local function IcicleButtonEvent(self)
     g_Player:ActionInput(2)
+
+    local character = LocalPlayer:GetRemotePlayer():GetCharacter()
+    character:ChangeAnimState("Throw")
 end
-BulletButtonList[2].OnUpEvent:Connect(IcicleButtonEvent)
+BulletButtonList.Btn_Icicle.OnUpEvent:Connect(IcicleButtonEvent)
 
 
 --# 목적 : 
 local function SnowCrystalButtonEvent(self)
     g_Player:ActionInput(3)
 end
-BulletButtonList[3].OnUpEvent:Connect(SnowCrystalButtonEvent)
+BulletButtonList.Btn_SnowCrystal.OnUpEvent:Connect(SnowCrystalButtonEvent)
 
 
 
@@ -73,6 +80,7 @@ function Toggle_StardardPopup(state)
 end
 
 
+
 local function ButtonEvent_StardardPopup(self)
     Toggle_StardardPopup(false)
     Toggle_ListPopup(true)
@@ -83,10 +91,10 @@ local function ButtonEvent_StardardPopup(self)
     
     Input:SetJoystickControlVisibility(0, true)
     LocalPlayer:SetEnableMovementControl(true)
-    
-    
 end
 AskPopup.YesButton.OnUpEvent:Connect(ButtonEvent_StardardPopup)
+
+
 
 local function ButtonEvent_StardardPopupNo(self)
     Toggle_StardardPopup(false)
@@ -132,5 +140,12 @@ buttonlist[2].OnUpEvent:Connect(ButtonEvent_ReadyPopup)
 
 
 
+
+
+--!---------------------------- a ------------------------------
+function Toggle_RollingGuage(state)
+    RollingUI.Visible = state
+end
+Game:ConnectEventFunction("Toggle_RollingGuage_sToc", Toggle_RollingGuage)
 
 

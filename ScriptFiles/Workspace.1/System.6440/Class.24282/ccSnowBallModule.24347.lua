@@ -8,7 +8,8 @@ function cc_SnowBall.new(object)
     local t = setmetatable({}, cc_SnowBall)
     
     t.WeaponObjects = Game:CreateObject(object, Vector.new(0,0,-5000))
-    
+    t.WeaponObjects:Initialize()
+
 -- 기본 공격    
     t.Damage = 8.5
     t.ColdState = 5

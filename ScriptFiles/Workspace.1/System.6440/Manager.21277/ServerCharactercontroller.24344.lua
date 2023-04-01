@@ -63,6 +63,9 @@ Game:ConnectEventFunction("RollingScallingUp_cTos", RollingScallingUp)
 local function RollingThrow(player, forX, forY, forZ)
     local playerID = player:GetPlayerID()
     g_PlayerList[ tostring(playerID) ]:Fire(player, 4, forX, forY, forZ)
+
+    --
+    Game:SendEventToClient(playerID, "Toggle_RollingGuage_sToc", false)
 end
 Game:ConnectEventFunction("RollingThrow_cTos", RollingThrow)
 

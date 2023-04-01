@@ -83,7 +83,7 @@ local function CollisionEvent(self, target)
     
     
     -- Game:DeleteObject(self)
-    print(target)
+    --print(target)
     --self.Visible=false
 end
 Item.Model.HitCollider.Collision.OnBeginOverlapEvent:Connect(CollisionEvent)

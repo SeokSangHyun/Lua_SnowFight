@@ -9,8 +9,7 @@ g_Player = {}                   -- 클라이언트 클래스 객체
 --* 
 local toy_Rolling = Toybox.Bullet.SnowBallRolling
 
---* UI 관련 변수
-local RollingUI = UIRoot.F_RollingGuage
+
 
 --* 변화량 관련 변수
 local prev_forwardpos = Vector.new(0,0,0)
