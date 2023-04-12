@@ -28,17 +28,14 @@ BulletButtonList.Btn_Snowball.OnUpEvent:Connect(SnowBallButtonUpEvent)
 
 --# 목적 : 
 local function IcicleButtonEvent(self)
-    g_Player:ActionInput(2)
-
-    local character = LocalPlayer:GetRemotePlayer():GetCharacter()
-    character:ChangeAnimState("Throw")
+    BulletThrow(2)
 end
 BulletButtonList.Btn_Icicle.OnUpEvent:Connect(IcicleButtonEvent)
 
 
 --# 목적 : 
 local function SnowCrystalButtonEvent(self)
-    g_Player:ActionInput(3)
+    BulletThrow(3)
 end
 BulletButtonList.Btn_SnowCrystal.OnUpEvent:Connect(SnowCrystalButtonEvent)
 
@@ -56,11 +53,11 @@ end
 
 
 --# 목적 : 공격 버튼 UI
-local function SnowBall_UIUpdate(num)
+function SnowBall_UIUpdate(num)
     local toyRoot = Toybox.Bullet:GetChildList()
-    for i=1, #toyRoot do
+    for i=#toyRoot, 3, -1 do
         if i == num then
-            local remaincnt = SnowBallButton.Img_TextBackground.T_Count
+            local remaincnt = BulletButtonList[i].Img_TextBackground.T_Count
             remaincnt:SetText("X " .. tostring(num) )
         end
     end

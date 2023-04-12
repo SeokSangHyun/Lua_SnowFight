@@ -60,7 +60,7 @@ function cc_SnowBall:FireObject(playerID, forX, forY, forZ)
     local speed = 10
     local force = Vector.new(self.Force * forX, self.Force * forY, forZ * 6000)
     
-    self.WeaponObjects:PreFire(playerID, self.WeaponObjects, target, stPos, endPos, speed, force)
+    self.WeaponObjects:BulletObjectFire(playerID, self.WeaponObjects, target, stPos, endPos, speed, force)
 end
 
 

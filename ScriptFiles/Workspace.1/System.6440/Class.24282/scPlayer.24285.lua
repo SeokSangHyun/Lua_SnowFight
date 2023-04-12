@@ -28,7 +28,10 @@ function sc_Player.new(player, weapon, object_path)
     t.Weapon = weapon
     t.weapons = {SnowBallModule.new(object_path[1]), IcicleModule.new(object_path[2]), SnowCrystalModule.new(object_path[3]), SnowBallRollingModule.new(object_path[4])}
 
-    -- 상태 별 변수
+    -- 투사체 발사 변수
+    t.FireBulletNum = 0
+    t.StartPos = Vector.new(0,0,0)
+    t.LookForward=Vector.new(0,0,0)
     
     return t
 end
@@ -102,39 +105,53 @@ end
 
 
 --# 목적 : 아이템을 획득하면 인벤토리에 추가하는처리
-function sc_Player:GetItem(player, ItemNum, forX, forY)
-
+function sc_Player:GetItem(ItemNum, forX, forY)
     local bulletcnt = self.weapons[ItemNum]:GetItem(forX, forY)
 
-    --Game:DeleteObject(self)
     return bulletcnt
 end
 
 
 
 --!---------------------------- 기능 ------------------------------
---# 목적 : 발사 요청 스크립트
-function sc_Player:PreFire(ItemNum)
+--# 목적 : 발사 요청 스크립트 
+function sc_Player:PreFire(ItemNum, stX, stY, stZ, forX, forY, forZ)
     --self.weapons[ItemNum]:Initialize(self.PlayerID)
+    self.FireBulletNum = ItemNum
+    self.StartPos = Vector.new(stX, stY, stZ)
+    self.LookForward = Vector.new(forX, forY, forZ)
 end
 
 
---# 목적 : 아이템 발사
-function sc_Player:Fire(player, num, forX, forY, forZ)
-    local playerID = player:GetPlayerID()
-    local IsCanFire = self.weapons[num]:UseItem(player, forX, forY, forZ)
+--# 목적 : 아이템 발사 
+function sc_Player:Fire()
+    local player = Game:GetPlayer(self.PlayerID)
+    local forw = self.LookForward
+    print(self.FireBulletNum)
+    local IsCanFire = self.weapons[self.FireBulletNum]:UseItem(1)
 
-    if num ~= 4 then
-        Game:BroadcastEvent("BulletFire_sToc", playerID, num, forX, forY, forZ)
-        if IsCanFire then
-        end
-    end
+    Game:BroadcastEvent("BulletFire_sToc", self.PlayerID, self.FireBulletNum, forw.X, forw.Y, forw.Z)
+    self.weapons[self.FireBulletNum]:BulletSystem(player , self.StartPos , self.LookForward)
 
+end
+
+
+
+
+
+--!---------------------------- 기능 ------------------------------
+function sc_Player:RollingStart()
+    self.weapons[1]:RollingInit(self.PlayerID)
 end
 
 
 function sc_Player:Rolling(waitTime, forX, forY)
-    self.weapons[4]:CheckInitialize(self.PlayerID, waitTime, forX, forY)
+    self.weapons[1]:RollingScaleUp(self.PlayerID, waitTime, forX, forY)
+end
+
+
+function sc_Player:RollingThrow(forX, forY, forZ)
+    self.weapons[1]:RollingThrow(self.PlayerID, forX, forY, forZ)
 end
 
 

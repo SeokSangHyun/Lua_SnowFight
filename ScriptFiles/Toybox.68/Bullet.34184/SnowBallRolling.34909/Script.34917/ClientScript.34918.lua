@@ -4,23 +4,27 @@ local ProjectileModule = require(ScriptModule.DefaultModules.Projectile)
 local Item = Script.Parent.Parent
 local model = Item.Model
 local FX = Toybox.FX.HitFX
+
+
+--발사한 유저의 정보
 local PID = 0
+local bulletIndex = 0
 
 
-function Item:Initialize(playerID)
+function Item:Initialize(playerID, bIndex)
     PID = playerID
-    print(PID)
+    bulletIndex = bIndex
 end
 
 
-function Item:PreFire(playerID, bullet, targetPos, stPos, endPos, speed, force)
+function Item:BulletObjectFire(playerID, bullet, targetPos, stPos, endPos, speed, force)
     -- toy.Track:PlayTransformTrack("FireAction", 0, 1)
     -- Firecheck = false
     
     -- Launcher(발사할 발사체, 시작지점, 끝지점, 발사체 속도, 곡사방향으로 줄 힘)
-    --ProjectileModule:Launcher(bullet, stPos, endPos, speed, force)
-    --bullet:LookAt(targetPos)
-    --PID = playerID
+    -- local mybullet = ProjectileModule:Launcher(bullet, stPos, endPos, speed, force)
+    -- mybullet:LookAt(targetPos)
+    -- mybullet:Initialize()
 end
 -- local function FireBullet(playerLocation , speed)
 --     if Equip == false then

@@ -55,10 +55,13 @@ end
 --!---------------------------- 기능 ------------------------------
 --# 목적 : 발사 요청 스크립트
 function cc_Player:PreFire()
-    local lookforward = LocalPlayer:GetCameraForward()
+    --필요한 변수 (바라보는방향 , 초기 위치)
+    local player = LocalPlayer:GetRemotePlayer()
+    local inven = player:GetEquipItem("Gloves_slot")
+    local StartPos = inven.Location
+    local lookfor = LocalPlayer:GetCameraForward()
 
-    self.weapons[self.WeaponIndex].WeaponObjects:Initialize(self.PlayerID)
-    Game:SendEventToServer( "RequestFire_cTos", self.WeaponIndex, lookforward.X, lookforward.Y, lookforward.Z)
+    Game:SendEventToServer( "RequestFire_cTos", self.WeaponIndex, StartPos.X, StartPos.Y, StartPos.Z ,lookfor.X, lookfor.Y, lookfor.Z)
 end
 
 
