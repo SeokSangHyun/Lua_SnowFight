@@ -57,6 +57,7 @@ end
 function cc_Player:PreFire()
     local lookforward = LocalPlayer:GetCameraForward()
 
+    self.weapons[self.WeaponIndex].WeaponObjects:Initialize(self.PlayerID)
     Game:SendEventToServer( "RequestFire_cTos", self.WeaponIndex, lookforward.X, lookforward.Y, lookforward.Z)
 end
 
