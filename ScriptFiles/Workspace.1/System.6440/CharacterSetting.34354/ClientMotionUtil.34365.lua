@@ -49,7 +49,7 @@ function CheckActionState(AnimName)
         AnimFrame = AnimFrame + 1
         --print(AnimFrame)
         if AnimFrame == 7 then
-            RequestFire()
+            g_Player:PreFire()
         end
 
     end

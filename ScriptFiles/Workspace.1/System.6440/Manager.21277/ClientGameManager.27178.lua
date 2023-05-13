@@ -46,13 +46,11 @@ Game:ConnectEventFunction("BulletPreFire_sToc", BulletPreFire)
 
 
 --GetCameraForward : 카메라가 바라보는 방향
---[[
 local function BulletFire(playerID, index_bullet, forX, forY, forZ)
     
     g_Player:Fire(playerID, index_bullet, forX, forY, forZ)
 end
 Game:ConnectEventFunction("BulletFire_sToc", BulletFire)
-]]--
 
 
 
@@ -61,28 +59,6 @@ local function SnowBallRooling(playerID, size)
     --크기를 기우는 로직
 end
 Game:ConnectEventFunction("SnowBallRooling_sToc", SnowBallRooling)
-
-
-
-
-
-
-
-
-
-
-
---!---------------------------- 카메라 효과 ------------------------------
-local function HitCharacterCamera(bullet_index)
-    local index = math.floor(bullet_index)
-    Camera:PlayCameraShake(g_BulletList[index].ShakeTime, g_BulletList[index].ShakeScale)
-    
-    print(index)
-end
-Game:ConnectEventFunction("HitCharacterCamera_sToc", HitCharacterCamera)
-
-
-
 
 
 
