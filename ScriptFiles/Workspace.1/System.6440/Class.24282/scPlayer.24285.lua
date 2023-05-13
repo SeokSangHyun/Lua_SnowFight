@@ -115,7 +115,7 @@ end
 --!---------------------------- 기능 ------------------------------
 --# 목적 : 발사 요청 스크립트
 function sc_Player:PreFire(ItemNum)
-    --self.weapons[ItemNum]:Initialize(self.PlayerID)
+    self.weapons[ItemNum]:Initialize(self.PlayerID)
 end
 
 
