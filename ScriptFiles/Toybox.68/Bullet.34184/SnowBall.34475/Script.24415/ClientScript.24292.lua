@@ -1,19 +1,7 @@
 
+local ProjectileModule = require(ScriptModule.DefaultModules.Projectile)
+
 local Item = Script.Parent.Parent
-
-local function CollisionEvent(self, target)
-    if target == nil or not target:IsCharacter() then;    return;    end;
-
-end
-Item.HitCollider.Collision.OnBeginOverlapEvent:Connect(CollisionEvent)
-
-
-
-
-
-
-
---[[
 local FX = Toybox.FX.HitFX
 
 --발사한 유저의 정보
@@ -61,7 +49,6 @@ local function CollisionEvent(self, target)
     Game:DeleteObject(self)
 end
 Item.HitCollider.Collision.OnBeginOverlapEvent:Connect(CollisionEvent)
-]]--
 
 
 

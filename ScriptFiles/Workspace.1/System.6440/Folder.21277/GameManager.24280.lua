@@ -1,0 +1,7 @@
+
+
+g_listAllPlayer = {}
+
+
+
+

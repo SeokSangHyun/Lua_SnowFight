@@ -9,7 +9,6 @@ Item.HitCollider.Collision:SetCharacterCollisionResponse(Enum.CollisionResponse.
 
 --! ------------------------------ 변수 선언 ------------------------------
 
---[[
 local function CharacterHit(player, targetID, hitPosition)
     if player:GetPlayerID() ~= EquipPlayerID then
         return
@@ -85,7 +84,6 @@ function Item:FireBullet(player , selfLoction , selfDir)
 
  end
 
-]]--
 
 
 
@@ -126,7 +124,9 @@ function Item:FireBullet(player , selfLoction , selfDir)
 
 
 
-
-
+local function Update(updateTime)
+    print("1")
+end
+Item.OnUpdateEvent:Connect(Update)
 
 
