@@ -7,10 +7,6 @@ local FX = Toybox.FX.HitFX
 local PID = 0
 
 
-function Item:Initialize(playerID)
-    PID = playerID
-    print(PID)
-end
 
 
 function Item:PreFire(playerID, bullet, targetPos, stPos, endPos, speed, force)
