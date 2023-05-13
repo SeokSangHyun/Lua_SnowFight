@@ -17,7 +17,7 @@ function GetActionKey()    return IsActionKey;    end;
 --? 유저 스폰되었을 때 처리
 local function SpawnCharacter(character)
     local HPBar = HUD.MainUI_Surface
-    local ui = character:AddPlayerHUD("SomeText", HPBar, Enum.UIDisplayType.Billboard) --캐릭터에 HUD를 추가하고 이름으로 등록해요.
+    local ui = character:AddPlayerHUD("HPBar", HPBar, Enum.UIDisplayType.Billboard) --캐릭터에 HUD를 추가하고 이름으로 등록해요.
     ui.Visible = true
 end
 Game.OnSpawnCharacter:Connect(SpawnCharacter)
