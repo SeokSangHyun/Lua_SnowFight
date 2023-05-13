@@ -1,6 +1,4 @@
 
-UIRoot = Workspace.UI.MainUI
-
 --* UI 관련 변수
 RollingUI = UIRoot.F_RollingGuage
 
