@@ -5,5 +5,5 @@ local Collider = Item.HitCollider
 
 
 --! ------------------------------  ------------------------------
---Collisier.Collision:SetCharacterCollisionResponse(Enum.CollisionResponse.Block)
+Collisier.Collision:SetCharacterCollisionResponse(Enum.CollisionResponse.Block)
 

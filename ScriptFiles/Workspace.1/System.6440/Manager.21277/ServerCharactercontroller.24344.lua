@@ -1,43 +1,51 @@
 
-local PlayerModule = require(Workspace.System.Class.scPlayer)
-local WeaponList = {Script.SnowBall , Script.Icicle , Script.SnowCrystal , Script.SnowBallRolling}
 
+local IsRollingAct = false  --롱링 시스템이 와성 됬는지 확인
 
 g_PlayerList = {}
 
 --# 초기화
-function InitPlayer(player)
-    local playerID = player:GetPlayerID()
-    local info = PlayerModule.new(player, Toybox.SnowFight, Toybox.Bullet:GetChildList())
-    
-    g_PlayerList[ tostring(playerID) ] = info
-    g_PlayerList[ tostring(playerID) ]:EquipItem(player)
-
-    Game:SendEventToClient(playerID, "InitPlayer_sToc", playerID)
-    
-    --UI
-    local remaincnt = info:GetAllBulletCount()
-    Game:SendEventToClient(playerID, "SnowBall_UIUpdate", remaincnt[1])
+--! ------------------------------ Getter/Setter ------------------------------
+local function RplicateMoveForward(player, state)
+    Game.CtrlMoveForward = state
 end
+Game:ConnectEventFunction("RplicateMoveForward", RplicateMoveForward)
 
 
 
---!---------------------------- 총알 발사 로직 ------------------------------
---# 목적 : 총알 생성
-local function RequestFire(player, num, stX, stY, stZ, forX, forY, forZ)
 
+local function RplicateMoveRight(player, state)
+    Game.CtrlMoveRight = state
+end
+Game:ConnectEventFunction("RplicateMoveRight", RplicateMoveRight)
+
+
+
+
+local function SetIsRollingAct(player, state)
+    IsRollingAct = state
+end
+Game:ConnectEventFunction("SetIsRollingAct", SetIsRollingAct)
+
+
+
+
+
+
+
+
+--!---------------------------- 총알 시스템 ------------------------------
+--# ----- 목적 : 총알 생성
+local function RequestFire(player, num, st, forward)
+    
     --발사 전 처리
     local playerID = player:GetPlayerID()
-    g_PlayerList[ tostring(playerID) ]:PreFire(num, stX, stY, stZ, forX, forY, forZ)
-    
-    local remaincnt = g_PlayerList[ tostring(playerID) ]:GetAllBulletCount()
-    Game:SendEventToClient(playerID, "SnowBall_UIUpdate", remaincnt[num])
-
-
-    --실제 발사 처리
-    g_PlayerList[ tostring(playerID) ]:Fire()
+    Game:BroadcastEvent("BulletFire_sToc", playerID, num, st, forward)
 end
 Game:ConnectEventFunction("RequestFire_cTos", RequestFire)
+
+
+
 
 
 
@@ -46,6 +54,56 @@ local function HitProcess(player)
     
 end
 Game:ConnectEventFunction("HitProcess_cTos", HitProcess)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+--# 목적 : 총알 발사
+local function BulletThrow(player, num, stX, stY, stZ, forX, forY, forZ)
+    print(1)
+    --:FireObject(playerID, posX, posY, posZ, forX, forY)
+end
+
+
+
+local function BulletRolling(player, num, stX, stY, stZ, forX, forY, forZ)
+    print(2)
+end
+
+
+
+
+
+
 
 
 
