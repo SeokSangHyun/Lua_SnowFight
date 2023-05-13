@@ -36,6 +36,18 @@ end
 
 
 
+--!---------------------------- 피격 처리 ------------------------------
+local function HitCharacter(player, targetID, bullet_index)
+    local playerID = player:GetPlayerID()
+
+    Game:SendEventToClient(targetID, "HitCharacterCamera_sToc", bullet_index)
+end
+Game:ConnectEventFunction("HitCharacter_cTos", HitCharacter)
+
+
+
+
+
 
 
 

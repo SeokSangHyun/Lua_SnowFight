@@ -1,6 +1,4 @@
 
---* UI 관련 변수
-RollingUI = UIRoot.F_RollingGuage
 
 
 --UI
@@ -12,37 +10,70 @@ local ListPopup = Workspace.UI.Popup.F_ListPopupPanel
 --!---------------------------- 공격 버튼 처리 ------------------------------
 --# 목적 : 눈덩이 굴리기
 local function SnowBallButtonDownEvent(self)
-    g_Player:ActionInput(1)
-    Toggle_RollingKey(true)
-    CheckRollingStart()
+    BulletThrowStart(1)
 end
 BulletButtonList.Btn_Snowball.OnPressEvent:Connect(SnowBallButtonDownEvent)
 
 --# 눈덩이 
 local function SnowBallButtonUpEvent(self)
-    --g_Player:SetWeaponIndex(1)
-    Toggle_RollingKey(false)
+    BulletThrowEnd(1)
 end
 BulletButtonList.Btn_Snowball.OnUpEvent:Connect(SnowBallButtonUpEvent)
 
 
 --# 목적 : 
 local function IcicleButtonEvent(self)
-    BulletThrow(2)
+    BulletThrowEnd(2)
 end
 BulletButtonList.Btn_Icicle.OnUpEvent:Connect(IcicleButtonEvent)
 
 
 --# 목적 : 
 local function SnowCrystalButtonEvent(self)
-    BulletThrow(3)
+    BulletThrowEnd(3)
 end
 BulletButtonList.Btn_SnowCrystal.OnUpEvent:Connect(SnowCrystalButtonEvent)
 
 
 
 
---!---------------------------- UI 처리 ------------------------------
+
+
+--!---------------------------- 상태 별 UI 처리 ------------------------------
+--# 목적 : 로비 (처음 진입 시 UI 세팅)
+function Init_LobbyUI()
+    UIRoot.LobbyUI.Visible = true
+    UIRoot.MainUI.Visible = false
+
+    local ui = UIRoot.LobbyUI
+    ui.F_AskPopupPanel.Visible = false
+    ui.F_ListPopupPanel.Visible = false
+    ui.F_NoticePanel.Visible = true
+end
+
+
+--# 목적 : 게임 진입시 (처음 진입 시 UI 세팅)
+function Init_GameUI()
+    UIRoot.LobbyUI.Visible = false
+    UIRoot.MainUI.Visible = true
+
+    local ui = UIRoot.MainUI
+end
+
+
+--# 목적 : 리워드 상태 진입시 (처음 진입 시 UI 세팅)
+function Init_RewardUI()
+    UIRoot.LobbyUI.Visible = false
+    UIRoot.MainUI.Visible = false
+end
+
+
+
+
+
+
+
+--!---------------------------- 상태 별 UI 처리 ------------------------------
 --# 목적 : ㅁㄴㅇㄻㄴ
 function Update_InformUI()
     local toy = Root_Infomation.Model.BellGroup
@@ -137,10 +168,5 @@ buttonlist[2].OnUpEvent:Connect(ButtonEvent_ReadyPopup)
 
 
 
---!---------------------------- a ------------------------------
-function Toggle_RollingGuage(state)
-    RollingUI.Visible = state
-end
-Game:ConnectEventFunction("Toggle_RollingGuage_sToc", Toggle_RollingGuage)
 
 

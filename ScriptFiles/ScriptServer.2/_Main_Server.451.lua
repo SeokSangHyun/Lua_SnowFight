@@ -37,8 +37,7 @@ local function SpawnCharacter(character) --OnSpawnCharacter로 연결된 함수�
     local player = character:GetPlayer()
     local playerID = player:GetPlayerID()
     
-    wait(1)
-    InitPlayer(player)
+    InitPlayerData(player)
 end
 Game.OnSpawnCharacter:Connect(SpawnCharacter) --Game에 캐릭터가 생성되면 호출되는 함수를 연결해요.
 

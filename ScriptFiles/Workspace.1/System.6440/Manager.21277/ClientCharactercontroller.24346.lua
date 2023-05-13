@@ -1,38 +1,24 @@
---# 모듈 임포트
-local PlayerModule = require(Workspace.System.Class.ccPlayer)
 
 --# 전역 및 대표 참조
 g_Player = {}                   -- 클라이언트 클래스 객체
 
 
 --# Rolling 관련 변수
---* 
-local toy_Rolling = Toybox.Bullet.SnowBallRolling
-
-
-
 --* 변화량 관련 변수
 local prev_forwardpos = Vector.new(0,0,0)
 local prev_rightpos = Vector.new(0,0,0)
 
 --* 상태 확인 변수
-local Is_RollingKey = false
-local Is_RollingMoveForward = false
-local Is_RollingMoveRight = false
-
-local MIN_BallScale = Vector.new(50, 50, 50)
-local MAX_BallScale = Vector.new(250, 250, 250)
-local MIN_BallOffset = Vector.new(50, 0, 70)
-local MAX_BallOffset = Vector.new(50, 0, 160)
+local IsRolling = false
+local IsSnowBall = false
 
 
 --* 시간 관련 변수
-local WaitTime = 0
-local StandardTime = time()
+local RollingStartTime = time()
+
 
 
 --# ===== 공격 버튼을 눌렀을 때 처리
-local cor1 = nil
 local MAX_INPUTTIME = 0.4
 local MAX_ROLLINGTIME = 5
 local SnowBallState = 1     -- (1:던지는지 확인 , 2:눈덩이 굴리기 확인)
@@ -41,25 +27,77 @@ local SnowBallState = 1     -- (1:던지는지 확인 , 2:눈덩이 굴리기 �
 
 
 --! ------------------------------  ------------------------------
-local function InitPlayer(playerID)
-
-    local info = PlayerModule.new(playerID, Toybox.Bullet:GetChildList())
-    --table.insert(g_PlayerList, info)
-    
-    g_Player = info
-end
-Game:ConnectEventFunction("InitPlayer_sToc", InitPlayer)
-
-
-
-
-
-
-
 local function HitProcess(playerID)
     
 end
 Game:ConnectEventFunction("HitProcess_sToc", HitProcess)
+
+
+
+
+
+
+
+
+
+--!---------------------------- 총알 시스템 ------------------------------
+--# ----- 목적 : 총알 생성
+function RequestFire()
+    local player = LocalPlayer:GetRemotePlayer()
+    
+    local inven = player:GetEquipItem("Gloves_slot")
+    local StartPos = inven.Location
+    local lookfor = LocalPlayer:GetCameraForward()
+
+    --Game:SendEventToServer( "RequestFire_cTos", player.BulletIndex, StartPos.X, StartPos.Y, StartPos.Z ,lookfor.X, lookfor.Y, lookfor.Z)
+    Game:SendEventToServer( "RequestFire_cTos", player.BulletIndex, StartPos, lookfor)
+end
+
+
+
+--# ----- 목적 : 총알발사
+function BulletFire(playerID, num, st, forward)--posX, posY, posZ, forX, forY)
+    local player = LocalPlayer:GetRemotePlayer()
+
+
+    if num == 1 then
+        player.SnowBall:FireObject(playerID, st.X, st.Y, st.Z, forward.X, forward.Y)
+    elseif num == 2 then
+        player.Icicle:FireObject(playerID, st.X, st.Y, st.Z, forward.X, forward.Y)
+    elseif num == 3 then
+        print(1)
+    elseif num == 4 then
+        --player.SnowBallRolling
+    end
+
+end
+Game:ConnectEventFunction("BulletFire_sToc", BulletFire)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -81,129 +119,118 @@ end
 --! ------------------------------ 판별 변수 세팅 ------------------------------
 --# ===== 목적 : 롤링 시스템 시 직진 변화량이 있을 때만 다음 동작이 작동하도록함
 function CheckRollingForwardState()
+    local character = LocalPlayer:GetRemotePlayer():GetCharacter()
+    if character == nil then;   return; end;
+
     local nowpos = LocalPlayer:GetRemotePlayer():GetCharacter().Location
     local vec = Vector.new(prev_forwardpos.X - nowpos.X , prev_forwardpos.Y - nowpos.Y , prev_forwardpos.Z - nowpos.Z)
     prev_forwardpos = nowpos
 
     if vec.Size <= 0 then
-        Is_RollingMoveForward = false
+        Game:SendEventToServer("RplicateMoveForward", false)
     else
-        Is_RollingMoveForward = true
+        Game:SendEventToServer("RplicateMoveForward", true)
     end
 end
 
 
 --# ===== 목적 : 롤링 시스템 시 오른쪽 변화량이 있을 때만 다음 동작이 작동하도록함
 function CheckRollingRightState()
+    local character = LocalPlayer:GetRemotePlayer():GetCharacter()
+    if character == nil then;   return; end;
+
     local nowpos = LocalPlayer:GetRemotePlayer():GetCharacter().Location
     local vec = Vector.new(prev_rightpos.X - nowpos.X , prev_rightpos.Y - nowpos.Y , prev_rightpos.Z - nowpos.Z)
     prev_rightpos = nowpos
 
     if vec.Size <= 0 then
-        Is_RollingMoveRight = false
+        Game:SendEventToServer("RplicateMoveRight", false)
     else
-        Is_RollingMoveRight = true
+        Game:SendEventToServer("RplicateMoveRight", true)
     end
 end
 
 
 
---# ===== 목적 : 눈덩이 공격을 입력 했는지 체크
-function Toggle_RollingKey(state)
-    Is_RollingKey = state
-end
+
 
 
 
 
 
 --! ------------------------------ 실행 ------------------------------
---# 1번 눈덩이 이외의 던지기
-function BulletThrow(BulletNum)
-    g_Player:ActionInput(BulletNum)
+local function CheckRolling()
+    local DeltaTime = time() - RollingStartTime
+    
+    if IsSnowBall then;    return;    end;
+    
 
-    local character = LocalPlayer:GetRemotePlayer():GetCharacter()
-    character:ChangeAnimState("Throw")
+    if DeltaTime > MAX_INPUTTIME then
+        IsRolling = true
+        
+        local player = LocalPlayer:GetRemotePlayer()
+        player.BulletIndex = 0
+        Toggle_RollingGuage(true)
+        Game:SendEventToServer("RollingSystemStart_cTos")
+        return
+    end
+
+    Game:AddTimeEvent("CheckRolling", 0.1, CheckRolling)
+end
+
+
+--# 1번 눈덩이 이외의 던지기
+function BulletThrowStart(BulletNum)
+    local player = LocalPlayer:GetRemotePlayer()
+    player.BulletIndex = BulletNum
+
+    if BulletNum == 1 then
+        IsSnowBall = false
+        IsRolling = false
+        RollingStartTime = time()
+        Game:AddTimeEvent("CheckRolling", 0.1, CheckRolling)
+    end
 end
 
 
 
-function BulletFire(num)
+
+function BulletThrowEnd(BulletNum)
+    local player = LocalPlayer:GetRemotePlayer()
+    player.BulletIndex = BulletNum
+
+    if BulletNum == 1 then
+        if not IsRolling then
+            IsSnowBall = true
+            local character = LocalPlayer:GetRemotePlayer():GetCharacter()
+            character:ChangeAnimState("Throw")
+        end
+    elseif BulletNum == 2 then
+
+        local character = LocalPlayer:GetRemotePlayer():GetCharacter()
+        character:ChangeAnimState("Throw")
+    elseif BulletNum == 3 then
+
+        local character = LocalPlayer:GetRemotePlayer():GetCharacter()
+        character:ChangeAnimState("Throw")
+    end
+
+end
+
+
+
+
+
+
+
+
+
+function BulletUIUpdate(num)
     SnowBall_UIUpdate(num)
 end
-Game:ConnectEventFunction("BulletFire_sToc", BulletFire)
+Game:ConnectEventFunction("BulletUIUpdate_sToc", BulletUIUpdate)
 
 
---# 롤링 시스템이 커지는 시스템
-local function RollingSystem(waittime)
-    if Is_RollingMoveForward or Is_RollingMoveRight then
-        if Is_RollingKey then
-            local forward = LocalPlayer:GetCameraForward()
-            Game:SendEventToServer("RollingScallingUp_cTos", waittime, forward.X, forward.Y)
-            RollingUI.ProgressBar:SetPercent(WaitTime / MAX_ROLLINGTIME)
-
-        end    
-    end
-end
-
-
-
---# 롤링 대기 
-function CheckRollingStart()
-    if g_Player:GetWeaponIndex() == 1 then
-        if cor1 == nil then
-            cor1 = coroutine.create(function()
-                StandardTime = time()
-                while true do
-                    WaitTime = time() - StandardTime
---* 눈덩이 커지는 로직
-                    if SnowBallState == 2 then
-                        if WaitTime > MAX_ROLLINGTIME then
-                            RollingUI.Visible = false
-                            local forward = LocalPlayer:GetCameraForward()
-                            Game:SendEventToServer("RollingThrow_cTos", forward.X, forward.Y, forward.Z)
-                            break;
-                        else
-                            
-                            RollingSystem(WaitTime)
-                            if not Is_RollingKey then
-                                local forward = LocalPlayer:GetCameraForward()
-                                Game:SendEventToServer("RollingThrow_cTos", forward.X, forward.Y, forward.Z)
-                                break;
-                            end
-                        end
-
---* 굴리기인지 던지기인지 판별
-                    elseif SnowBallState == 1 then
-                        if WaitTime > MAX_INPUTTIME then
-                            RollingUI.ProgressBar:SetPercent(0)
-                            RollingUI.Visible = true
-                            WaitTime = 0
-                            StandardTime = time()
-                            SnowBallState = 2
-                            --g_Player:PreFire()
-                            Game:SendEventToServer("RollingSystemStart_cTos")
-                        else
-                            if not Is_RollingKey then
-                                local character = LocalPlayer:GetRemotePlayer():GetCharacter()
-                                character:ChangeAnimState("Throw")
-                                break;
-                            end
-                        end
-
-                    else;   return; end;
-                    wait(0.05)
-                end
-                --::Continue::
-                Init_SnowBallRolling()
-                cor1 = nil
-            end)
-
-            coroutine.resume(cor1)
-        end
-    end
-
-end
 
 
 
