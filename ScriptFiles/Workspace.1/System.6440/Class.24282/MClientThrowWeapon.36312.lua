@@ -81,14 +81,15 @@ function cTrowModule:FireObject(playerID, posX, posY, posZ, forX, forY)
     
     local myID = LocalPlayer:GetRemotePlayer():GetPlayerID()
     if playerID == myID then
-        mybullet.HitCollider.Collision.OnCollisionEvent:Connect(function(self, target)
-            if target == nil or not target:IsCharacter() then;  return;        end;
-                print(self.Parent.Name)
+        mybullet.HitCollider.Collision.OnBeginOverlapEvent:Connect(function(self, target)
+            if target == nil or not target:IsCharacter() or target:IsMyCharacter() then;  return;        end;
+                print(target)
             
                 local targetID = target:GetPlayerID()
                 local bulletIndex = self.Parent.BulletIndex
                 
                 Game:SendEventToServer("HitCharacter_cTos", targetID, bulletIndex)
+                Game:DeleteObject(self)
         end)
 
 -- 총알 감소

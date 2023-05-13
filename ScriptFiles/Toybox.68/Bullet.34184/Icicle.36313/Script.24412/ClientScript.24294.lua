@@ -2,8 +2,11 @@
 local Item = Script.Parent.Parent
 
 local function CollisionEvent(self, target)
-    if target == nil or not target:IsCharacter() then;    return;    end;
+    if target == nil or not target:IsCharacter() or target:IsMyCharacter() then;    return;    end;
 
+    print(Item.BulletIndex)
+    local targetPos = self.Location
+    Game:CreateFX(Toybox.FX.HitFX, targetPos)
 end
 Item.HitCollider.Collision.OnBeginOverlapEvent:Connect(CollisionEvent)
 

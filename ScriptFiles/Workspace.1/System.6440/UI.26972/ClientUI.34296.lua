@@ -7,36 +7,6 @@ local ListPopup = Workspace.UI.Popup.F_ListPopupPanel
 
 
 
---!---------------------------- 공격 버튼 처리 ------------------------------
---# 목적 : 눈덩이 굴리기
-local function SnowBallButtonDownEvent(self)
-    BulletThrowStart(1)
-end
-BulletButtonList.Btn_Snowball.OnPressEvent:Connect(SnowBallButtonDownEvent)
-
---# 눈덩이 
-local function SnowBallButtonUpEvent(self)
-    BulletThrowEnd(1)
-end
-BulletButtonList.Btn_Snowball.OnUpEvent:Connect(SnowBallButtonUpEvent)
-
-
---# 목적 : 
-local function IcicleButtonEvent(self)
-    BulletThrowEnd(2)
-end
-BulletButtonList.Btn_Icicle.OnUpEvent:Connect(IcicleButtonEvent)
-
-
---# 목적 : 
-local function SnowCrystalButtonEvent(self)
-    BulletThrowEnd(3)
-end
-BulletButtonList.Btn_SnowCrystal.OnUpEvent:Connect(SnowCrystalButtonEvent)
-
-
-
-
 
 
 --!---------------------------- 상태 별 UI 처리 ------------------------------
@@ -66,7 +36,6 @@ function Init_RewardUI()
     UIRoot.LobbyUI.Visible = false
     UIRoot.MainUI.Visible = false
 end
-
 
 
 
@@ -166,6 +135,16 @@ buttonlist[2].OnUpEvent:Connect(ButtonEvent_ReadyPopup)
 
 
 
+
+--!---------------------------- 캐릭터 관련 UI 처리 ------------------------------
+function SetCharacterHP(playerID, nowHP)
+    local TargetCharacter = Game:GetRemotePlayerCharacter(playerID)
+    local characterHUD = TargetCharacter:GetPlayerHUD("HPBar")
+    local hpHUD = characterHUD.HPBar
+    
+    hpHUD:SetPercent(nowHP/100)
+end
+Game:ConnectEventFunction("SetCharacterHP_cTos", SetCharacterHP)
 
 
 

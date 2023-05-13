@@ -1,4 +1,6 @@
 
+local DamageModule = require(ScriptModule.DefaultModules.DamageManager)
+
 --전역
 local DEF_READY_PLAYER = Script.ReadyPlayerCnt
 
@@ -39,8 +41,15 @@ end
 --!---------------------------- 피격 처리 ------------------------------
 local function HitCharacter(player, targetID, bullet_index)
     local playerID = player:GetPlayerID()
+    local hitCharacter = Game:GetPlayerCharacter(playerID)
 
     Game:SendEventToClient(targetID, "HitCharacterCamera_sToc", bullet_index)
+    
+    
+    
+    --캐릭터 체력 처리
+    DamageModule:ApplyDamage(hitCharacter, g_BulletList[bullet_index].BulletDamage)
+    Game:BroadcastEvent("SetCharacterHP_cTos",targetID, hitCharacter.HP)
 end
 Game:ConnectEventFunction("HitCharacter_cTos", HitCharacter)
 

@@ -1,6 +1,6 @@
 
 local Item = Script.Parent.Parent
-Item.HitCollider.Collision:SetCharacterCollisionResponse(Enum.CollisionResponse.Overlap)
+Item.HitCollider.Collision:SetCharacterCollisionResponse(Enum.CollisionResponse.Block)
 
 
 

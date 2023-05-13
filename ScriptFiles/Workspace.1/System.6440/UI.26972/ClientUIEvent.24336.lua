@@ -56,6 +56,35 @@ end
 
 
 
+--!---------------------------- 공격 버튼 처리 ------------------------------
+--# 목적 : 눈덩이 굴리기
+local function SnowBallButtonDownEvent(self)
+    BulletThrowStart(1)
+end
+BulletButtonList.Btn_Snowball.OnPressEvent:Connect(SnowBallButtonDownEvent)
+
+--# 눈덩이 
+local function SnowBallButtonUpEvent(self)
+    BulletThrowEnd(1)
+end
+BulletButtonList.Btn_Snowball.OnUpEvent:Connect(SnowBallButtonUpEvent)
+
+
+--# 목적 : 
+local function IcicleButtonEvent(self)
+    BulletThrowEnd(2)
+end
+BulletButtonList.Btn_Icicle.OnUpEvent:Connect(IcicleButtonEvent)
+
+
+--# 목적 : 
+local function SnowCrystalButtonEvent(self)
+    BulletThrowEnd(3)
+end
+BulletButtonList.Btn_SnowCrystal.OnUpEvent:Connect(SnowCrystalButtonEvent)
+
+
+
 
 --Game:ConnectEventFunction("Toggle_RollingGuage_sToc", Toggle_RollingGuage)
 
