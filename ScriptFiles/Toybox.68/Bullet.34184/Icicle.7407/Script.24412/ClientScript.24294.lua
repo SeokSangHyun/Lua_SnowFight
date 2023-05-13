@@ -12,7 +12,7 @@ function Item:Initialize(playerID)
 end
 
 
-function Item:BulletObjectFire(playerID, bullet, targetPos, stPos, endPos, speed, force)
+function Item:PreFire(playerID, bullet, targetPos, stPos, endPos, speed, force)
     -- toy.Track:PlayTransformTrack("FireAction", 0, 1)
     -- Firecheck = false
     

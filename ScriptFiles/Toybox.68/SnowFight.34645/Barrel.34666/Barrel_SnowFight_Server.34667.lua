@@ -124,14 +124,14 @@ function Item:FireBullet(player , BulletIndex , playerLocation , playerDir)
         speed = BulletSpeed
     end
 
-     --Item:SendEventToClient(playerID, "FireBullet", location, speed)
+     Item:SendEventToClient(playerID, "FireBullet", location, speed)
      --------------발사 시 다른 플레이어와의 FX 동기화----------------
-    --  local players = Game:GetAllPlayer()
-    --  for i = 1, #players do
-    --      if players[i]:GetPlayerID() ~= EquipPlayerID then
-    --          Item:SendEventToClient(players[i]:GetPlayerID(), "FireFX", location, speed)
-    --      end     
-    --  end
+     local players = Game:GetAllPlayer()
+     for i = 1, #players do
+         if players[i]:GetPlayerID() ~= EquipPlayerID then
+             Item:SendEventToClient(players[i]:GetPlayerID(), "FireFX", location, speed)
+         end     
+     end
 end
 
 

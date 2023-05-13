@@ -99,7 +99,7 @@ function Item:FireBullet(player , playerLocation , playerDir)
         if hitResult.HitObject ~= nil then
             local dis = nil
             if IsStraight then
-                dis = Utility:VecDistance(playerCharacter.Location +  .Transform:GetForward() * BulletDistance, hitResult.HitLocation)
+                dis = Utility:VecDistance(playerCharacter.Location + playerCharacter.Transform:GetForward() * BulletDistance, hitResult.HitLocation)
             else
                 dis = Utility:VecDistance(playerLocation + playerDir * BulletDistance, hitResult.HitLocation)
             end

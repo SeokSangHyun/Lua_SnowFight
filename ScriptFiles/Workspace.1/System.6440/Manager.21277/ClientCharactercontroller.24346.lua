@@ -118,37 +118,33 @@ end
 
 
 --! ------------------------------ 실행 ------------------------------
---# 1번 눈덩이 이외의 던지기
-function BulletThrow(BulletNum)
-    g_Player:ActionInput(BulletNum)
-
-    local character = LocalPlayer:GetRemotePlayer():GetCharacter()
-    character:ChangeAnimState("Throw")
-end
-
-
-
-function BulletFire(num)
-    SnowBall_UIUpdate(num)
-end
-Game:ConnectEventFunction("BulletFire_sToc", BulletFire)
-
-
---# 롤링 시스템이 커지는 시스템
 local function RollingSystem(waittime)
     if Is_RollingMoveForward or Is_RollingMoveRight then
         if Is_RollingKey then
             local forward = LocalPlayer:GetCameraForward()
             Game:SendEventToServer("RollingScallingUp_cTos", waittime, forward.X, forward.Y)
             RollingUI.ProgressBar:SetPercent(WaitTime / MAX_ROLLINGTIME)
+            -- local size = toy_Rolling.Scale
+            -- size.X = size.X + 0.01
+            -- size.Y = size.Y + 0.01
+            -- size.Z = size.Z + 0.01
+            -- toy.Scale = size
+            
+            -- local pos = toy.Location
+            -- pos.Z = pos.Z * 1.004
+            -- toy.Location = pos
 
+            -- if size.Z > 0.9 then
+            --     toy.ClientScript:Run()
+            --     Init_SnowBall()
+            --     return
+            -- end
         end    
     end
 end
 
 
 
---# 롤링 대기 
 function CheckRollingStart()
     if g_Player:GetWeaponIndex() == 1 then
         if cor1 == nil then

@@ -44,7 +44,7 @@ function cc_SnowCrystal:FireObject(playerID, forX, forY, forZ)
     local speed = 10
     local force = Vector.new(self.Force * forX, self.Force * forY, forZ * 5000)
     
-    self.WeaponObjects:BulletObjectFire(playerID, self.WeaponObjects, target, stPos, endPos, speed, force)
+    self.WeaponObjects:PreFire(playerID, self.WeaponObjects, target, stPos, endPos, speed, force)
 end
 
 

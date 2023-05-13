@@ -11,11 +11,7 @@ function sc_SnowBall.new(object)
     t.InvenIndex = 1
     
     t.OneTurnBulletCount = 30
-    t.NowBulletCount = 30
-    
-    --눈 굴리기 변수
-    t.WeaponThrowObject = Game:CreateSyncObject(Toybox.Bullet.SnowBallRolling, Vector.new(0,0,-1000))
-    t.StartScale = Vector.new(0, 0, 0)
+    t.NowBulletCount = 0
     
     return t
 end
@@ -43,7 +39,7 @@ end
 
 
 --# 목적 : 아이템을 사용하는 처리
-function sc_SnowBall:UseItem(num)
+function sc_SnowBall:UseItem(player)
     if (self.NowBulletCount) >= 1 then
         self.NowBulletCount = self.NowBulletCount - 1
         --Game:SendEventToClient(player:GetPlayerID(), "BulletFire", player, self.InvenIndex)
@@ -56,82 +52,14 @@ function sc_SnowBall:UseItem(num)
 end
 
 
-local BulletDistance = 7000
-
---# 목적 : 서버 용 가상의 오브젝트 발사
-function sc_SnowBall:BulletSystem(player , playerLocation , playerDir)
-    local IsStraitght = false
-    local playerCharacter = player:GetCharacter()
-
-    local hitList = player:LineTraceList(playerLocation + playerDir * 50, playerDir, 100)
-    if #hitList >= 1 then
-        local hitResult = hitList[1]
-        local dis = nil
-        if IsStraight then
-            dis = Utility:VecDistance(playerCharacter.Location + playerCharacter.Transform:GetForward() * BulletDistance, hitResult.HitLocation)
-        else
-            dis = Utility:VecDistance(playerLocation + playerDir * BulletDistance, hitResult.HitLocation)
-        end
-        location = hitResult.HitLocation
-        speed = (BulletDistance - dis) * (BulletSpeed / BulletDistance)
-    
-        local setHit = coroutine.create(function(player, object, locataion, waitTime)
-            wait(waitTime)
-            if not player:IsValid() or not object:IsValid() then
-                return
-            end
-            
-            if object:IsCharacter() then
-                CharacterHit(player, object:GetPlayerID(), locataion)
-            elseif object:IsNPC() then
-                NPCHit(player, object.Name, locataion, object:GetKey())
-            else
-                StaticMeshHit(player, object.Name, locataion, object:GetKey())
-            end
-        end)
-        
-        coroutine.resume(setHit, player, hitResult.HitObject, hitResult.HitLocation, speed)
-    end
-end
-    
-
-
-
-
-
 --!---------------------------- 무기 시스템 처리 ------------------------------
 --# 목적 : 기본 세팅 값
-function sc_SnowBall:RollingInit(playerID)
-    local player = Game:GetPlayer(playerID)
-    local pos = player:GetCharacter().Location+ Vector.new(0,0,20)
-    --print(pos)
-
-    self.WeaponThrowObject.Visible = true
-    self.WeaponThrowObject.Location = pos
-    self.StartScale = Vector.new(1.5,1.5,1.5)
+function sc_SnowBall:Initialize()
 end
 
 
 --# 목적 : 초기화 검사
-function sc_SnowBall:RollingScaleUp(playerID, waittime, forX, forY)
-    local player = Game:GetPlayer(playerID)
-    local pos = player:GetCharacter().Location 
-    scale = Vector.new( self.StartScale.X + 0.23*waittime , self.StartScale.Y + 0.23*waittime , self.StartScale.Z + 0.23*waittime )
-
-    self.WeaponThrowObject.Location = pos + Vector.new(forX*250, forY*250, 20)
-    self.WeaponThrowObject.Scale = scale
-end
-
-
---# 목적 : 아이템을 사용하는 처리
-function sc_SnowBall:RollingThrow(playerID, forX, forY, forZ)
-    local player = Game:GetPlayer(playerID)
-    local pos = player:GetCharacter().Location
-    local target_pos = pos + Vector.new(forX*1000, forY*1000, 0)
-    --print(pos)
-    --print(target_pos)
-    self.WeaponThrowObject:MoveToLocation(target_pos)
-    self.WeaponThrowObject:RunPlay(forZ, forX, forY)
+function sc_SnowBall:CheckInitialize()
 end
 
 

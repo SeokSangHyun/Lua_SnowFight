@@ -22,12 +22,6 @@ function DamageManager:ApplyDamage(character, damage)
    if character.HP >= character.MaxHP then
        character.HP = character.MaxHP
    end
-   
-   --HP 체력 업데이트
---    local hp = character:GetPlayerHUD("HPBar").HPBar
---    print(hp)
---    print(character.HP)
---    hp:SetPercent(character.HP / character.MaxHP)
 end
 
 return DamageManager

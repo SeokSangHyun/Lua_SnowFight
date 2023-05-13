@@ -8,7 +8,7 @@ function cc_SnowBall.new(object)
     local t = setmetatable({}, cc_SnowBall)
     
     t.WeaponObjects = Game:CreateObject(object, Vector.new(0,0,-5000))
-    t.WeaponThrowObject = nil
+    t.WeaponObjects:Initialize()
 
 -- 기본 공격    
     t.Damage = 8.5
@@ -26,8 +26,6 @@ end
 
 
 --!---------------------------- Getter/Setter ------------------------------
-
-
 --# 목적 : 아이템 획득
 function cc_SnowBall:GetBulletCount()
     return 
@@ -55,7 +53,7 @@ function cc_SnowBall:FireObject(playerID, forX, forY, forZ)
     local speed = 10
     local force = Vector.new(self.Force * forX, self.Force * forY, forZ * 6000)
     
-    self.WeaponObjects:BulletObjectFire(playerID, self.WeaponObjects, target, stPos, endPos, speed, force)
+    self.WeaponObjects:PreFire(playerID, self.WeaponObjects, target, stPos, endPos, speed, force)
 end
 
 

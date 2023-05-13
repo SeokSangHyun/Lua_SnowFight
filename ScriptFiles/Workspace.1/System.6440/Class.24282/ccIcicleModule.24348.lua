@@ -35,20 +35,26 @@ end
 
 --# 목적 : 아이템 발사
 function cc_Icicle:FireObject(playerID, forX, forY, forZ)
-    --(toy, stPos, endPos, speed, force)
+--[[
+    print(self.WeaponObjects.Mesh.Item.Rotation)
+    print(Vector.new(forX, forY, forZ))
+    print(Vector.new(math.deg(forX), math.deg(forY), math.deg(forZ)))
+]]--
+    local item = self.WeaponObjects
+    local rot = item.Rotation
+    rot = Vector.new(0, -90, math.deg(forX) + math.deg(forY))
+    item.Rotation = rot
+
+
     local character = Game:GetRemotePlayerCharacter(playerID)
-    local player = character:GetPlayer()
-    
     local target = Vector.new(0, 0, 0)
-    local targetItem = player:GetEquipItem("Gloves_slot")
-    
-    local stPos = targetItem.Location + Vector.new(forX, forY*40, forZ*50)
+    local stPos = character.Location + Vector.new(10, math.cos(forY)*60, math.sin(forZ)*80)
     local endPos = stPos + Vector.new(self.Distance * forX, self.Distance * forY-40, self.Distance * forZ-50)
     local target = endPos
     local speed = 10
-    local force = Vector.new(self.Force * forX, self.Force * forY, forZ * 6000)
+    local force = Vector.new(self.Force * forX, self.Force * forY, forZ * 5000)
     
-    self.WeaponObjects:BulletObjectFire(playerID, self.WeaponObjects, target, stPos, endPos, speed, force)
+    self.WeaponObjects:PreFire(playerID, item, target, stPos, endPos, speed, force)
 end
 
 
