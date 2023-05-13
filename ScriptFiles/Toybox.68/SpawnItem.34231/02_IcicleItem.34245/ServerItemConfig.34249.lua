@@ -6,9 +6,8 @@ Collisier.Collision:SetCharacterCollisionResponse(Enum.CollisionResponse.Overlap
 
 
 local function CollisionEvent(self, target)
-    if target == nil or not target:IsCharacter() then
-       return
-   end
+    if target == nil or not target:IsCharacter() then;    return;    end;
+    
    local player = target:GetPlayer()
    local Item_Index = tonumber( string.sub(Item.Name, 1, 2) )
    

@@ -1,8 +1,0 @@
--- Effect_AraHit Client--
-
-
-
-
-
-
-
