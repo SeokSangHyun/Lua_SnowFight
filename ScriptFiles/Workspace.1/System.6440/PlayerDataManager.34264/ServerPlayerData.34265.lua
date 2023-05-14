@@ -3,19 +3,49 @@ g_PlayerData = {}
 
 
 
---! ------------------------------ 스폰 변수 ------------------------------
-local function Init_PlayerData(character)
-    local player = character:GetPlayer()
-    local playerID = player:GetPlayerID()
-    
-    --InitPlayer(player)
+--! ------------------------------ Player State ------------------------------
+function CheckPlayerState(playerID, strState)
+    local player = Game:GetPlayer(playerID)
 
-    g_PlayerData[playerID] = {["A"] = 100, ["B"] = 4, ["C"] = 7, ["D"] = 6, ["F"] = 1}
+    if player.State == 2 and strState == "WaitReady" then
+        return true
+    else
+        return false
+    end
 end
---Game.OnSpawnCharacter:Connect(Init_PlayerData)
+
+function SetPlayerState(playerID, strState)
+    local player = Game:GetPlayer(playerID)
+    
+    if strState == "WaitReady" then
+        player.State = 2
+    elseif strState == "Dead" then
+        player.State = 10
+    else
+        player.State = 0
+    end
+end
 
 
 
+
+function StateAction(playerID)
+    local player = Game:GetPlayer(playerID)
+    local character= Game:GetPlayerCharacter(playerID)
+
+    if player.State == 2 then
+        while player.State == 2 do
+            character:AddForce( Vector.new(0, 0, 50*5000) )
+            wait(2)
+        end
+    end
+end
+
+
+
+
+
+--! ------------------------------ 시스템 처리 ------------------------------
 local function LeavePlayer(player)
     print("Leave " .. player.Name)
     local playerID = player:GetPlayerID()

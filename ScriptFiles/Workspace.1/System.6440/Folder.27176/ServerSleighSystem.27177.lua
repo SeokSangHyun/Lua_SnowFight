@@ -103,13 +103,13 @@ local function RegistSpawnList(playerID)
         RegistSpawnList(playerID)
     else
         table.insert(ArraySpawn[respawn_index], playerID)
-        g_PlayerList[ tostring(playerID) ]:SetPlayerState("WaitReady")
+        SetPlayerState(playerID, "WaitReady")
 
         wait(1)
         local character = Game:GetPlayer(playerID):GetCharacter()
         character.Location = InGameSpawnList[respawn_index].Location
         
-        g_PlayerList[ tostring(playerID) ]:StateAction()
+        StateAction(playerID)
     end
 end
 
@@ -118,7 +118,7 @@ local function CollisionCaveEvent(self, target)
     if target == nil or not target:IsCharacter() then;    return;    end;
     local playerID = target:GetPlayerID()
 
-    if g_PlayerList[ tostring(playerID) ]:CheckPlayerState("WaitReady") then;    return;   end;
+    if CheckPlayerState(playerID, strState) then;    return;   end;
 
     RegistSpawnList(playerID)
 
