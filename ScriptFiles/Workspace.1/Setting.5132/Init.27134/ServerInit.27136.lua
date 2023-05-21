@@ -11,7 +11,7 @@ GameRegistChair = Workspace.World.Lobby.Trigger.RegistChair:GetChildList()
 g_BulletList = Toybox.Bullet:GetChildList()
 
 
-
+Toybox.Bullet:GetChildList()[4].HitCollider.Collision:SetCharacterCollisionResponse(Enum.CollisionResponse.Block)
 
 --! ------------------------------ 초기화 ------------------------------
 function InitPlayerData(player)

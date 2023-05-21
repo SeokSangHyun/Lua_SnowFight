@@ -1,11 +1,10 @@
 
 local DamageModule = require(ScriptModule.DefaultModules.DamageManager)
+local Utility = require(ScriptModule.DefaultModules.Utility)
 
 --전역
 local DEF_READY_PLAYER = Script.ReadyPlayerCnt
 
-
-g_listAllPlayer = {}
 
 
 -- 대기 열
@@ -41,10 +40,9 @@ end
 --!---------------------------- 피격 처리 ------------------------------
 local function HitCharacter(player, targetID, bullet_index)
     local playerID = player:GetPlayerID()
-    local hitCharacter = Game:GetPlayerCharacter(playerID)
-
-    Game:SendEventToClient(targetID, "HitCharacterCamera_sToc", bullet_index)
+    local hitCharacter = Game:GetPlayerCharacter(targetID)
     
+    Game:SendEventToClient(targetID, "HitCharacterCamera_sToc", bullet_index)
     
     
     --캐릭터 체력 처리
@@ -55,7 +53,25 @@ Game:ConnectEventFunction("HitCharacter_cTos", HitCharacter)
 
 
 
-
+function HitCharacter_Rolling(obj)
+    local pos = obj.Location
+    print("충돌은함")
+    
+    for i = 1 , #g_InGamePlayList do
+        local temp_pos = g_InGamePlayList[i]:GetCharacter().Location
+        --local dist = pos:Distance(temp_pos)
+        local dist = Utility:VecDistance(pos, temp_pos)
+        if dist <= g_BulletList[4].HitScale then
+            local targetID = g_InGamePlayList[i]:GetPlayerID()
+            local hitCharacter = g_InGamePlayList[i]:GetCharacter()
+            Game:SendEventToClient(targetID, "HitCharacterCamera_sToc", 4)
+            
+            --캐릭터 체력 처리
+            DamageModule:ApplyDamage(hitCharacter, g_BulletList[4].BulletDamage)
+            Game:BroadcastEvent("SetCharacterHP_cTos",targetID, hitCharacter.HP)
+        end
+    end
+end
 
 
 

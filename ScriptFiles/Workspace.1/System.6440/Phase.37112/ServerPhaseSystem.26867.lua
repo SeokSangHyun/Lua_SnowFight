@@ -13,24 +13,18 @@ local startTime = 0
 
 
 
---
-g_ReadyPlayerList = {}            -- 준비하고 있는 플레이어 리스트
-g_InGamePlayList = {}             -- 게임을 진입하고 플레이하는 플레이어 리스트
-
-
-
 
 --! ------------------------------ Phase 공통 기능 ------------------------------
 --# 페이즈 별 시간 초기화
 function InitTime(phase)
     if phase == "Lobby" then
-        limittime = Script.LobbyTime
+        limittime = Script.Parent.LobbyTime
     elseif phase == "Ready" then
-        limittime = Script.ReadyTime
+        limittime = Script.Parent.ReadyTime
     elseif phase == "InGame" then
-        limittime = Script.InGameTime
+        limittime = Script.Parent.InGameTime
     elseif phase == "Reward" then
-        limittime = Script.RewardTime
+        limittime = Script.Parent.RewardTime
     end
 
     Game.GameState = phase
@@ -73,70 +67,11 @@ end
 
 
 
-function GameStartPlayerList()
-    for i = 1, #g_ReadyPlayerList do
-        if g_ReadyPlayerList[i]:GetPlayerID() == playerID then
-           table.remove(g_ReadyPlayerList, i)
-           return true
-       end
-    end
-end
-
-
-
-
---! ------------------------------ ReadyList ------------------------------
---# ----- 목적 : ReadyList 초기화
-function ResetReadyPlayerList()
-    g_ReadyPlayerList {}
-end
-
-
-
-function AddReadyPlayerList(player)
-    table.insert(g_ReadyPlayerList, player)
-end
-
-
-
-function DeleteReadyPlayer()
-    for i = 1, #g_ReadyPlayerList do
-        table.insert(g_InGamePlayList, g_ReadyPlayerList[i])
-    end
-    
-    g_ReadyPlayerList = {}
-end
 
 
 
 
 
-
---! ------------------------------ ReadyList ------------------------------
-function ResetInGamePlayerList()
-    g_InGamePlayList = {}
-end
-
-
-
-function AddInGamePlayerList(player)
-    table.insert(g_InGamePlayList, player)
-end
-
-
-
-function DeleteInGamePlayer(player)
-    local playerID = player:GetPlayerID()
-
-    for i = 1, #g_InGamePlayList do
-        if g_InGamePlayList[i]:GetPlayerID() == playerID then
-           table.remove(g_InGamePlayList, i)
-           return true
-       end
-    end
-    
-    return false
-end
 
 
 
