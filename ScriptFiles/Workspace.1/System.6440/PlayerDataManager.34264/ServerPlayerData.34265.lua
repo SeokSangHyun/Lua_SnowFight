@@ -35,7 +35,7 @@ function StateAction(playerID)
 
     if player.State == 2 then
         while player.State == 2 do
-            character:AddForce( Vector.new(0, 0, 50*5000) )
+            character:AddForce( Vector.new(0, 0, 5*5000) )
             wait(2)
         end
     end

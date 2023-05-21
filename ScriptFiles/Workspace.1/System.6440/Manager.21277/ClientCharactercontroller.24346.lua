@@ -9,8 +9,8 @@ local prev_forwardpos = Vector.new(0,0,0)
 local prev_rightpos = Vector.new(0,0,0)
 
 --* 상태 확인 변수
-local IsRolling = false
-local IsSnowBall = false
+local IsRolling = false                     -- 굴리기 중인지 확인
+local IsSnowBall = false                    -- 던지기 했는지 확인
 
 
 --* 시간 관련 변수
@@ -31,6 +31,15 @@ local function HitProcess(playerID)
     
 end
 Game:ConnectEventFunction("HitProcess_sToc", HitProcess)
+
+
+function GetIsRolling()
+    return IsRolling
+end
+
+function SetIsRolling(state)
+    IsRolling = state
+end
 
 
 
@@ -72,26 +81,6 @@ function BulletFire(playerID, num, st, forward)--posX, posY, posZ, forX, forY)
 
 end
 Game:ConnectEventFunction("BulletFire_sToc", BulletFire)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -159,10 +148,11 @@ end
 
 
 --! ------------------------------ 실행 ------------------------------
+--# -----목적 : 키를 누르고 있는지 확인
 local function CheckRolling()
     local DeltaTime = time() - RollingStartTime
     
-    if IsSnowBall then;    return;    end;
+    if IsSnowBall or IsRolling then;    return;    end;
     
 
     if DeltaTime > MAX_INPUTTIME then
@@ -177,6 +167,8 @@ local function CheckRolling()
 
     Game:AddTimeEvent("CheckRolling", 0.1, CheckRolling)
 end
+
+
 
 
 --# 1번 눈덩이 이외의 던지기
@@ -194,7 +186,6 @@ end
 
 
 
-
 function BulletThrowEnd(BulletNum)
     local player = LocalPlayer:GetRemotePlayer()
     player.BulletIndex = BulletNum
@@ -203,7 +194,9 @@ function BulletThrowEnd(BulletNum)
         if not IsRolling then
             IsSnowBall = true
             local character = LocalPlayer:GetRemotePlayer():GetCharacter()
-            character:ChangeAnimState("Throw")
+            character:ChangeAnimState("Throw")    
+        else
+            RollingThrow()
         end
     elseif BulletNum == 2 then
 
@@ -222,9 +215,30 @@ end
 
 
 
+function RollingScallingUp(WaitTime)
+    local forward = LocalPlayer:GetRemotePlayer():GetCharacter().Transform:GetForward()
+    Game:SendEventToServer("RollingScallingUp_cTos", WaitTime, forward.X, forward.Y)
+end
 
 
 
+
+function RollingThrow()
+    IsSnowBall = false
+    IsRolling = false
+    local forward = LocalPlayer:GetRemotePlayer():GetCharacter().Transform:GetForward()
+    Game:SendEventToServer("RollingThrow_cTos", forward.X, forward.Y, forward.Z)
+end
+
+
+
+
+
+
+
+
+
+--! ------------------------------ 실행 ------------------------------
 function BulletUIUpdate(num)
     SnowBall_UIUpdate(num)
 end

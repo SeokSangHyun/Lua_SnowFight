@@ -7,6 +7,7 @@ function PhaseModule.new()
     local t = setmetatable({}, PhaseModule)
     
     t.LobbyPhase = Game:AddPhase("Lobby")
+    t.ReadyPhase = Game:AddPhase("Ready")
     t.InGamePhase = Game:AddPhase("InGame")
     t.ResultPhase = Game:AddPhase("Result")
 

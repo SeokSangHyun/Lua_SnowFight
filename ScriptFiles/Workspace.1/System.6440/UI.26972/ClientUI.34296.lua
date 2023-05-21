@@ -67,6 +67,9 @@ Game:ConnectEventFunction("SnowBall_UIUpdate", SnowBall_UIUpdate)
 
 
 
+
+
+
 --!---------------------------- 공통 처리 ------------------------------
 --# 게임 준비 등록
 --? 
@@ -132,6 +135,9 @@ local function ButtonEvent_ReadyPopup(self)
     ReadySleighMoveLoop()
 end
 buttonlist[2].OnUpEvent:Connect(ButtonEvent_ReadyPopup)
+
+
+
 
 
 

@@ -8,11 +8,12 @@ sTrowModule.__index = sTrowModule
 
 --!---------------------------- 초기화 ------------------------------
 --# 목적 : 생성시 정보 초기화
-function sTrowModule.new(object)
+function sTrowModule.new(playerID, object)
     local t = setmetatable({}, sTrowModule)
     
     
     t.WeaponObject = object
+        t.playerID = playerID
 
     
     return t

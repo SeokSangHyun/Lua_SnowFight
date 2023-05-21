@@ -13,6 +13,7 @@ g_BulletList = Toybox.Bullet:GetChildList()
 
 --* UI 컴포넌트
 UIRoot = Workspace.UI
+RollingUI = UIRoot.MainUI.F_RollingGuage
 BulletButtonList = UIRoot.MainUI.BulletHUD
 
 
@@ -25,7 +26,7 @@ function InitPlayerData(player)
     
     player.SnowBall = ThrowModule.new(bullets[1])
     player.Icicle = ThrowModule.new(bullets[2])
-    player.SnowBallRolling = ThrowModule.new(bullets[4])
+    player.SnowBallRolling = RollingModule.new(bullets[4])
     
     player.BulletIndex = 0
 end

@@ -84,7 +84,15 @@ Game:ConnectEventFunction("HitCharacterCamera_sToc", HitCharacterCamera)
 
 
 
-
+--!---------------------------- Update Event ------------------------------
+--[[
+local function MainUpdate(updateTime)
+    if GetIsRolling() then
+        
+    end
+end
+Game.OnUpdateEvent:Connect(MainUpdate)
+]]--
 
 
 

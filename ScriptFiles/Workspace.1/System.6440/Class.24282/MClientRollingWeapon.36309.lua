@@ -107,44 +107,6 @@ end
 
 
 
-
-
---!---------------------------- 무기 시스템 처리 ------------------------------
---# 목적 : 기본 세팅 값
-function sc_SnowBall:RollingInit(playerID)
-    local player = Game:GetPlayer(playerID)
-    local pos = player:GetCharacter().Location+ Vector.new(0,0,20)
-    --print(pos)
-
-    self.WeaponThrowObject.Visible = true
-    self.WeaponThrowObject.Location = pos
-    self.StartScale = Vector.new(1.5,1.5,1.5)
-end
-
-
---# 목적 : 초기화 검사
-function sc_SnowBall:RollingScaleUp(playerID, waittime, forX, forY)
-    local player = Game:GetPlayer(playerID)
-    local pos = player:GetCharacter().Location 
-    scale = Vector.new( self.StartScale.X + 0.23*waittime , self.StartScale.Y + 0.23*waittime , self.StartScale.Z + 0.23*waittime )
-
-    self.WeaponThrowObject.Location = pos + Vector.new(forX*250, forY*250, 20)
-    self.WeaponThrowObject.Scale = scale
-end
-
-
---# 목적 : 아이템을 사용하는 처리
-function sc_SnowBall:RollingThrow(playerID, forX, forY, forZ)
-    local player = Game:GetPlayer(playerID)
-    local pos = player:GetCharacter().Location
-    local target_pos = pos + Vector.new(forX*1000, forY*1000, 0)
-    --print(pos)
-    --print(target_pos)
-    self.WeaponThrowObject:MoveToLocation(target_pos)
-    self.WeaponThrowObject:RunPlay(forZ, forX, forY)
-end
-
-
 --# 목적 : 종료 시 처리
 function sc_SnowBall:FinishSystem()
 end

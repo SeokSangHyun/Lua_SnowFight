@@ -29,18 +29,26 @@ Game:ConnectEventFunction("BulletCountUpdate_sToc", BulletCountUpdate)
 local WaitTime = 0.1
 local MAX_ROLLINGTIME = 5
 function GuageUIUpdate()
-    local offset = MAX_ROLLINGTIME / WaitTime
+    if not GetIsRolling() then;    return;    end;
+
+    local offset =  WaitTime / MAX_ROLLINGTIME
     local Percent = RollingUI.ProgressBar:GetPercent()
+    
+    
     Percent = Percent + offset
 
+
     if Percent >= 1 then
+        RollingThrow()
         RollingUI.ProgressBar:SetPercent(1)
         return
     end
     RollingUI.ProgressBar:SetPercent(Percent)
+    RollingScallingUp(WaitTime)
 
     Game:AddTimeEvent("cGuageUIUpdate", WaitTime, GuageUIUpdate)
 end
+
 
 
 function Toggle_RollingGuage(state)
@@ -51,6 +59,10 @@ function Toggle_RollingGuage(state)
 
     RollingUI.Visible = state
 end
+Game:ConnectEventFunction("Toggle_RollingGuage_sToc", Toggle_RollingGuage)
+
+
+
 
 
 
@@ -63,11 +75,14 @@ local function SnowBallButtonDownEvent(self)
 end
 BulletButtonList.Btn_Snowball.OnPressEvent:Connect(SnowBallButtonDownEvent)
 
+
 --# 눈덩이 
 local function SnowBallButtonUpEvent(self)
     BulletThrowEnd(1)
 end
 BulletButtonList.Btn_Snowball.OnUpEvent:Connect(SnowBallButtonUpEvent)
+
+
 
 
 --# 목적 : 
@@ -77,6 +92,7 @@ end
 BulletButtonList.Btn_Icicle.OnUpEvent:Connect(IcicleButtonEvent)
 
 
+
 --# 목적 : 
 local function SnowCrystalButtonEvent(self)
     BulletThrowEnd(3)
@@ -84,9 +100,6 @@ end
 BulletButtonList.Btn_SnowCrystal.OnUpEvent:Connect(SnowCrystalButtonEvent)
 
 
-
-
---Game:ConnectEventFunction("Toggle_RollingGuage_sToc", Toggle_RollingGuage)
 
 
 
