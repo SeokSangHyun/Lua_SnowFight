@@ -12,6 +12,9 @@ Game:AddReplicateValue("GameTime", 0, Enum.ReplicateType.Changed, 0)
 local function EnterLobbyState()
     InitTime("Lobby")
     ResetInGamePlayerList()
+    
+    --개발 상태 처리
+    Init_ReadyChairState()
 end
 g_sPhase.LobbyPhase.EnterEvent:Connect(EnterLobbyState) --해당 Phase로 변경됐을때 호출되는 이벤트를 연결해요.
 
@@ -52,6 +55,9 @@ local function EnterInGameState()
     for i = 1 , #allPlayer do
         AddInGamePlayerList(allPlayer[i])
     end
+    
+    --개발 상태 처리
+    Init_InGameChairState()
 end
 g_sPhase.InGamePhase.EnterEvent:Connect(EnterInGameState)
 

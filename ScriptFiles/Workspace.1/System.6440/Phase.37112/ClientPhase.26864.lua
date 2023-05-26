@@ -6,6 +6,9 @@ local module = PhaseModule.new()
 local function EnterLobbyState()
     print("Lobby")
     Init_LobbyUI()
+    
+    --개발 상태 처리
+    Init_ReadyChairState()
 end
 module.LobbyPhase.EnterEvent:Connect(EnterLobbyState) --해당 Phase로 변경됐을때 호출되는 이벤트를 연결해요.
 
@@ -16,6 +19,9 @@ module.LobbyPhase.EnterEvent:Connect(EnterLobbyState) --해당 Phase로 변경�
 local function EnterInGameState()
     print("Game")
     Init_GameUI()
+    
+    --개발 상태 처리
+    Init_InGameChairState()
 end
 module.InGamePhase.EnterEvent:Connect(EnterInGameState)
 

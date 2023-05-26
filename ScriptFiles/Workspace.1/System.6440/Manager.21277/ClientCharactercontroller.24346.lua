@@ -26,6 +26,27 @@ local SnowBallState = 1     -- (1:던지는지 확인 , 2:눈덩이 굴리기 �
 
 
 
+
+--! ------------------------------  ------------------------------
+--# -----목적 : 이동 조작을 막을 것인지 확인
+--               Ture일 때 조작 가능
+function CheckMoveCtrl()
+    if not Runcheck then
+        return true
+    else
+        return false
+    end
+end
+
+
+
+
+
+
+
+
+
+
 --! ------------------------------  ------------------------------
 local function HitProcess(playerID)
     

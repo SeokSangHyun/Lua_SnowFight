@@ -158,13 +158,17 @@ if IsUseMoveControl then
     --PC이면
     if IsMobileTouchScreen == false then 
         DefaultInput:ProcessInputAxisEvent("MoveForward", function(value) 
+            if not CheckMoveCtrl() then;    return;    end;
+        
            LocalPlayer:MoveForward(value)
             if IsMobileTouchScreen == false then
                 CheckRollingForwardState()
             end
         end)
     
-        DefaultInput:ProcessInputAxisEvent("MoveRight", function(value) 
+        DefaultInput:ProcessInputAxisEvent("MoveRight", function(value)
+            if not CheckMoveCtrl() then;    return;    end;
+        
            LocalPlayer:MoveRight(value)
             if IsMobileTouchScreen == false then
                 CheckRollingRightState()
@@ -175,6 +179,8 @@ if IsUseMoveControl then
     else
         --조이스틱 이동
         DefaultInput:ProcessInputAxisEvent("MoveForward_M", function(value) 
+            if not CheckMoveCtrl() then;    return;    end;
+        
            local moveSpeed = 2.0
            LocalPlayer:MoveForward(value * moveSpeed)
             if IsMobileTouchScreen == false then
@@ -183,6 +189,8 @@ if IsUseMoveControl then
         end)
         
         DefaultInput:ProcessInputAxisEvent("MoveRight_M", function(value) 
+            if not CheckMoveCtrl() then;    return;    end;
+        
            local moveSpeed = 2.0
            LocalPlayer:MoveRight(value * moveSpeed)
             if IsMobileTouchScreen == true then

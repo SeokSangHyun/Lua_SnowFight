@@ -98,6 +98,8 @@ local function ButtonEvent_StardardPopupNo(self)
     Toggle_StardardPopup(false)
     CharacterStateChange("Stand")
 
+    Game:SendEventToServer("ResetChair_cTos", g_ConnectGate.Index)
+
     Input:SetJoystickControlVisibility(0, true)
     LocalPlayer:SetEnableMovementControl(true)
     
@@ -123,7 +125,10 @@ end
 local function ButtonEvent_ReadyPopup(self)
     Game:SendEventToServer("CharacterOutToLocation")
     CharacterStateChange("Stand")
+    
+    
     Toggle_ListPopup(false)
+    Game:SendEventToServer("ResetChair_cTos", g_ConnectGate.Index)
 end
 buttonlist[1].OnUpEvent:Connect(ButtonEvent_ReadyPopup)
 
@@ -132,6 +137,8 @@ local function ButtonEvent_ReadyPopup(self)
     Toggle_ListPopup(false)
     
     Game:SendEventToServer("ReadySleighAction")
+    Game:SendEventToServer("ResetChair_cTos", g_ConnectGate.Index)
+    
     ReadySleighMoveLoop()
 end
 buttonlist[2].OnUpEvent:Connect(ButtonEvent_ReadyPopup)

@@ -5,16 +5,56 @@ local CaveColliders = Workspace.World.Lobby.Trigger.Slide:GetChildList()
 local InGameSpawnList = Workspace.World.Lobby.Trigger.SpawnPoint:GetChildList()
 local ArraySpawn = { }
 
+-- 대기 열
+g_ConnectGate = {}
+for i = 1 , #GameRegistChair do
+    table.insert(g_ConnectGate, 0)
+end
+
 --#
 local spawn_maxcnt = math.floor( ((#GameRegistChair/#InGameSpawnList)+0.5) )
 local IsConrifmRegist = false
 
 
+
+
+
+
+--! ------------------------------  ------------------------------
 --# 
 function ReadySettingSleigh()
     ArraySpawn = { }
     IsConrifmRegist = false
 end
+
+
+
+
+--! ------------------------------ 썰매준비 등록 ------------------------------
+
+
+--# -----목적:의자의 상태를 확인하는 함수
+function CheckChairState(player, index)
+    local playerID = player:GetPlayerID()
+    
+    --print(playerID .. type(playerID))
+    if g_ConnectGate[index] == 0 then
+        --입장 가능
+        g_ConnectGate[index] = playerID
+        Game:SendEventToClient(playerID, "RegistConnectGate_sToc", index)
+        Game:BroadcastEvent("WaitChairUI_sToc", index)
+    elseif g_ConnectGate[index] == -1 then
+        --dlqwkd dkdP akrrl
+    else
+        --입장 불가능
+        --print("")
+    end
+end 
+Game:ConnectEventFunction("CheckChairState_cTos", CheckChairState)
+
+
+
+
 
 
 
@@ -134,6 +174,56 @@ end
 for i = 1 , #InGameSpawnList do
     table.insert(ArraySpawn, {})
 end
+
+
+
+
+--!---------------------------- UI ------------------------------
+--# -----목적:등록 가능 상태
+function ResetChair(player, index)
+    g_ConnectGate[index] = 0
+    Game:BroadcastEvent("ResetChairUI_sToc", index)
+end
+Game:ConnectEventFunction("ResetChair_cTos", ResetChair)
+
+--# -----목적:대기 상태
+function WaitChair(player, index)
+    Game:BroadcastEvent("WaitChairUI_sToc", index)
+end
+Game:ConnectEventFunction("WaitChair_cTos", WaitChair)
+
+--# -----목적:체어 상태 변경 없음
+function RejectChair(player, index)
+    Game:BroadcastEvent("RejectChairUI_sToc", index)
+end
+Game:ConnectEventFunction("RejectChair_cTos", RejectChair)
+
+
+
+
+
+--!---------------------------- 상황 별 처리 ------------------------------
+--# -----목적 : 로비 들어왔을 때 의자 상태 초기화
+function Init_ReadyChairState()
+    for i = 1 , #g_ConnectGate do
+        g_ConnectGate[i] = 0
+    end
+    Workspace.World.Lobby.Trigger.ReadyLine.Enable = true
+    Workspace.World.Lobby.Trigger.ReadyLine.Collision:SetCharacterCollisionResponse(Enum.CollisionResponse.Block)
+end
+
+
+--# -----목적 : 게임 상태로 갔을 때 처리
+function Init_InGameChairState()
+    for i = 1 , #g_ConnectGate do
+        g_ConnectGate[i] = -1
+    end
+    Workspace.World.Lobby.Trigger.ReadyLine.Enable = false
+    Workspace.World.Lobby.Trigger.ReadyLine.Collision:SetCharacterCollisionResponse(Enum.CollisionResponse.Overlap)
+end
+
+
+
 
 
 

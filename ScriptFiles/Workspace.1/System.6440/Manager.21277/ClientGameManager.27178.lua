@@ -1,13 +1,14 @@
 
-
-g_ConnectGate = nil
 Root_Infomation = Workspace.System.InformSystem
-
 
 local IsActionKey = false
 
+
+
+--!---------------------------- Setter/Getter ------------------------------
 function SetActionKey(act)    IsActionKey = act;    end;
 function GetActionKey()    return IsActionKey;    end;
+
 
 
 

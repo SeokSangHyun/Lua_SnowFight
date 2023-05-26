@@ -36,11 +36,13 @@ end
 function StateAction(playerID)
     local player = Game:GetPlayer(playerID)
     local character= Game:GetPlayerCharacter(playerID)
+    Game:SendEventToClient(playerID, "CharacterStateChange_sToc", "Stand")
+    
 
     if player.State == 2 then
         while player.State == 2 do
             character:AddForce( Vector.new(0, 0, 5*5000) )
-            wait(2)
+            wait(1.5)
         end
     end
 end
