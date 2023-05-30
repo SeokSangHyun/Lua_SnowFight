@@ -67,7 +67,49 @@ function HitCharacter_Rolling(obj)
 end
 
 
+--!---------------------------- 리워드 상태 ------------------------------
+local RewardGroup = Script.reward
+function LocatePlayer()
+    local Score1 = 0    local list_Score1 = {}
+    local Score2 = 0    local list_Score2 = {}
+    local Score3 = 0    local list_Score3 = {}
+    local list_other = {}
+     
+    local place = RewardGroup.PlayerPlace:GetChildList()
+     
 
+    for i = 1 , #g_InGamePlayList do
+        if Score1 < g_InGamePlayList[i].GamePoint then
+            Score3 = Score2
+            Score2 = Score1
+            Score1 = GamePoint
+        elseif Score2 < g_InGamePlayList[i].GamePoint then
+            Score3 = Score2
+            Score2 = GamePoint
+        elseif Score3 < g_InGamePlayList[i].GamePoint then
+            Score3 = GamePoint
+        end
+    end
+     
+     
+    for i = 1 , #g_InGamePlayList do
+        if Score1 >= g_InGamePlayList[i].GamePoint then
+            g_InGamePlayList[i]:GetCharacter().Location = place[1].Location
+            table.insert(list_Score1, g_InGamePlayList[i])
+        elseif Score2 >= g_InGamePlayList[i].GamePoint then
+            g_InGamePlayList[i]:GetCharacter().Location = place[2].Location
+            table.insert(list_Score2, g_InGamePlayList[i])
+        elseif Score3 >= g_InGamePlayList[i].GamePoint then
+            g_InGamePlayList[i]:GetCharacter().Location = place[3].Location
+            table.insert(list_Score3, g_InGamePlayList[i])
+        else
+            g_InGamePlayList[i]:GetCharacter().Location = place[4].Location
+            table.insert(list_other, g_InGamePlayList[i])
+        end
+    end
+     
+     
+end
 
 
 

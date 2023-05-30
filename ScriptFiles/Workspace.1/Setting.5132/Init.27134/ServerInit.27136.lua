@@ -25,7 +25,10 @@ function InitPlayerData(player)
     player.SnowBallRolling = RollingModule.new(playerID, bullets[4])
     
     player.BulletIndex = 0
-    player.State = 0
+    player.PlayState = 1
+    
+    
+    player.GamePoint = 0.0
 end
 
 

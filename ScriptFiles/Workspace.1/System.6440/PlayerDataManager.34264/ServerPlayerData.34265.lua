@@ -8,25 +8,34 @@ g_InGamePlayList = {}             -- 게임을 진입하고 플레이하는 플�
 
 
 --! ------------------------------ Player State ------------------------------
+--# -----목적 : 플레이어의 상태
+--! (1 None = 기본 상태. 로비)
+--! (2 WaitReady = 참가 등록은 완료. 게임 시작 전)
+--! (5 InGame = 게임 시작. 플레이중)
+--! (10 Death = 사망 처리)
 function CheckPlayerState(playerID, strState)
     local player = Game:GetPlayer(playerID)
 
-    if player.State == 2 and strState == "WaitReady" then
+    if player.PlayState == 2 and strState == "WaitReady" then
         return true
     else
         return false
     end
 end
 
+
+
 function SetPlayerState(playerID, strState)
     local player = Game:GetPlayer(playerID)
     
     if strState == "WaitReady" then
-        player.State = 2
-    elseif strState == "Dead" then
-        player.State = 10
+        player.PlayState = 2
+    elseif strState == "InGame" then
+        player.PlayState = 5
+    elseif strState == "Death" then
+        player.PlayState = 10
     else
-        player.State = 0
+        player.PlayState = 1
     end
 end
 
@@ -39,13 +48,22 @@ function StateAction(playerID)
     Game:SendEventToClient(playerID, "CharacterStateChange_sToc", "Stand")
     
 
-    if player.State == 2 then
-        while player.State == 2 do
+    if player.PlayState == 2 then
+        while player.PlayState == 2 do
             character:AddForce( Vector.new(0, 0, 5*5000) )
             wait(1.5)
         end
     end
 end
+
+
+
+
+
+
+
+
+
 
 
 
@@ -115,11 +133,17 @@ end
 --! ------------------------------ ReadyList ------------------------------
 function ResetInGamePlayerList()
     g_InGamePlayList = {}
+    
+    local allPlayer = Game:GetAllPlayer()
+    for i = 1, #allPlayer do
+        SetPlayerState(allPlayer[i]:GetPlayerID(), "None")
+    end
 end
 
 
 
 function AddInGamePlayerList(player)
+    SetPlayerState(player:GetPlayerID(), "InGame")
     table.insert(g_InGamePlayList, player)
 end
 

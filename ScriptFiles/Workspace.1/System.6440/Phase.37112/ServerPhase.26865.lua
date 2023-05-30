@@ -76,6 +76,7 @@ g_sPhase.InGamePhase.UpdateEvent:Connect(UpdateInGameState)
 --# 결과 상태
 local function EnterRewardState()
     InitTime("Result")
+    LocatePlayer()
 end
 g_sPhase.ResultPhase.EnterEvent:Connect(EnterRewardState)
 

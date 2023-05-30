@@ -145,7 +145,6 @@ local function RegistSpawnList(playerID)
         table.insert(ArraySpawn[respawn_index], playerID)
         SetPlayerState(playerID, "WaitReady")
 
-        wait(1)
         local character = Game:GetPlayer(playerID):GetCharacter()
         character.Location = InGameSpawnList[respawn_index].Location
         
