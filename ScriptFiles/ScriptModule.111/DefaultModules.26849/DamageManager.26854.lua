@@ -12,22 +12,22 @@ local DamageManager = {}
 -- 캐릭터의 HP가 0 이하가되면 자동으로 Kill하여 줍니다.
 -- ApplyDamage(데미지를 입힐 캐릭터, 데미지)
 function DamageManager:ApplyDamage(character, damage)
-   character.HP = character.HP - damage
-   
-   if character.HP <= 0 then
-       character:GetPlayer():KillCharacter()
-       character:GetPlayer():RespawnCharacter()
-   end
-   
-   if character.HP >= character.MaxHP then
-       character.HP = character.MaxHP
-   end
-   
-   --HP 체력 업데이트
---    local hp = character:GetPlayerHUD("HPBar").HPBar
---    print(hp)
---    print(character.HP)
---    hp:SetPercent(character.HP / character.MaxHP)
+    local HP = character.HP
+    HP = HP - damage
+    
+    if HP >= character.MaxHP then
+        HP = character.MaxHP
+    end
+    
+    if HP <= 0 then
+        --character:GetPlayer():KillCharacter()
+        --character:GetPlayer():RespawnCharacter()
+        local player = character:GetPlayer()
+        FrozingCharacter(player)
+        HP = character.MaxHP
+    end
+    
+   character.HP = HP
 end
 
 return DamageManager

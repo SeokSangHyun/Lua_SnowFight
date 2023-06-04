@@ -67,6 +67,9 @@ function HitCharacter_Rolling(obj)
 end
 
 
+
+
+
 --!---------------------------- 리워드 상태 ------------------------------
 local RewardGroup = Script.reward
 function LocatePlayer()
@@ -116,8 +119,11 @@ end
 
 
 
-
-
+--!---------------------------- 사망처리 ------------------------------
+function FrozingCharacter(player)
+    local playerID = player:GetPlayerID()
+    Game:BroadcastEvent("FrozingCharacter_sToc", playerID)
+end
 
 
 

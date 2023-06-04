@@ -85,17 +85,18 @@ Game:ConnectEventFunction("HitCharacterCamera_sToc", HitCharacterCamera)
 
 
 
---!---------------------------- Update Event ------------------------------
---[[
-local function MainUpdate(updateTime)
-    if GetIsRolling() then
-        
-    end
+
+--!---------------------------- 사망처리 ------------------------------
+function FrozingCharacter(playerID)
+    local target_character = Game:GetRemotePlayerCharacter(playerID)
+    local pos = target_character.Location
+
+    local froz = Toybox.DeathStone
+    Game:CreateObject(froz, pos)
+    
+    LocalPlayer:SetEnableMovementControl(false)
 end
-Game.OnUpdateEvent:Connect(MainUpdate)
-]]--
-
-
+Game:ConnectEventFunction("FrozingCharacter_sToc", FrozingCharacter)
 
 
 
