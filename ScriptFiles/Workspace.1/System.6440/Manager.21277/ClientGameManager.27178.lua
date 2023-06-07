@@ -86,17 +86,41 @@ Game:ConnectEventFunction("HitCharacterCamera_sToc", HitCharacterCamera)
 
 
 
+
+
 --!---------------------------- 사망처리 ------------------------------
 function FrozingCharacter(playerID)
     local target_character = Game:GetRemotePlayerCharacter(playerID)
+    local target_player = target_character:GetPlayer()
     local pos = target_character.Location
 
     local froz = Toybox.DeathStone
-    Game:CreateObject(froz, pos)
+    local obj = Game:CreateObject(froz, pos)
+    target_player.DeathObj = obj
     
-    LocalPlayer:SetEnableMovementControl(false)
+    
+    if target_character:IsMyCharacter() then
+        LocalPlayer:SetEnableMovementControl(false)
+        ChangeCamera(obj.Camera , obj)
+        
+        
+        UIRoot.MainUI.F_Death.Visible = true
+        
+    end
 end
 Game:ConnectEventFunction("FrozingCharacter_sToc", FrozingCharacter)
+
+
+
+
+
+function FrozingBroken(playerID)
+    local target_character = Game:GetRemotePlayerCharacter(playerID)
+    local target_player = target_character:GetPlayer()
+    target_player.DeathObj:FrozenUpdate()--:SendEventToServer("FrozenUpdate_cTos")
+end
+Game:ConnectEventFunction("FrozingCharacter_sToc", FrozingBroken)
+
 
 
 

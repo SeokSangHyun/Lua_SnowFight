@@ -127,3 +127,29 @@ Game:ConnectEventFunction("RollingThrow_cTos", RollingThrow)
 
 
 
+
+
+
+
+
+--! ------------------------------ 죽음 시스템 ------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

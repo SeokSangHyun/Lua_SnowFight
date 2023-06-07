@@ -72,7 +72,7 @@ end
 
 --!---------------------------- 리워드 상태 ------------------------------
 local RewardGroup = Script.reward
-function LocatePlayer()
+function LocatePlayer_Reward()
     local Score1 = 0    local list_Score1 = {}
     local Score2 = 0    local list_Score2 = {}
     local Score3 = 0    local list_Score3 = {}
@@ -110,12 +110,15 @@ function LocatePlayer()
             table.insert(list_other, g_InGamePlayList[i])
         end
     end
-     
-     
 end
 
 
-
+local ReturnGroup = Workspace.SpawnPoint
+function LocatePlayer_StartPoint()
+    for i = 1 , #g_InGamePlayList do
+        g_InGamePlayList[i]:GetCharacter().Location = ReturnGroup.Location
+    end
+end
 
 
 
@@ -126,9 +129,11 @@ function FrozingCharacter(player)
 end
 
 
-
-
-
+function FrozingBroken(player)
+    local playerID = player:GetPlayerID()
+    Game:BroadcastEvent("FrozingCharacter_sToc", playerID)
+end
+Game:ConnectEventFunction("FrozingBroken_cTos", FrozingBroken)
 
 
 

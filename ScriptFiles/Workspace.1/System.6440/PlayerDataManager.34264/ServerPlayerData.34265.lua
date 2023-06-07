@@ -85,14 +85,7 @@ end
 
 
 
-
-
-
-
-
-
-
-
+--[[
 function GameStartPlayerList()
     for i = 1, #g_ReadyPlayerList do
         if g_ReadyPlayerList[i]:GetPlayerID() == playerID then
@@ -101,14 +94,21 @@ function GameStartPlayerList()
        end
     end
 end
+]]--
+
+
+
+
+
+
+
 
 
 --! ------------------------------ ReadyList ------------------------------
 --# ----- 목적 : ReadyList 초기화
 function ResetReadyPlayerList()
-    g_ReadyPlayerList {}
+    g_ReadyPlayerList = {}
 end
-
 
 
 function AddReadyPlayerList(player)
@@ -161,6 +161,22 @@ function DeleteInGamePlayer(player)
     
     return false
 end
+
+
+
+
+
+--! ------------------------------ List 공통 기능 ------------------------------
+--# ----- 목적 :게임 시작할 때 준비된 플레이어(g_ReadyPlayerList)를 플레이 리스트(g_InGamePlayList)로 옮기는 로직
+function GameStartPlayerList()
+    for i = 1, #g_ReadyPlayerList do
+       AddInGamePlayerList(g_ReadyPlayerList[i])
+    end
+    
+    ResetReadyPlayerList()
+end
+
+
 
 
 

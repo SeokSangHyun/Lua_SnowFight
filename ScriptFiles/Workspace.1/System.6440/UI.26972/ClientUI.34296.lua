@@ -162,3 +162,13 @@ Game:ConnectEventFunction("SetCharacterHP_cTos", SetCharacterHP)
 
 
 
+--# -----목적 : 사망시 UI 이벤트
+UIRoot.MainUI.F_Death.Button.OnUpEvent:Connect(function(self)
+    Game:SendEventToServer("FrozingBroken_cTos")
+end)
+
+
+
+
+
+

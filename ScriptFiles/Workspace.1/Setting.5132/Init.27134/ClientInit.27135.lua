@@ -29,6 +29,8 @@ function InitPlayerData(player)
     player.SnowBallRolling = RollingModule.new(bullets[4])
     
     player.BulletIndex = 0
+    
+    player.DeathObj = nil
 end
 InitPlayerData( LocalPlayer:GetRemotePlayer() )
 

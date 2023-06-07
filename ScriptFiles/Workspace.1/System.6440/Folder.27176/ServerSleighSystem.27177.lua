@@ -119,6 +119,7 @@ function ReadySleighAction(player)
     readysit.WaitPos:DetachAllCharacter(Vector.new(0, 0, 0))
     character:SetMaxSpeed(1000)
     
+    AddReadyPlayerList(player)
 end
 Game:ConnectEventFunction("ReadySleighAction", ReadySleighAction)
 

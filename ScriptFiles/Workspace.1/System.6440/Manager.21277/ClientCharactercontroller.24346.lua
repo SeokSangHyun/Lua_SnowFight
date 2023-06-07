@@ -257,13 +257,26 @@ end
 
 
 
-
-
 --! ------------------------------ 실행 ------------------------------
 function BulletUIUpdate(num)
     SnowBall_UIUpdate(num)
 end
 Game:ConnectEventFunction("BulletUIUpdate_sToc", BulletUIUpdate)
+
+
+
+
+
+
+
+--! ------------------------------ 죽음 시스템 ------------------------------
+
+
+
+
+
+
+
 
 
 

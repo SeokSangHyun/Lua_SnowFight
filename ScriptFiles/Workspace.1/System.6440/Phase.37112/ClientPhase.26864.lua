@@ -30,6 +30,8 @@ module.InGamePhase.EnterEvent:Connect(EnterInGameState)
 --! ------------------------------ Reward ------------------------------
 --# 결과 상태
 local function EnterRewardState()
+    Exit_DeathStone()
+
     print("Reward")
     Init_RewardUI()
 end
