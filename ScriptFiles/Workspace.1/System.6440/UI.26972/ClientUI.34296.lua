@@ -150,12 +150,17 @@ buttonlist[2].OnUpEvent:Connect(ButtonEvent_ReadyPopup)
 
 
 --!---------------------------- 캐릭터 관련 UI 처리 ------------------------------
-function SetCharacterHP(playerID, nowHP)
-    local TargetCharacter = Game:GetRemotePlayerCharacter(playerID)
+function SetCharacterHP(playerID, targetID, IsAlive, nowHP)
+    local ShotCharacter = Game:GetRemotePlayerCharacter(playerID)
+    local TargetCharacter = Game:GetRemotePlayerCharacter(targetID)
     local characterHUD = TargetCharacter:GetPlayerHUD("HPBar")
     local hpHUD = characterHUD.HPBar
     
     hpHUD:SetPercent(nowHP/100)
+    if not IsAlive then
+        AddWarLog("kill", ShotCharacter:GetPlayerNickName(), TargetCharacter:GetPlayerNickName())
+    end
+    
 end
 Game:ConnectEventFunction("SetCharacterHP_cTos", SetCharacterHP)
 

@@ -67,6 +67,7 @@ LogUpdate()
 --! ------------------------------  ------------------------------
 
 
+--[[
 local cnt = 1
 while true do
     AddWarLog("kill", "나", "너"..cnt)    cnt = cnt + 1
@@ -78,6 +79,7 @@ while true do
     
     wait(2)
 end
+]]--
 
 
 

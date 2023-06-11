@@ -29,6 +29,9 @@ function InitPlayerData(player)
     
     
     player.GamePoint = 0.0
+    
+    player.DeathStoneIndex = 0
+    player.DeathStoneCount = 5
 end
 
 

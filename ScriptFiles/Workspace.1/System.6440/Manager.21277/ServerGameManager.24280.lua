@@ -39,16 +39,15 @@ local function HitCharacter(player, targetID, bullet_index)
     
     
     --캐릭터 체력 처리
-    DamageModule:ApplyDamage(hitCharacter, g_BulletList[bullet_index].BulletDamage)
-    Game:BroadcastEvent("SetCharacterHP_cTos",targetID, hitCharacter.HP)
+    local IsAlive = DamageModule:ApplyDamage(hitCharacter, g_BulletList[bullet_index].BulletDamage)
+    Game:BroadcastEvent("SetCharacterHP_cTos",playerID, targetID, IsAlive, hitCharacter.HP)
 end
 Game:ConnectEventFunction("HitCharacter_cTos", HitCharacter)
 
 
 
-function HitCharacter_Rolling(obj)
+function HitCharacter_Rolling(playerID, obj)
     local pos = obj.Location
-    print("충돌은함")
     
     for i = 1 , #g_InGamePlayList do
         local temp_pos = g_InGamePlayList[i]:GetCharacter().Location
@@ -60,8 +59,8 @@ function HitCharacter_Rolling(obj)
             Game:SendEventToClient(targetID, "HitCharacterCamera_sToc", 4)
             
             --캐릭터 체력 처리
-            DamageModule:ApplyDamage(hitCharacter, g_BulletList[4].BulletDamage)
-            Game:BroadcastEvent("SetCharacterHP_cTos",targetID, hitCharacter.HP)
+            local IsAlive = DamageModule:ApplyDamage(hitCharacter, g_BulletList[4].BulletDamage)
+            Game:BroadcastEvent("SetCharacterHP_cTos",playerID, targetID, IsAlive, hitCharacter.HP)
         end
     end
 end
@@ -124,14 +123,17 @@ end
 
 --!---------------------------- 사망처리 ------------------------------
 function FrozingCharacter(player)
+    CreateDeathStone(player)
+    
     local playerID = player:GetPlayerID()
-    Game:BroadcastEvent("FrozingCharacter_sToc", playerID)
+    Game:SendEventToClient(playerID, "FrozingCharacter_sToc")
 end
 
 
 function FrozingBroken(player)
     local playerID = player:GetPlayerID()
-    Game:BroadcastEvent("FrozingCharacter_sToc", playerID)
+    ActDeathStone(player)
+    --Game:BroadcastEvent("FrozingCharacter_sToc", playerID)
 end
 Game:ConnectEventFunction("FrozingBroken_cTos", FrozingBroken)
 
