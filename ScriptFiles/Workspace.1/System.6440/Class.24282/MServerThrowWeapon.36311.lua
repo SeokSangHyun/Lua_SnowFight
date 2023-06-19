@@ -13,7 +13,10 @@ function sTrowModule.new(playerID, object)
     
     
     t.WeaponObject = object
-        t.playerID = playerID
+    t.playerID = playerID
+    
+    t.BulletCount = 0
+    t.BulletMaxCount = 1000
 
     
     return t
@@ -25,9 +28,22 @@ end
 
 --!---------------------------- Getter/Setter ------------------------------
 --# 목적 : 
-function sTrowModule:GetBulletCount(player)
-    return self.NowBulletCount
+function sTrowModule:AddBullet(num)
+    if self.BulletCount >= self.BulletMaxCount then;    return; end;
+    self.BulletCount = self.BulletCount + num
+    
+    return self.BulletCount
 end
+
+function sTrowModule:GetBullet()
+    return self.BulletCount
+end
+
+function sTrowModule:CheckFire()
+    if self.BulletCount <= 0 then;  return false;
+    else;   return true;    end;
+end
+
 
 
 
@@ -36,6 +52,7 @@ end
 --!---------------------------- 무기 시스템 처리 ------------------------------
 --# 목적 : 기본 세팅 값
 function sTrowModule:Initialize()
+    self.BulletCount = 0
 end
 
 
