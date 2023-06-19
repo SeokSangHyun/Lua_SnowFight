@@ -11,7 +11,6 @@ Game:AddReplicateValue("GameTime", 0, Enum.ReplicateType.Changed, 0)
 --# 아무것도 아닌 기본 상태
 local function EnterLobbyState()
     InitTime("Lobby")
-    ResetDeathStone()
     LocatePlayer_StartPoint()
     ResetInGamePlayerList()
     

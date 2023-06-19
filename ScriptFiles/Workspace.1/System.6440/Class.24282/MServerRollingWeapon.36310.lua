@@ -49,7 +49,6 @@ function sRollingModule:Initialize()
 --충돌
     self.WeaponObject.HitCollider.Collision:SetCharacterCollisionResponse(Enum.CollisionResponse.Overlap)
     self.WeaponObject.HitCollider.Collision.OnBeginOverlapEvent:Connect( function(ball, target)
-    print(target)
         if target == nil or not target:IsCharacter() then;    return;    end;
             
         local playerID = target:GetPlayerID()
@@ -57,7 +56,7 @@ function sRollingModule:Initialize()
         
         self.RolllAct = false
         self.Cor = nil
-        HitCharacter_Rolling(self.playerID, self.WeaponObject)
+        HitCharacter_Rolling(self.WeaponObject)
     end)
 end
 
@@ -90,8 +89,8 @@ function sRollingModule:RollingThrow(forX, forY, forZ)
     self.Cor = coroutine.create(function()
         self.RolllAct = true
         while self.RolllAct do
-            self.WeaponObject.HitCollider.Location = self.WeaponObject.Location + Vector.new(0, 0, 20)
-            wait(0.1)
+            self.WeaponObject.HitCollider.Location = self.WeaponObject.Location
+            wait(0.5)
         end
         
         self.WeaponObject.HitCollider.Location = Vector.new(0, 0, 0)

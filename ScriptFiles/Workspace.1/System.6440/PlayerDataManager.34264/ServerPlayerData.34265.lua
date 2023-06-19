@@ -5,70 +5,6 @@ g_ReadyPlayerList = {}            -- 준비하고 있는 플레이어 리스트
 g_InGamePlayList = {}             -- 게임을 진입하고 플레이하는 플레이어 리스트
 
 
-g_DeathStone = {}
-local StoneIndex = 1
---! ------------------------------ DeathStone ------------------------------
-function ResetDeathStone()
-    for i = 1 , #g_DeathStone do
-        Game:DeleteObject(g_DeathStone[i])
-    end
-    
-    g_DeathStone = {}
-end
-
-
-
-function AddDeathStone()
-    local obj = Game:CreateSyncObject(Toybox.DeathStone, Vector.new(0,0,0))
-    obj.Enable = false
-    table.insert(g_DeathStone, obj)
-end
-
-
-
-function CreateDeathStone(player)
-    local pos = player:GetCharacter().Location
-    g_DeathStone[StoneIndex].Location = pos
-    g_DeathStone[StoneIndex].Enable = true
-
-    player.DeathStoneCount = 5
-    player.DeathStoneIndex = StoneIndex
-    StoneIndex = StoneIndex + 1
-    if #g_DeathStone >= StoneIndex then
-        StoneIndex = 1
-    end
-end
-
-
-
-function RemoveDeathStone(player)
-    g_DeathStone[StoneIndex].Location = Vector.new(0,0,0)
-    g_DeathStone[StoneIndex].Enable = false
-    
-    player.DeathStoneCount = 0
-    player.DeathStoneIndex = 0
-    
-    Game:SendEventToClient(player:GetPlayerID(), "FrozingBroken_sToc")
-end
-
-
-
-function ActDeathStone(player)
-    local index = player.DeathStoneIndex
-    local cnt = player.DeathStoneCount
-    
-    g_DeathStone[index]:FrozenUpdate()
-    
-    player.DeathStoneCount = cnt - 1
-    if cnt <= 0 then
-        RemoveDeathStone(player)
-    end
-end
-
-
-
-
-
 
 
 --! ------------------------------ Player State ------------------------------
@@ -149,6 +85,19 @@ end
 
 
 
+--[[
+function GameStartPlayerList()
+    for i = 1, #g_ReadyPlayerList do
+        if g_ReadyPlayerList[i]:GetPlayerID() == playerID then
+           table.remove(g_ReadyPlayerList, i)
+           return true
+       end
+    end
+end
+]]--
+
+
+
 
 
 
@@ -221,15 +170,8 @@ end
 --# ----- 목적 :게임 시작할 때 준비된 플레이어(g_ReadyPlayerList)를 플레이 리스트(g_InGamePlayList)로 옮기는 로직
 function GameStartPlayerList()
     for i = 1, #g_ReadyPlayerList do
-       AddDeathStone(g_ReadyPlayerList[i])
        AddInGamePlayerList(g_ReadyPlayerList[i])
     end
-    
-    local allplayer = Game:GetAllPlayer()
-    for i = 1 , #allplayer do
-        AddDeathStone(allplayer[i])
-    end
-    
     
     ResetReadyPlayerList()
 end

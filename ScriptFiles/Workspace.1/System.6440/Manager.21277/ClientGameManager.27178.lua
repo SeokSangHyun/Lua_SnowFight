@@ -27,6 +27,8 @@ Game.OnSpawnCharacter:Connect(SpawnCharacter)
 local function ChangeReplicateValue(self, value) -- value : 변화한 값
     wait(1)
     Update_InformUI()
+
+
 end
 Game:ConnectChangeEventFunction("GameTime", ChangeReplicateValue)
 
@@ -88,7 +90,6 @@ Game:ConnectEventFunction("HitCharacterCamera_sToc", HitCharacterCamera)
 
 --!---------------------------- 사망처리 ------------------------------
 function FrozingCharacter(playerID)
---[[
     local target_character = Game:GetRemotePlayerCharacter(playerID)
     local target_player = target_character:GetPlayer()
     local pos = target_character.Location
@@ -99,14 +100,13 @@ function FrozingCharacter(playerID)
     
     
     if target_character:IsMyCharacter() then
-]]--
         LocalPlayer:SetEnableMovementControl(false)
-        --ChangeCamera(obj.Camera , obj)
+        ChangeCamera(obj.Camera , obj)
         
         
         UIRoot.MainUI.F_Death.Visible = true
         
---    end
+    end
 end
 Game:ConnectEventFunction("FrozingCharacter_sToc", FrozingCharacter)
 
@@ -115,10 +115,11 @@ Game:ConnectEventFunction("FrozingCharacter_sToc", FrozingCharacter)
 
 
 function FrozingBroken(playerID)
-        LocalPlayer:SetEnableMovementControl(true)
-        UIRoot.MainUI.F_Death.Visible = false
+    local target_character = Game:GetRemotePlayerCharacter(playerID)
+    local target_player = target_character:GetPlayer()
+    target_player.DeathObj:FrozenUpdate()--:SendEventToServer("FrozenUpdate_cTos")
 end
-Game:ConnectEventFunction("FrozingBroken_sToc", FrozingBroken)
+Game:ConnectEventFunction("FrozingCharacter_sToc", FrozingBroken)
 
 
 

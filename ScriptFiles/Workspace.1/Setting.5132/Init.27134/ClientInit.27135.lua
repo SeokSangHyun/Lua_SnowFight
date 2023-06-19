@@ -30,7 +30,7 @@ function InitPlayerData(player)
     
     player.BulletIndex = 0
     
-    
+    player.DeathObj = nil
 end
 InitPlayerData( LocalPlayer:GetRemotePlayer() )
 
