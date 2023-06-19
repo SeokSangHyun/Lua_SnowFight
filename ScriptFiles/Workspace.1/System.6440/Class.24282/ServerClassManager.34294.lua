@@ -26,17 +26,19 @@ end
 --!---------------------------- 처리 ------------------------------
 function GetBulletItem(player, index)
     local playerID = player:GetPlayerID()
-    local cnt = 0
+    local bulletcnt = 0
     
-    if index == 1 or index == 4 then
-        cnt = player.SnowBall:AddBullet(1)
+    if index == 1 then
+        player.SnowBall:AddBullet(1)
+        bulletcnt = player.SnowBall:GetBulletCount()
     elseif index == 2 then
-        cnt = player.Icicle:AddBullet(1)
-    elseif index == 3 then
-        --player.Crystal = ThrowModule.new(bullets[2])
+        player.Icicle:AddBullet(1)
+        bulletcnt = player.Icicle:GetBulletCount()
+    else
     end
     
-    Game:SendEventToClient(playerID, "BulletCountUpdate_sToc", index, cnt)
+    
+    Game:SendEventToClient(playerID, "BulletCountUpdate_sToc", index, bulletcnt)
 end
 Game:ConnectEventFunction("GetBulletItem_cTos", GetBulletItem)
 

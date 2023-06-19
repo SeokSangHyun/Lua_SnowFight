@@ -53,6 +53,7 @@ end
 
 
 --# 목적 : 공격 버튼 UI
+--[[
 function SnowBall_UIUpdate(num)
     local toyRoot = Toybox.Bullet:GetChildList()
     for i=#toyRoot, 3, -1 do
@@ -63,6 +64,7 @@ function SnowBall_UIUpdate(num)
     end
 end
 Game:ConnectEventFunction("SnowBall_UIUpdate", SnowBall_UIUpdate)
+]]--
 
 
 

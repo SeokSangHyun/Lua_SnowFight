@@ -39,8 +39,21 @@ function CheckMoveCtrl()
 end
 
 
-
-
+--# -----목적 : 총알
+--                TRUE일 때, 총알 발사 가능
+function CheckBulletCount(player)
+    local IsFire = false
+    if player.BulletIndex == 1 or player.BulletIndex == 4 then
+        IsFire = player.SnowBall:CheckFire()
+    elseif player.BulletIndex == 2 then
+        IsFire = player.Icicle:CheckFire()
+    --elseif player.BulletIndex == 3 then
+    else
+        IsFire = false
+    end
+    
+    return IsFire
+end
 
 
 
@@ -79,7 +92,7 @@ function RequestFire()
     local StartPos = inven.Location
     local lookfor = LocalPlayer:GetCameraForward()
 
-    --Game:SendEventToServer( "RequestFire_cTos", player.BulletIndex, StartPos.X, StartPos.Y, StartPos.Z ,lookfor.X, lookfor.Y, lookfor.Z)
+    --BulletCountUpdate(player.BulletIndex , player. player.BulletIndex)
     Game:SendEventToServer( "RequestFire_cTos", player.BulletIndex, StartPos, lookfor)
 end
 
@@ -100,6 +113,7 @@ function BulletFire(playerID, num, st, forward)--posX, posY, posZ, forX, forY)
         --player.SnowBallRolling
     end
 
+    
 end
 Game:ConnectEventFunction("BulletFire_sToc", BulletFire)
 
@@ -121,7 +135,6 @@ function Init_SnowBallRolling()
     SnowBallState = 1
     RollingUI.ProgressBar:SetPercent(0 / MAX_ROLLINGTIME)
 end
-
 
 
 
@@ -196,6 +209,8 @@ end
 function BulletThrowStart(BulletNum)
     local player = LocalPlayer:GetRemotePlayer()
     player.BulletIndex = BulletNum
+    
+    if not CheckBulletCount(player) then;    return;    end;
 
     if BulletNum == 1 then
         IsSnowBall = false
@@ -210,6 +225,8 @@ end
 function BulletThrowEnd(BulletNum)
     local player = LocalPlayer:GetRemotePlayer()
     player.BulletIndex = BulletNum
+
+    if not CheckBulletCount(player) then;    return;    end;
 
     if BulletNum == 1 then
         if not IsRolling then

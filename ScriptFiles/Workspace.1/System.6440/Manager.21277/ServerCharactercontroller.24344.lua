@@ -54,6 +54,13 @@ local function RequestFire(player, num, st, forward)
     
     --발사 전 처리
     local playerID = player:GetPlayerID()
+    
+        if index == 1 then
+        player.SnowBall:BulletFire()
+    elseif index == 2 then
+        player.Icicle:BulletFire()
+    else
+    end
     Game:BroadcastEvent("BulletFire_sToc", playerID, num, st, forward)
 end
 Game:ConnectEventFunction("RequestFire_cTos", RequestFire)

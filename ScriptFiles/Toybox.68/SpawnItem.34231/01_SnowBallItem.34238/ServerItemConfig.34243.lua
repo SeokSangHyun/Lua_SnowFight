@@ -10,7 +10,7 @@ local function CollisionEvent(self, target)
     
    local player = target:GetPlayer()
    local Item_Index = tonumber( string.sub(Item.Name, 1, 2) )
-
+   
    GetBulletItem(player, Item_Index)
 
    --Item:BroadcastEvent("GetFX", target:GetPlayerID())

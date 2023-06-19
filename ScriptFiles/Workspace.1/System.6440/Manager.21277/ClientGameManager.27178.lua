@@ -45,16 +45,6 @@ Game:ConnectEventFunction("BulletPreFire_sToc", BulletPreFire)
 
 
 --GetCameraForward : 카메라가 바라보는 방향
---[[
-local function BulletFire(playerID, index_bullet, forX, forY, forZ)
-    
-    g_Player:Fire(playerID, index_bullet, forX, forY, forZ)
-end
-Game:ConnectEventFunction("BulletFire_sToc", BulletFire)
-]]--
-
-
-
 -- 롤링
 local function SnowBallRooling(playerID, size)
     --크기를 기우는 로직

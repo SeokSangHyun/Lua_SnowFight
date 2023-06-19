@@ -24,17 +24,6 @@ end
 
 
 
-
---!---------------------------- Getter/Setter ------------------------------
---# 목적 : 
-function sRollingModule:GetBulletCount(player)
-    return self.NowBulletCount
-end
-
-
-
-
-
 --!---------------------------- 무기 시스템 처리 ------------------------------
 --# 목적 : 기본 세팅 값
 function sRollingModule:Initialize()

@@ -20,6 +20,14 @@ BulletButtonList = UIRoot.MainUI.BulletHUD
 
 
 
+--! ------------------------------ 상수형 ------------------------------
+DEF_MAX_BulletCount = 1000
+
+
+
+
+
+
 --! ------------------------------ 초기화 ------------------------------
 function InitPlayerData(player)
     local bullets = Toybox.Bullet:GetChildList()

@@ -19,7 +19,7 @@ end
 
 --! ------------------------------ 애니메이션 변경 함수 ------------------------------
 local function MontionChange(self, target)
-        if target == nil or not target:IsCharacter() then;    return;    end;
+        if target == nil or not target:IsCharacter() or not target:IsMyCharacter() then;    return;    end;
         
         local text = self.Parent.SurfaceUI.Text:GetText()
         local remoteCharacter = LocalPlayer:GetRemotePlayer():GetCharacter()

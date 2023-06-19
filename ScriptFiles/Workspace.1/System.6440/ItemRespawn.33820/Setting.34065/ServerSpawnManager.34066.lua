@@ -24,8 +24,8 @@ local function InitSpawner()
         for j = 1 , #SpawnItem do
             local si =  SpawnItem[j]
             spawner:AddSpawnObject(si, si.SpawnRate, Limit);
-            spawner:SetObjectSpawnType_Scale(si.Scale);
         end
+        --spawner:SetObjectSpawnType_Scale(si.Scale);
     end
     
 end

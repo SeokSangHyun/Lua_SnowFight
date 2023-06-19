@@ -14,13 +14,10 @@ local ListPopup = Workspace.UI.Popup.F_ListPopupPanel
 
 --!---------------------------- Widget 변경 ------------------------------
 --# 목적 : 
-local function BulletCountUpdate(index, count)
-    local i = math.floor(index)
-    local num = math.floor(count)
+function BulletCountUpdate(index, count)
     local ch = BulletButtonList:GetChildList()
-    
-    local cnt_text = ch[i].Img_TextBackground.T_Count
-    cnt_text:SetText("x" .. num )
+    local cnt_text = ch[#ch + 1 - index].Img_TextBackground.T_Count
+    cnt_text:SetText("x" .. math.floor(count))
 end
 Game:ConnectEventFunction("BulletCountUpdate_sToc", BulletCountUpdate)
 

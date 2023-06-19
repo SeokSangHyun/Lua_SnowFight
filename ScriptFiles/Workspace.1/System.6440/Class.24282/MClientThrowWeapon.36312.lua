@@ -22,7 +22,7 @@ function cTrowModule.new(object)
     t.Angle = object.Angle
 
     t.BulletCount = 10
-    t.BulletMaxCount = 1000
+    t.BulletMaxCount = DEF_MAX_BulletCount
 
     return t
 end
@@ -49,7 +49,7 @@ function cTrowModule:AddBullet(num)
     self.BulletCount = self.BulletCount + num
 end
 
-function cTrowModule:GetBullet()
+function cTrowModule:GetBulletCount()
     return self.BulletCount
 end
 
@@ -94,6 +94,7 @@ function cTrowModule:FireObject(playerID, posX, posY, posZ, forX, forY)
 
 -- 총알 감소
         self.BulletCount = self.BulletCount - 1
+        BulletCountUpdate(player.BulletIndex, self.BulletCount)
     end
 end
 

@@ -13,6 +13,18 @@ g_BulletList = Toybox.Bullet:GetChildList()
 
 Toybox.Bullet:GetChildList()[4].HitCollider.Collision:SetCharacterCollisionResponse(Enum.CollisionResponse.Block)
 
+
+
+
+
+--! ------------------------------ 상수형 ------------------------------
+DEF_MAX_BulletCount = 1000
+
+
+
+
+
+
 --! ------------------------------ 초기화 ------------------------------
 function InitPlayerData(player)
     EquipItem(player)
