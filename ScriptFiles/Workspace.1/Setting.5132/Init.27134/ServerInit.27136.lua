@@ -26,6 +26,7 @@ DEF_MAX_BulletCount = 1000
 
 
 --! ------------------------------ 초기화 ------------------------------
+--! PlayState .. 1=None  ,  2=WaitReady  ,  5=InGame  ,  10=Death
 function InitPlayerData(player)
     EquipItem(player)
     

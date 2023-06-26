@@ -11,12 +11,7 @@ Game:AddReplicateValue("GameTime", 0, Enum.ReplicateType.Changed, 0)
 --# 아무것도 아닌 기본 상태
 local function EnterLobbyState()
     InitTime("Lobby")
-    ResetDeathStone()
-    LocatePlayer_StartPoint()
-    ResetInGamePlayerList()
-    
-    --개발 상태 처리
-    Init_ReadyChairState()
+    Init_LobbyState()
 end
 g_sPhase.LobbyPhase.EnterEvent:Connect(EnterLobbyState) --해당 Phase로 변경됐을때 호출되는 이벤트를 연결해요.
 
@@ -53,10 +48,7 @@ g_sPhase.ReadyPhase.UpdateEvent:Connect(UpdateReadyState)
 local function EnterInGameState()
     InitTime("InGame")
     
-    GameStartPlayerList()
-    
-    --개발 상태 처리
-    Init_InGameChairState()
+    Init_GameState()
 end
 g_sPhase.InGamePhase.EnterEvent:Connect(EnterInGameState)
 
@@ -75,7 +67,7 @@ g_sPhase.InGamePhase.UpdateEvent:Connect(UpdateInGameState)
 --# 결과 상태
 local function EnterRewardState()
     InitTime("Result")
-    LocatePlayer_Reward()
+    Init_RewardState()
 end
 g_sPhase.ResultPhase.EnterEvent:Connect(EnterRewardState)
 

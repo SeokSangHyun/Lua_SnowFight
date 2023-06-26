@@ -8,7 +8,7 @@ local function EnterLobbyState()
     Init_LobbyUI()
     
     --개발 상태 처리
-    Init_ReadyChairState()
+    Init_LobbyState(LocalPlayer:GetRemotePlayer())
 end
 module.LobbyPhase.EnterEvent:Connect(EnterLobbyState) --해당 Phase로 변경됐을때 호출되는 이벤트를 연결해요.
 
@@ -18,10 +18,8 @@ module.LobbyPhase.EnterEvent:Connect(EnterLobbyState) --해당 Phase로 변경�
 --# 게임 중인 상태
 local function EnterInGameState()
     print("Game")
+    Init_GameState(LocalPlayer:GetRemotePlayer())
     Init_GameUI()
-    
-    --개발 상태 처리
-    Init_InGameChairState()
 end
 module.InGamePhase.EnterEvent:Connect(EnterInGameState)
 
@@ -30,10 +28,9 @@ module.InGamePhase.EnterEvent:Connect(EnterInGameState)
 --! ------------------------------ Reward ------------------------------
 --# 결과 상태
 local function EnterRewardState()
-    Exit_DeathStone()
-
     print("Reward")
     Init_RewardUI()
+    Init_RewardState(LocalPlayer:GetRemotePlayer())
 end
 module.ResultPhase.EnterEvent:Connect(EnterRewardState)
 

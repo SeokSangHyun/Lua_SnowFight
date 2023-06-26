@@ -5,12 +5,6 @@ local RollingUI = UIRoot.MainUI.F_RollingGuage
 
 
 
---UI
-local AskPopup = Workspace.UI.Popup.F_AskPopupPanel
-local ListPopup = Workspace.UI.Popup.F_ListPopupPanel
-
-
-
 
 --!---------------------------- Widget 변경 ------------------------------
 --# 목적 : 

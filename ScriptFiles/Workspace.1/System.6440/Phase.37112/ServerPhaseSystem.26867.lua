@@ -12,6 +12,34 @@ local limittime = 0
 local startTime = 0
 
 
+--!---------------------------- 상태 별 상태 처리 ------------------------------
+--# 목적 : 로비 (처음 진입 시 상태 세팅)
+function Init_LobbyState()
+    ResetDeathStone()
+    LocatePlayer_StartPoint()
+    ResetInGamePlayerList()
+    
+    --개발 상태 처리
+    Init_ReadyChairState()
+end
+
+
+--# 목적 : 게임 진입시 (처음 진입 시 상태 세팅)
+function Init_GameState()
+    GameStartPlayerList()
+    
+    --개발 상태 처리
+    Init_InGameChairState()
+end
+
+
+--# 목적 : 리워드 상태 진입시 (처음 진입 시 상태 세팅)
+function Init_RewardState()
+    LocatePlayer_Reward()
+end
+
+
+
 
 
 --! ------------------------------ Phase 공통 기능 ------------------------------

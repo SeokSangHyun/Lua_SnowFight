@@ -1,12 +1,8 @@
 
 
 
---UI
-local AskPopup = Workspace.UI.Popup.F_AskPopupPanel
-local ListPopup = Workspace.UI.Popup.F_ListPopupPanel
-
-
-
+local AskPopup = UIRoot.LobbyUI.F_AskPopupPanel
+local ListPopup = UIRoot.LobbyUI.F_ListPopupPanel
 
 
 --!---------------------------- 상태 별 UI 처리 ------------------------------
@@ -27,7 +23,25 @@ function Init_GameUI()
     UIRoot.LobbyUI.Visible = false
     UIRoot.MainUI.Visible = true
 
+    local player = LocalPlayer:GetRemotePlayer()
     local ui = UIRoot.MainUI
+    if player.PlayState == 2 then
+        ui.BulletHUD.Visible = true
+        ui.F_PlayLog.Visible = true
+        ui.F_WarLog.Visible = true
+        ui.F_RollingGuage.Visible = true
+        ui.F_Death.Visible = true
+
+        ui.F_Wait.Visible = false
+    else
+        ui.BulletHUD.Visible = false
+        ui.F_PlayLog.Visible = false
+        ui.F_WarLog.Visible = false
+        ui.F_RollingGuage.Visible = false
+        ui.F_Death.Visible = false
+
+        ui.F_Wait.Visible = true
+    end
 end
 
 
@@ -82,6 +96,9 @@ end
 
 
 local function ButtonEvent_StardardPopup(self)
+    local player = LocalPlayer:GetRemotePlayer()
+    player.PlayState = 2
+
     Toggle_StardardPopup(false)
     Toggle_ListPopup(true)
     CharacterStateChange("Sit")
