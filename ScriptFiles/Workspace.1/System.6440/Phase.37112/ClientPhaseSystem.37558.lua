@@ -27,3 +27,11 @@ end
 
 
 
+--!---------------------------- Time ------------------------------
+local function ChangeReplicateValue(self, value) -- value : 변화한 값
+    Update_InformUI()
+    
+    Update_TimerUI(Game.GameState)
+end
+Game:ConnectChangeEventFunction("GameTime", ChangeReplicateValue)
+

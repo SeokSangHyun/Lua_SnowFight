@@ -24,11 +24,7 @@ end
 Game.OnSpawnCharacter:Connect(SpawnCharacter)
 
 
-local function ChangeReplicateValue(self, value) -- value : 변화한 값
-    wait(1)
-    Update_InformUI()
-end
-Game:ConnectChangeEventFunction("GameTime", ChangeReplicateValue)
+
 
 -- Input:DeactiveGroup("DefaultInput")
 -- InputSetting()

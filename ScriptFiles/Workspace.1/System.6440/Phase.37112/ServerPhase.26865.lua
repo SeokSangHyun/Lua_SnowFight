@@ -27,6 +27,7 @@ g_sPhase.LobbyPhase.UpdateEvent:Connect(UpdateLobbyState)  --해당 Phase일때 
 
 --! ------------------------------ Ready ------------------------------
 --# 게임 중인 상태
+--[[
 local function EnterReadyState()
     InitTime("Ready")
 end
@@ -37,6 +38,7 @@ local function UpdateReadyState(UpdateTime)
     ClockTime()
 end
 g_sPhase.ReadyPhase.UpdateEvent:Connect(UpdateReadyState)
+]]--
 
 
 

@@ -1,7 +1,7 @@
 
 local ThrowModule = require(Workspace.System.Class.MServerThrowWeapon)
 local RollingModule = require(Workspace.System.Class.MServerRollingWeapon)
-
+local StormModule = require(Workspace.System.Class.MServerStormWeapon)
 
 
 
@@ -9,6 +9,7 @@ local RollingModule = require(Workspace.System.Class.MServerRollingWeapon)
 --! ------------------------------ 전역변수 ------------------------------
 GameRegistChair = Workspace.World.Lobby.Trigger.RegistChair:GetChildList()
 g_BulletList = Toybox.Bullet:GetChildList()
+g_Phase = Workspace.System.Phase
 
 
 Toybox.Bullet:GetChildList()[4].HitCollider.Collision:SetCharacterCollisionResponse(Enum.CollisionResponse.Block)
@@ -35,6 +36,7 @@ function InitPlayerData(player)
     
     player.SnowBall = ThrowModule.new(playerID, bullets[1])
     player.Icicle = ThrowModule.new(playerID, bullets[2])
+    player.Crystal = StormModule.new(playerID, bullets[3])
     player.SnowBallRolling = RollingModule.new(playerID, bullets[4])
     
     player.BulletIndex = 0

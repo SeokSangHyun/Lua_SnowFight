@@ -1,7 +1,7 @@
 
 local ThrowModule = require(Workspace.System.Class.MClientThrowWeapon)
 local RollingModule = require(Workspace.System.Class.MClientRollingWeapon)
-
+local StormModule = require(Workspace.System.Class.MClientStormWeapon)
 
 
 
@@ -9,6 +9,7 @@ local RollingModule = require(Workspace.System.Class.MClientRollingWeapon)
 --! ------------------------------ 전역변수 ------------------------------
 GameRegistChair = Workspace.World.Lobby.Trigger.RegistChair:GetChildList()
 g_BulletList = Toybox.Bullet:GetChildList()
+g_Phase = Workspace.System.Phase
 
 
 --* UI 컴포넌트
@@ -37,6 +38,7 @@ function InitPlayerData(player)
     
     player.SnowBall = ThrowModule.new(bullets[1])
     player.Icicle = ThrowModule.new(bullets[2])
+    player.Crystal = StormModule.new(playerID, bullets[3])
     player.SnowBallRolling = RollingModule.new(bullets[4])
     
     player.BulletIndex = 0

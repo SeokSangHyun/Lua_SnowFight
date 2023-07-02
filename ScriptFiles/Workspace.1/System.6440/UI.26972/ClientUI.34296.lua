@@ -32,7 +32,7 @@ function Init_GameUI()
         ui.F_RollingGuage.Visible = true
         ui.F_Death.Visible = true
 
-        ui.F_Wait.Visible = false
+        ui.F_NoticePanel.Visible = false
     else
         ui.BulletHUD.Visible = false
         ui.F_PlayLog.Visible = false
@@ -40,7 +40,7 @@ function Init_GameUI()
         ui.F_RollingGuage.Visible = false
         ui.F_Death.Visible = false
 
-        ui.F_Wait.Visible = true
+        ui.F_NoticePanel.Visible = true
     end
 end
 
@@ -59,9 +59,32 @@ end
 --!---------------------------- 상태 별 UI 처리 ------------------------------
 --# 목적 : ㅁㄴㅇㄻㄴ
 function Update_InformUI()
+    --SurfaceUI
     local toy = Root_Infomation.Model.BellGroup
     local clock = math.floor(Game.GameTime * 10) /10
     toy.SurfaceUI_Condition.Text:SetText(clock)
+end
+
+
+function Update_TimerUI(state)
+    
+    if state == "Lobby" then
+        local totla_time = g_Phase.LobbyTime
+        local ui = UIRoot.LobbyUI.F_NoticePanel
+        ui.Contents_Time:SetText( math.floor(totla_time - Game.GameTime) )
+        
+    elseif Game.GameState == "InGame" then
+        local totla_time = g_Phase.InGameTime
+        local ui1 = UIRoot.MainUI.F_NoticePanel
+        local ui2 = UIRoot.MainUI.F_Timer
+        ui1.Contents_Time:SetText( math.floor(totla_time - Game.GameTime) )
+        ui2.Contents:SetText( math.floor(totla_time - Game.GameTime) )
+        
+    elseif Game.GameState == "Result" then
+        local totla_time = g_Phase.RewardTime
+        local ui = UIRoot.RewardUI.F_NoticePanel
+        ui.Contents_Time:SetText( math.floor(totla_time - Game.GameTime) )
+    end
 end
 
 

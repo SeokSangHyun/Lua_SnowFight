@@ -47,11 +47,13 @@ end
 function InitTime(phase)
     if phase == "Lobby" then
         limittime = Script.Parent.LobbyTime
+--[[
     elseif phase == "Ready" then
         limittime = Script.Parent.ReadyTime
+]]--
     elseif phase == "InGame" then
         limittime = Script.Parent.InGameTime
-    elseif phase == "Reward" then
+    elseif phase == "Result" then
         limittime = Script.Parent.RewardTime
     end
 
