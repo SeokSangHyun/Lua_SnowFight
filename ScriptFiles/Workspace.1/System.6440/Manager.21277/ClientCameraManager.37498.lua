@@ -9,7 +9,8 @@ function ChangeCamera(targetCam, targetObj)
     local remoteCharacter = LocalPlayer:GetRemotePlayer():GetCharacter()
     local newCamera = LocalPlayer:SetCurrentCamera(targetCam)
     
-    newCamera:SetLookAtTarget(targetObj)        --카메라가 바라보는 대상을 설정해요.
+    newCamera.Parent = targetObj
+    newCamera:SetLookAtTarget(nil)        --카메라가 바라보는 대상을 설정해요.
 end
 
 

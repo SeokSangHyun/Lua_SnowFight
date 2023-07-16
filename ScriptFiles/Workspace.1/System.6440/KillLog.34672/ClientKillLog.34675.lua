@@ -1,4 +1,6 @@
 
+WarLog = Script
+
 --! ------------------------------  ------------------------------
 local PlayerModule = require(Workspace.System.KillLog.ModuleLogs)
 
@@ -9,20 +11,27 @@ local LogCor = nil
 
 
 --! ------------------------------  ------------------------------
-function AddWarLog(log_type, strGivceUserName, strReceiveUserName )
+function WarLog:AddWarLog(log_type, strGivceUserName, strReceiveUserName )
     local parent = Workspace.UI.MainUI.F_WarLog.LogBox
-    local widget = Workspace.UI.MainUI.F_WarLog.LogBox.F_OneAction
+    local widget = nil
+    
+    if log_type == "kill" then
+        widget = UIRoot.MainUI.F_WarLog.LogBox.F_Kill
+    elseif log_type == "StormGain" then
+        widget = UIRoot.MainUI.F_WarLog.LogBox.F_StormItemGain
+    end
+    
     local prep = PlayerModule.new(parent, widget)
     prep:RegisterLog(log_type, strGivceUserName, strReceiveUserName )
 
     table.insert( g_WarLog, prep )
 end
-
+Game:ConnectEventFunction("AddWarLog_sToc", function(log_type, strGivceUserName, strReceiveUserName) WarLog:AddWarLog(log_type, strGivceUserName, strReceiveUserName) end)
 
 
 
 --! ------------------------------ 로그 시스템 동작 ------------------------------
-function LogUpdate()
+function WarLog:LogUpdate()
     local StartTime = time()
     local SlotMaxTime = 5
     local WaitTime = 0
@@ -59,7 +68,7 @@ function LogUpdate()
         coroutine.resume(LogCor)
     end
 end
-LogUpdate()
+WarLog:LogUpdate()
 
 
 

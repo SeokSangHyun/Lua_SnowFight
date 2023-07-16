@@ -16,7 +16,6 @@ function cStormModule.new(object)
     t.Damage = object.BulletDamage
     t.ColdOffset = object.ColdOffset
     t.Speed = object.BulletSpeed
-    t.Angle = object.Angle
 
     t.IsGain = false
     t.IsMode = false
@@ -57,9 +56,11 @@ end
 
 function cStormModule:ActiveStormMode(state)
     if state then
-        ChangeCamera(self.WeaponObject.Camera, nil)
+        local tornado = self.WeaponObject
+        ChangeCamera(tornado.Camera, tornado)
     else
-        ChangeCamera(Workspace.MainCamera, nil)
+        local character = LocalPlayer:GetRemotePlayer():GetCharacter()
+        ChangeCamera(Workspace.MainCamera, character)
     end
 
     self.IsMode = state

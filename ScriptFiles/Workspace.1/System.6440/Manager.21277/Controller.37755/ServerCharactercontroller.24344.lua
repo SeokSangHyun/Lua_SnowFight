@@ -9,8 +9,10 @@ g_PlayerList = {}
 
 
 
---# 초기화
+
+
 --! ------------------------------ Getter/Setter ------------------------------
+--# 초기화
 local function RplicateMoveForward(player, state)
     Game.CtrlMoveForward = state
 end

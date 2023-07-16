@@ -46,7 +46,7 @@ function sRollingModule:Initialize()
         
         self.RolllAct = false
         self.Cor = nil
-        HitCharacter_Rolling(self.playerID, self.WeaponObject)
+        GameManager:HitCharacter_Rolling(self.playerID, self.WeaponObject)
     end)
 end
 
