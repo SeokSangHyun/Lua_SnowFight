@@ -5,7 +5,14 @@ local Item = Script.Parent
 
 
 --!---------------------------- <> ------------------------------
---# ----- 요약 : 
+--[[
+function Item:TornadoMove(vec)
+    Item:SendEventToServer("TornadoMove_cTos", Vector.new(0, -1, 0), 100)
+end
+
+]]--
+
+
 
 
 

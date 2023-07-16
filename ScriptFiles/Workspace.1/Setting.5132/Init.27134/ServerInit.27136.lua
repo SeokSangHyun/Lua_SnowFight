@@ -40,7 +40,6 @@ function InitPlayerData(player)
     local playerID = player:GetPlayerID()
     local bullets = Toybox.Bullet:GetChildList()
     local ToyList = Workspace.System.ToyList
-    ToyList.Storm.SnowStorm.HitCollider.Collision:SetCharacterCollisionResponse(Enum.CollisionResponse.Ignore)
     
     player.SnowBall = ThrowModule.new(playerID, bullets[1])
     player.Icicle = ThrowModule.new(playerID, bullets[2])

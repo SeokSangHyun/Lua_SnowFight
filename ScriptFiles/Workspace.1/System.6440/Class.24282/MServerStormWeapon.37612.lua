@@ -16,6 +16,7 @@ function sStormModule.new(playerID, object)
 
     t.IsGain = false
     
+    --t.WeaponObject.HitCollider.Collision:SetCharacterCollisionResponse(Enum.CollisionResponse.Ignore)
     return t
 end
 
@@ -46,11 +47,13 @@ end
 
 
 
+
+
 --!---------------------------- 무기 시스템 처리 ------------------------------
 --# 목적 : 기본 세팅 값
 function sStormModule:Initialize()
     local player = Game:GetPlayer(self.playerID)
-    local pos = player:GetCharacter().Location+ Vector.new(0,0,-30)
+    local pos = player:GetCharacter().Location+ Vector.new(0,0,50)
 
     self.WeaponObject.Location = pos
     self.WeaponObject.HitCollider.Collision:SetCharacterCollisionResponse(Enum.CollisionResponse.Overlap)
