@@ -88,7 +88,7 @@ function cTrowModule:FireObject(playerID, posX, posY, posZ, forX, forY)
                 local targetID = target:GetPlayerID()
                 local bulletIndex = self.Parent.BulletIndex
                 
-                Game:SendEventToServer("HitCharacter_cTos", targetID, g_BulletList[bulletIndex].BulletDamage)
+                Game:SendEventToServer("HitCharacter_cTos", targetID, bulletIndex)
                 Game:DeleteObject(self)
         end)
 

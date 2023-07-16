@@ -1,6 +1,4 @@
 
-GameManager = Script.Parent
-
 local DamageModule = require(ScriptModule.DefaultModules.DamageManager)
 local Utility = require(ScriptModule.DefaultModules.Utility)
 
@@ -33,22 +31,22 @@ end
 
 
 --!---------------------------- 피격 처리 ------------------------------
-function GameManager:HitCharacter(player, targetID, damage)
+local function HitCharacter(player, targetID, bullet_index)
     local playerID = player:GetPlayerID()
     local hitCharacter = Game:GetPlayerCharacter(targetID)
     
-    Game:SendEventToClient(targetID, "HitCharacterCamera_sToc", damage)
+    Game:SendEventToClient(targetID, "HitCharacterCamera_sToc", bullet_index)
     
     
     --캐릭터 체력 처리
-    local IsAlive = DamageModule:ApplyDamage(hitCharacter, damage)--g_BulletList[bullet_index].BulletDamage)
+    local IsAlive = DamageModule:ApplyDamage(hitCharacter, g_BulletList[bullet_index].BulletDamage)
     Game:BroadcastEvent("SetCharacterHP_cTos",playerID, targetID, IsAlive, hitCharacter.HP)
 end
-Game:ConnectEventFunction("HitCharacter_cTos", function(player, targetID, damage) GameManager:HitCharacter(player, targetID, damage) end)
+Game:ConnectEventFunction("HitCharacter_cTos", HitCharacter)
 
 
 
-function GameManager:HitCharacter_Rolling(playerID, obj)
+function HitCharacter_Rolling(playerID, obj)
     local player = Game:GetPlayer(playerID)
     local pos = obj.Location
     

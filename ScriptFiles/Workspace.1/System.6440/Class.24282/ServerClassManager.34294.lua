@@ -36,12 +36,12 @@ function GetBulletItem(player, index)
         player.Icicle:AddBullet(1)
         bulletcnt = player.Icicle:GetBulletCount()
         Game:SendEventToClient(playerID, "BulletCountUpdate_sToc", index, bulletcnt)
---[[
     elseif index == 3 then
         player.Crystal:AddBullet()
         player.Crystal:Initialize()
         Game:SendEventToClient(playerID, "Toggle_StormButton_sToc", true)
-]]--
+        
+        player.Crystal.WeaponObject.HitCollider.Collision:SetCharacterCollisionResponse(Enum.CollisionResponse.Ignore)
     else
     end
     
