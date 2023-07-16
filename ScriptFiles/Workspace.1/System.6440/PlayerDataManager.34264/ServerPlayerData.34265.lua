@@ -1,77 +1,13 @@
 
+--! ------------------------------ <> ------------------------------
 g_PlayerData = {}
 
 g_ReadyPlayerList = {}            -- 준비하고 있는 플레이어 리스트
 g_InGamePlayList = {}             -- 게임을 진입하고 플레이하는 플레이어 리스트
 
 
-g_DeathStone = {}
-local StoneIndex = 1
---! ------------------------------ DeathStone ------------------------------
-function ResetDeathStone()
-    for i = 1 , #g_DeathStone do
-        Game:DeleteObject(g_DeathStone[i])
-    end
-    
-    g_DeathStone = {}
-end
 
-
-
-function AddDeathStone()
-    local obj = Game:CreateSyncObject(Toybox.DeathStone, Vector.new(0,0,0))
-    obj.Enable = false
-    table.insert(g_DeathStone, obj)
-end
-
-
-
-function CreateDeathStone(player)
-    local pos = player:GetCharacter().Location
-    g_DeathStone[StoneIndex].Location = pos
-    g_DeathStone[StoneIndex].Enable = true
-
-    player.DeathStoneCount = 5
-    player.DeathStoneIndex = StoneIndex
-    StoneIndex = StoneIndex + 1
-    if #g_DeathStone >= StoneIndex then
-        StoneIndex = 1
-    end
-end
-
-
-
-function RemoveDeathStone(player)
-    g_DeathStone[StoneIndex].Location = Vector.new(0,0,0)
-    g_DeathStone[StoneIndex].Enable = false
-    
-    player.DeathStoneCount = 0
-    player.DeathStoneIndex = 0
-    
-    Game:SendEventToClient(player:GetPlayerID(), "FrozingBroken_sToc")
-end
-
-
-
-function ActDeathStone(player)
-    local index = player.DeathStoneIndex
-    local cnt = player.DeathStoneCount
-    
-    g_DeathStone[index]:FrozenUpdate()
-    
-    player.DeathStoneCount = cnt - 1
-    if cnt <= 0 then
-        RemoveDeathStone(player)
-    end
-end
-
-
-
-
-
-
-
---! ------------------------------ Player State ------------------------------
+--! ------------------------------ <Player State> ------------------------------
 --# -----목적 : 플레이어의 상태
 --! (1 None = 기본 상태. 로비)
 --! (2 WaitReady = 참가 등록은 완료. 게임 시작 전)
@@ -119,13 +55,6 @@ function StateAction(playerID)
         end
     end
 end
-
-
-
-
-
-
-
 
 
 

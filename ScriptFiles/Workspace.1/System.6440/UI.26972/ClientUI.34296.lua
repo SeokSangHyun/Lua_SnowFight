@@ -26,6 +26,11 @@ function Update_TimerUI(state)
         local ui = UIRoot.LobbyUI.F_NoticePanel
         ui.Contents_Time:SetText( math.floor(totla_time - Game.GameTime) )
         
+    elseif Game.GameState == "Ready" then
+        local totla_time = g_Phase.ReadyTime
+        local ui = UIRoot.LobbyUI.F_NoticePanel
+        ui.Contents_Time:SetText( math.floor(totla_time - Game.GameTime) )
+        
     elseif Game.GameState == "InGame" then
         local totla_time = g_Phase.InGameTime
         local ui1 = UIRoot.MainUI.F_NoticePanel
