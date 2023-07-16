@@ -20,6 +20,7 @@ end
 
 --# 목적 : 리워드 상태 진입시 (처음 진입 시 상태 세팅)
 function Init_RewardState(player)
+    CharacterUtil:MontionChange("Normal")
     Exit_DeathStone()
 end
 

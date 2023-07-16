@@ -4,6 +4,8 @@ local module = PhaseModule.new()
 --! ------------------------------ LobbyPhase ------------------------------
 --# 아무것도 아닌 기본 상태
 local function EnterLobbyState()
+    repeat wait(0.2) until LocalPlayer:GetRemotePlayer()
+
     print("Lobby")
     Init_LobbyUI()
     
@@ -11,6 +13,17 @@ local function EnterLobbyState()
     Init_LobbyState(LocalPlayer:GetRemotePlayer())
 end
 module.LobbyPhase.EnterEvent:Connect(EnterLobbyState) --해당 Phase로 변경됐을때 호출되는 이벤트를 연결해요.
+
+
+
+--! ------------------------------ Ready ------------------------------
+--# 게임 중인 상태
+local function EnterReadyState()
+    print("Ready")
+    --Init_GameUI()
+end
+module.ReadyPhase.EnterEvent:Connect(EnterReadyState)
+
 
 
 
@@ -31,6 +44,7 @@ local function EnterRewardState()
     print("Reward")
     Init_RewardUI()
     Init_RewardState(LocalPlayer:GetRemotePlayer())
+    
 end
 module.ResultPhase.EnterEvent:Connect(EnterRewardState)
 

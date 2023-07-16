@@ -90,9 +90,10 @@ BulletButtonList.Btn_Icicle.OnUpEvent:Connect(IcicleButtonEvent)
 
 --# 목적 : 
 local function SnowCrystalButtonEvent(self)
+    print("Stome")
     BulletThrowEnd(3)
 end
-BulletButtonList.Btn_SnowCrystal.OnUpEvent:Connect(SnowCrystalButtonEvent)
+UIRoot.MainUI.F_CrystalButton.Btn_SnowCrystal.OnUpEvent:Connect(SnowCrystalButtonEvent)
 
 
 

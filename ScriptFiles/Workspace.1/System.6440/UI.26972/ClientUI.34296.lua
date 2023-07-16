@@ -5,53 +5,6 @@ local AskPopup = UIRoot.LobbyUI.F_AskPopupPanel
 local ListPopup = UIRoot.LobbyUI.F_ListPopupPanel
 
 
---!---------------------------- 상태 별 UI 처리 ------------------------------
---# 목적 : 로비 (처음 진입 시 UI 세팅)
-function Init_LobbyUI()
-    UIRoot.LobbyUI.Visible = true
-    UIRoot.MainUI.Visible = false
-
-    local ui = UIRoot.LobbyUI
-    ui.F_AskPopupPanel.Visible = false
-    ui.F_ListPopupPanel.Visible = false
-    ui.F_NoticePanel.Visible = true
-end
-
-
---# 목적 : 게임 진입시 (처음 진입 시 UI 세팅)
-function Init_GameUI()
-    UIRoot.LobbyUI.Visible = false
-    UIRoot.MainUI.Visible = true
-
-    local player = LocalPlayer:GetRemotePlayer()
-    local ui = UIRoot.MainUI
-    if player.PlayState == 2 then
-        ui.BulletHUD.Visible = true
-        ui.F_PlayLog.Visible = true
-        ui.F_WarLog.Visible = true
-        ui.F_RollingGuage.Visible = true
-        ui.F_Death.Visible = true
-
-        ui.F_NoticePanel.Visible = false
-    else
-        ui.BulletHUD.Visible = false
-        ui.F_PlayLog.Visible = false
-        ui.F_WarLog.Visible = false
-        ui.F_RollingGuage.Visible = false
-        ui.F_Death.Visible = false
-
-        ui.F_NoticePanel.Visible = true
-    end
-end
-
-
---# 목적 : 리워드 상태 진입시 (처음 진입 시 UI 세팅)
-function Init_RewardUI()
-    UIRoot.LobbyUI.Visible = false
-    UIRoot.MainUI.Visible = false
-end
-
-
 
 
 
@@ -60,7 +13,7 @@ end
 --# 목적 : ㅁㄴㅇㄻㄴ
 function Update_InformUI()
     --SurfaceUI
-    local toy = Root_Infomation.Model.BellGroup
+    local toy = Root_Infomation
     local clock = math.floor(Game.GameTime * 10) /10
     toy.SurfaceUI_Condition.Text:SetText(clock)
 end
@@ -109,7 +62,7 @@ Game:ConnectEventFunction("SnowBall_UIUpdate", SnowBall_UIUpdate)
 
 
 
---!---------------------------- 공통 처리 ------------------------------
+--!---------------------------- AskPopup 처리 ------------------------------
 --# 게임 준비 등록
 --? 
 function Toggle_StardardPopup(state)
@@ -152,6 +105,8 @@ AskPopup.NoButton.OnUpEvent:Connect(ButtonEvent_StardardPopupNo)
 
 
 
+
+--!---------------------------- 공격 버튼 ------------------------------
 --# 게임 준비 등록 후 팝업
 --? 
 local buttonlist = ListPopup.ButtonList:GetChildList()
@@ -189,6 +144,31 @@ buttonlist[2].OnUpEvent:Connect(ButtonEvent_ReadyPopup)
 
 
 
+--# ----- 요약 : 토네이도 버튼 처리
+-- 토네이도 버튼 토글
+function Toggle_StormButton(state)
+    UIRoot.MainUI.F_CrystalButton.Visible = state
+end
+Game:ConnectEventFunction("Toggle_StormButton_sToc", Toggle_StormButton)
+
+
+
+-- 토네이도 버튼 토글
+UIRoot.MainUI.F_CrystalButton.Btn_SnowCrystal.OnUpEvent:Connect(function(self)
+    local player = LocalPlayer:GetRemotePlayer()
+    if not player.Crystal:CheckStormMode() then
+        player.Crystal:ActiveStormMode(true)
+        Toggle_UI(true)
+    else
+        player.Crystal:ActiveStormMode(false)
+        Toggle_UI(false)
+    end
+    
+end)
+
+
+
+
 
 
 --!---------------------------- 캐릭터 관련 UI 처리 ------------------------------
@@ -213,6 +193,12 @@ Game:ConnectEventFunction("SetCharacterHP_cTos", SetCharacterHP)
 UIRoot.MainUI.F_Death.Button.OnUpEvent:Connect(function(self)
     Game:SendEventToServer("FrozingBroken_cTos")
 end)
+
+
+
+
+
+
 
 
 

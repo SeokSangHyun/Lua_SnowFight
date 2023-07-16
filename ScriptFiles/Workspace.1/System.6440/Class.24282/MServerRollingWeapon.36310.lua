@@ -89,8 +89,10 @@ function sRollingModule:RollingThrow(forX, forY, forZ)
     
 end
 
-
-
+function sRollingModule:DisActive()
+    self.WeaponObject.Enable = true
+    self.WeaponObject.Location = Vector.new(0,0,-100)
+end
 
 
 

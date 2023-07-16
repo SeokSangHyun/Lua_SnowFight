@@ -31,14 +31,21 @@ function GetBulletItem(player, index)
     if index == 1 then
         player.SnowBall:AddBullet(1)
         bulletcnt = player.SnowBall:GetBulletCount()
+        Game:SendEventToClient(playerID, "BulletCountUpdate_sToc", index, bulletcnt)
     elseif index == 2 then
         player.Icicle:AddBullet(1)
         bulletcnt = player.Icicle:GetBulletCount()
+        Game:SendEventToClient(playerID, "BulletCountUpdate_sToc", index, bulletcnt)
+    elseif index == 3 then
+        player.Crystal:AddBullet()
+        player.Crystal:Initialize()
+        Game:SendEventToClient(playerID, "Toggle_StormButton_sToc", true)
+        
+        player.Crystal.WeaponObject.HitCollider.Collision:SetCharacterCollisionResponse(Enum.CollisionResponse.Ignore)
     else
     end
     
     
-    Game:SendEventToClient(playerID, "BulletCountUpdate_sToc", index, bulletcnt)
 end
 Game:ConnectEventFunction("GetBulletItem_cTos", GetBulletItem)
 
