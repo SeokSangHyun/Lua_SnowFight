@@ -245,6 +245,9 @@ function BulletThrowEnd(BulletNum)
         local character = LocalPlayer:GetRemotePlayer():GetCharacter()
         character:ChangeAnimState("SkillAnim")
         
+        
+        
+        
     end
 
 end

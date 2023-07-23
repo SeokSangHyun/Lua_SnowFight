@@ -1,6 +1,11 @@
 
 PlayerControl = Script.Parent
 
+
+
+
+
+
 --! ------------------------------ <> ------------------------------
 function PlayerControl:SetMoveControl(player, state)
     local playerID = player:GetPlayerID()
@@ -10,7 +15,11 @@ end
 
 
 
-
+--! ------------------------------ <캐릭터 애니메이션> ------------------------------
+function PlayerControl:CharacterStateChange( player, anim )
+    local playerID = player:GetPlayerID()
+    Game:SendEventToClient(playerID, "CharacterStateChange", anim)
+end
 
 
 

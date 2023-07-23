@@ -91,24 +91,24 @@ function LocatePlayer_Reward(index)
     local place = RewardGroup.PlayerPlace:GetChildList()
     local pos = place[4].Location
     
-    if g_InGamePlayList[index] >= temp_kill then
+    if g_InGamePlayList[index].KillPoint >= temp_kill then
         pos = place[1].Location
-    elseif g_InGamePlayList[index] >= temp_freeze then
+    elseif g_InGamePlayList[index].FreezingPoint >= temp_freeze then
         pos = place[2].Location
-    elseif g_InGamePlayList[index] >= temp_tornado then
+    elseif g_InGamePlayList[index].TornadoPoint >= temp_tornado then
         pos = place[3].Location
     end
     
     
-    g_InGamePlayList[index] = pos
+    g_InGamePlayList[index]:GetCharacter.Location = pos
 end
 
 
-local ReturnGroup = Workspace.SpawnPoint
+local ReturnGroup = Workspace.SpawnPoint.SpawnArea
 function LocatePlayer_StartPoint()
     for i = 1 , #g_InGamePlayList do
-        
-        g_InGamePlayList[i]:GetCharacter().Location = ReturnGroup.Location
+        local area = Vector.new( math.random(-200, 200), math.random(-200, 200), 0)
+        g_InGamePlayList[i]:GetCharacter().Location = ReturnGroup.Location + area--:RespawnCharacter()--:GetCharacter().Location = ReturnGroup.Location
     end
 end
 

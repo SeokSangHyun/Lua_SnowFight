@@ -48,6 +48,8 @@ function Init_GameUI()
         ui.F_PlayLog.Visible = true
         ui.F_WarLog.Visible = true
         ui.F_Timer.Visible = true
+        ui.F_RollingGuage.Visible = true
+        ui.F_Death.Visible = true
         
 
         ui.F_Death.Visible = false
@@ -58,10 +60,12 @@ function Init_GameUI()
         ui.F_PlayLog.Visible = false
         ui.F_WarLog.Visible = false
         ui.F_Timer.Visible = false
+        ui.F_RollingGuage.Visible = false
+        ui.F_Death.Visible = false
 
-        ui.F_Death.Visible = true
-        ui.F_RollingGuage.Visible = true
-        ui.F_NoticePanel.Visible = true
+        ui.F_Death.Visible = false
+        ui.F_RollingGuage.Visible = false
+        ui.F_NoticePanel.Visible = false
     end
 end
 

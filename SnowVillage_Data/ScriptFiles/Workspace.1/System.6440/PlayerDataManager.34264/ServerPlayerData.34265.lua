@@ -1,7 +1,11 @@
 
+PlayerData = Script
+
 --! ------------------------------ <> ------------------------------
 g_ReadyPlayerList = {}            -- 준비하고 있는 플레이어 리스트
 g_InGamePlayList = {}             -- 게임을 진입하고 플레이하는 플레이어 리스트
+
+
 
 
 
@@ -14,7 +18,7 @@ g_InGamePlayList = {}             -- 게임을 진입하고 플레이하는 플�
 function CheckPlayerState(playerID, strState)
     local player = Game:GetPlayer(playerID)
 
-    if player.PlayState == 2 and strState == "WaitReady" then
+    if player.PlayState == 2 or strState == "WaitReady" then
         return true
     else
         return false
@@ -23,9 +27,9 @@ end
 
 
 
-function SetPlayerState(playerID, strState)
-    local player = Game:GetPlayer(playerID)
-    
+function PlayerData:SetPlayerState(player, strState)
+    local playerID = player:GetPlayerID()
+
     if strState == "WaitReady" then
         player.PlayState = 2
     elseif strState == "InGame" then
@@ -35,15 +39,18 @@ function SetPlayerState(playerID, strState)
     else
         player.PlayState = 1
     end
+    
+    
+    Game:SendEventToClient(playerID, "SetPlayerState", strState)
 end
-
+Game:ConnectEventFunction("SetPlayerState", function(player, strState)   PlayerData:SetPlayerState(player, strState)    end)
 
 
 
 function StateAction(playerID)
     local player = Game:GetPlayer(playerID)
     local character= Game:GetPlayerCharacter(playerID)
-    Game:SendEventToClient(playerID, "CharacterStateChange_sToc", "Stand")
+    PlayerControl:CharacterStateChange( player, "Stand" )
     
 
     if player.PlayState == 2 then
@@ -94,10 +101,11 @@ function AddReadyPlayerList(player)
 end
 
 
-
+--# ----- 목적 : 로비 -> 레디 상태로 변할 때 아직 
 function DeleteReadyPlayer()
     for i = 1, #g_ReadyPlayerList do
         table.insert(g_InGamePlayList, g_ReadyPlayerList[i])
+        --RegistSpawnList(g_ReadyPlayerList[i]:GetPlayerID())
     end
     
     g_ReadyPlayerList = {}
@@ -114,14 +122,14 @@ function ResetInGamePlayerList()
     
     local allPlayer = Game:GetAllPlayer()
     for i = 1, #allPlayer do
-        SetPlayerState(allPlayer[i]:GetPlayerID(), "None")
+        PlayerData:SetPlayerState(allPlayer[i], "None")
     end
 end
 
 
 
 function AddInGamePlayerList(player)
-    SetPlayerState(player:GetPlayerID(), "InGame")
+    PlayerData:SetPlayerState(player, "InGame")
     table.insert(g_InGamePlayList, player)
 end
 
@@ -150,13 +158,10 @@ function GameStartPlayerList()
     for i = 1, #g_ReadyPlayerList do
        AddDeathStone(g_ReadyPlayerList[i])
        AddInGamePlayerList(g_ReadyPlayerList[i])
+       local character = g_ReadyPlayerList[i]:GetCharacter()
+       character:SetMaxSpeed(450)
+       --AddDeathStone(g_ReadyPlayerList[i])
     end
-    
-    local allplayer = Game:GetAllPlayer()
-    for i = 1 , #allplayer do
-        AddDeathStone(allplayer[i])
-    end
-    
     
     ResetReadyPlayerList()
 end

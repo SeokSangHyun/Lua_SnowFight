@@ -11,6 +11,10 @@ Game:AddReplicateValue("GameTime", 0, Enum.ReplicateType.Changed, 0)
 --# 아무것도 아닌 기본 상태
 local function EnterLobbyState()
     InitTime("Lobby")
+    local allplayer = Game:GetAllPlayer()
+    for i = 1, #allplayer do
+        PlayerData:SetPlayerState(allplayer[i], "None")
+    end
     Init_LobbyState()
 end
 g_sPhase.LobbyPhase.EnterEvent:Connect(EnterLobbyState) --해당 Phase로 변경됐을때 호출되는 이벤트를 연결해요.
@@ -29,6 +33,8 @@ g_sPhase.LobbyPhase.UpdateEvent:Connect(UpdateLobbyState)  --해당 Phase일때 
 --# 게임 중인 상태
 local function EnterReadyState()
     InitTime("Ready")
+    
+    Init_ReadyState()
 end
 g_sPhase.ReadyPhase.EnterEvent:Connect(EnterReadyState)
 

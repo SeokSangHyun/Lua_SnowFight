@@ -1,4 +1,4 @@
-local SpawnPoint = Script.Parent.BoxCollider
+local SpawnPoint = Script.Parent.SpawnArea
 local WaitSpawnPoint = Game:AddSpawnPoint(SpawnPoint)
 local SpawnRadius = Script.SpawnRadius
 

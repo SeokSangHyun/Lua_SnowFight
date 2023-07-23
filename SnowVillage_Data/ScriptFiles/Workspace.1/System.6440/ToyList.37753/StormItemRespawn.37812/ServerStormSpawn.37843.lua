@@ -24,7 +24,7 @@ function StormItemSpawner:Spawn()
         local fxObj = obj.PrevFX
         fxObj.Location = SpawnPos + FXPos
         
-        Game:BroadcastEvent("AddNotice_sToc", "태풍의 결정이 곧 떨어집니다.", 1)
+        Game:BroadcastEvent("AddNotice_sToc", "하늘에서 태풍의 결정이 곧 떨어집니다.", 1)
         
         
         local dist = Vector.new(obj.BoxCollider.Location.X - fxObj.Location.X, obj.BoxCollider.Location.Y - fxObj.Location.Y, obj.BoxCollider.Location.Z - fxObj.Location.Z)

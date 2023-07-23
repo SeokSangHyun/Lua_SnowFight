@@ -78,7 +78,7 @@ function CheckActionState(AnimName)
     if AnimName == nowObject.Throw then
         AnimFrame = AnimFrame + 1
         --print(AnimFrame)
-        if AnimFrame == 7 then
+        if AnimFrame == 12 then
             RequestFire()
         end
 

@@ -24,6 +24,12 @@ function Init_LobbyState()
 end
 
 
+--# 목적 : 준비 진입시
+function Init_ReadyState()
+    --DeleteReadyPlayer()
+end
+
+
 --# 목적 : 게임 진입시 (처음 진입 시 상태 세팅)
 function Init_GameState()
     GameStartPlayerList()
@@ -44,7 +50,6 @@ function Init_RewardState()
     end
     
 end
-
 
 
 

@@ -76,11 +76,12 @@ end
 --# 목적 : 초기화 검사
 function sRollingModule:RollingScaleUp(waittime, forX, forY)
     local player = Game:GetPlayer(self.playerID)
-    local pos = player:GetCharacter().Location 
-    scale = Vector.new( self.StartScale.X + 0.25*waittime , self.StartScale.Y + 0.25*waittime , self.StartScale.Z + 0.25*waittime )
+    local pos = player:GetCharacter().Location
+    local scale = 0.3
+    local RollingScale = Vector.new( self.StartScale.X + scale*waittime , self.StartScale.Y + scale*waittime , self.StartScale.Z + scale*waittime )
 
     self.WeaponObject.Location = pos + Vector.new(forX*250, forY*250, 20)
-    self.WeaponObject.Scale = scale
+    self.WeaponObject.Scale = RollingScale
 end
 
 

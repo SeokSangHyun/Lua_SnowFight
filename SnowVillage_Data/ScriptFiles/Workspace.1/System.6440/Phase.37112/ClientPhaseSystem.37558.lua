@@ -43,6 +43,8 @@ end
 
 
 function InitServer_RewardState()
+    local RewardPlace = Workspace.World.Reward
+
     CharacterUtil:MontionChange("Normal")
     ChangeCamera(RewardPlace.Camera, nil)
     PlayerControl:SetCharacterControl(false)

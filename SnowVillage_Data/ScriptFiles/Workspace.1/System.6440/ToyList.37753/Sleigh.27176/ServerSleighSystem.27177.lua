@@ -75,7 +75,7 @@ function CharacterMoveToLocation(player, targetPos)
         end
     end
     
-    readysit.WaitPos:AttachCharacter(character, Enum.AttachPoint.Top)
+    readysit.WaitPos.SitPos:AttachCharacter(character, Enum.AttachPoint.Top)
 end
 Game:ConnectEventFunction("CharacterMoveToLocation", CharacterMoveToLocation)
 
@@ -96,7 +96,7 @@ function CharacterOutToLocation(player)
     end
     
     --outPos = readysit.WaitPos.Location + Vector.new(-150, 0, 200)
-    readysit.WaitPos:DetachAllCharacter(Vector.new(-300, 0, 50))
+    readysit.WaitPos.SitPos:DetachAllCharacter(Vector.new(-300, 0, 50))
 end
 Game:ConnectEventFunction("CharacterOutToLocation", CharacterOutToLocation)
 
@@ -116,8 +116,8 @@ function ReadySleighAction(player)
         end
     end
     
-    readysit.WaitPos:DetachAllCharacter(Vector.new(0, 0, 0))
-    character:SetMaxSpeed(1000)
+    readysit.WaitPos.SitPos:DetachAllCharacter(Vector.new(0, 0, 0))
+    character:SetMaxSpeed(1200)
     
     AddReadyPlayerList(player)
 end
@@ -145,7 +145,7 @@ local function RegistSpawnList(playerID)
         RegistSpawnList(playerID)
     else
         table.insert(ArraySpawn[respawn_index], playerID)
-        SetPlayerState(playerID, "WaitReady")
+        PlayerData:SetPlayerState(player, "WaitReady")
 
         local character = Game:GetPlayer(playerID):GetCharacter()
         character.Location = InGameSpawnList[respawn_index].Location
@@ -161,7 +161,7 @@ local function CollisionCaveEvent(self, target)
     if target == nil or not target:IsCharacter() then;    return;    end;
     local playerID = target:GetPlayerID()
 
-    if CheckPlayerState(playerID, strState) then;    return;   end;
+    if not CheckPlayerState(playerID, "WaitReady") then;    return;   end;
 
     RegistSpawnList(playerID)
 end
@@ -218,6 +218,12 @@ end
 --# -----목적 : 게임 상태로 갔을 때 처리
 function Init_InGameChairState()
     for i = 1 , #g_ConnectGate do
+        if g_ConnectGate[i] ~= nil and g_ConnectGate[i] ~= -1 and g_ConnectGate[i] ~= 0 then
+            local player = Game:GetPlayer(g_ConnectGate[i])
+            PlayerData:SetPlayerState(player, "None")
+            PlayerControl:CharacterStateChange( player, "Stand" )
+            CharacterOutToLocation(player)
+        end
         g_ConnectGate[i] = -1
     end
     Workspace.World.Lobby.Trigger.ReadyLine.Enable = false

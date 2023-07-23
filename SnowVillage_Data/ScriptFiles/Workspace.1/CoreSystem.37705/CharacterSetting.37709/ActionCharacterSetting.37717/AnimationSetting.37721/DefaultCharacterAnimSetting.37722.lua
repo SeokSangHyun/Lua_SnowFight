@@ -203,7 +203,7 @@ local function AnimStateAdd()
     AnimState = AnimStateMachineSetting:AddAnimState("Sit", Object.Sit, InfinityPlay)
     AnimState:SetNeedReplicate(true)
     
-    AnimState = AnimStateMachineSetting:AddAnimState("Throw", Object.Throw, 1, 0.85)
+    AnimState = AnimStateMachineSetting:AddAnimState("Throw", Object.Throw, 1, 1.6)
     AnimState:SetNeedReplicate(true)
     --AnimState = AnimStateMachineSetting:AddBlendAnimState("Throw", Idle_Run_BlendFunction)
     --AnimState:AddBlendAnimation(0.0, Object.Throw, 0,0)
@@ -244,7 +244,7 @@ local function AnimBlendAdd()
     
     AnimStateMachineSetting:AddAnimTransition("Move", "Throw", Stand_Condition)
     AnimStateMachineSetting:AddAnimTransition("Stand", "Throw", 0.5)
-    AnimStateMachineSetting:AddAnimTransition("Throw", "Stand", 2)
+    AnimStateMachineSetting:AddAnimTransition("Throw", "Stand")
     AnimStateMachineSetting:AddAnimTransition("Throw", "Move", Move_Condition)
     
     AnimStateMachineSetting:AddAnimTransition("SkillAnim", "Stand", 2)

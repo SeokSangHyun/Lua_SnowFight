@@ -28,6 +28,11 @@ PlayerControl:ConnectEventFunction("SetCameraControl", function(state)    Player
 
 
 
-
+--! ------------------------------ <캐릭터 애니메이션> ------------------------------
+function PlayerControl:CharacterStateChange( anim )
+    local character = LocalPlayer:GetRemotePlayer():GetCharacter()
+    character:ChangeAnimState(anim, 0.0001)
+end
+Game:ConnectEventFunction("CharacterStateChange", function(anim)    PlayerControl:CharacterStateChange(anim)    end)
 
 

@@ -12,12 +12,7 @@ local CharacterSetting = Toybox.CharacterSetting
 
 
 
---! ------------------------------ 변수 선언 ------------------------------
-function CharacterStateChange( anim )
-    local character = LocalPlayer:GetRemotePlayer():GetCharacter()
-    character:ChangeAnimState(anim, 0.0001)
-end
-Game:ConnectEventFunction("CharacterStateChange_sToc", CharacterStateChange)
+
 
 
 
@@ -129,8 +124,9 @@ end
 
 --# -----목적 : 게임 상태로 갔을 때 처리
 function Init_InGameChairState()
-    g_ConnectGate = nil
+    local player = LocalPlayer:GetRemotePlayer()
     
+    g_ConnectGate = nil
     local cntChair = #GameRegistChair
     for i = 1 , cntChair do
         RejectChairUI(i)

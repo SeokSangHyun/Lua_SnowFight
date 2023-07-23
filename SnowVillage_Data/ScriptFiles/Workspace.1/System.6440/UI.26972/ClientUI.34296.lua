@@ -81,11 +81,11 @@ end
 
 local function ButtonEvent_StardardPopup(self)
     local player = LocalPlayer:GetRemotePlayer()
-    player.PlayState = 2
+    Game:SendEventToServer("SetPlayerState", "WaitReady")
 
     Toggle_StardardPopup(false)
     Toggle_ListPopup(true)
-    CharacterStateChange("Sit")
+    PlayerControl:CharacterStateChange("Sit")
     
     --CharacterMoveToLocation(GameRegistChair[2].WaitPos.Location)
     Game:SendEventToServer("CharacterMoveToLocation", g_ConnectGate.WaitPos.Location)
@@ -99,7 +99,7 @@ AskPopup.YesButton.OnUpEvent:Connect(ButtonEvent_StardardPopup)
 
 local function ButtonEvent_StardardPopupNo(self)
     Toggle_StardardPopup(false)
-    CharacterStateChange("Stand")
+    PlayerControl:CharacterStateChange("Stand")
 
     Game:SendEventToServer("ResetChair_cTos", g_ConnectGate.Index)
 
@@ -117,28 +117,32 @@ AskPopup.NoButton.OnUpEvent:Connect(ButtonEvent_StardardPopupNo)
 --!---------------------------- 공격 버튼 ------------------------------
 --# 게임 준비 등록 후 팝업
 --? 
-local buttonlist = ListPopup.ButtonList:GetChildList()
-for i = 3 , #buttonlist do
-    buttonlist[i].Visible = false
-end
+local buttonlist = ListPopup.ButtonList
+
+
 
 function Toggle_ListPopup(state)
     ListPopup.Visible = state
 end
 
 
+
 local function ButtonEvent_ReadyPopup(self)
     Game:SendEventToServer("CharacterOutToLocation")
-    CharacterStateChange("Stand")
+    PlayerControl:CharacterStateChange("Stand")
     
     
     Toggle_ListPopup(false)
     Game:SendEventToServer("ResetChair_cTos", g_ConnectGate.Index)
 end
-buttonlist[1].OnUpEvent:Connect(ButtonEvent_ReadyPopup)
+buttonlist.NoButton.OnUpEvent:Connect(ButtonEvent_ReadyPopup)
+
+
 
 
 local function ButtonEvent_ReadyPopup(self)
+    local player = LocalPlayer:GetRemotePlayer()
+    Game:SendEventToServer("SetPlayerState", "InGame")
     Toggle_ListPopup(false)
     
     Game:SendEventToServer("ReadySleighAction")
@@ -146,7 +150,9 @@ local function ButtonEvent_ReadyPopup(self)
     
     ReadySleighMoveLoop()
 end
-buttonlist[2].OnUpEvent:Connect(ButtonEvent_ReadyPopup)
+buttonlist.Button1.OnUpEvent:Connect(ButtonEvent_ReadyPopup)
+
+
 
 
 
@@ -167,9 +173,11 @@ UIRoot.MainUI.F_CrystalButton.Btn_SnowCrystal.OnUpEvent:Connect(function(self)
     if not player.Crystal:CheckStormMode() then
         player.Crystal:ActiveStormMode(true)
         Toggle_UI(true)
+        PlayerControl:SetCharacterControl(false)
     else
         player.Crystal:ActiveStormMode(false)
         Toggle_UI(false)
+        PlayerControl:SetCharacterControl(true)
     end
     
 end)

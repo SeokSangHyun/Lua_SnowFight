@@ -5,7 +5,8 @@ local module = PhaseModule.new()
 --# 아무것도 아닌 기본 상태
 local function EnterLobbyState()
     repeat wait(0.2) until LocalPlayer:GetRemotePlayer()
-
+    local player = LocalPlayer:GetRemotePlayer()
+    
     print("Lobby")
     SoundManager:InitSound("Lobby")
     Init_LobbyUI()
@@ -33,7 +34,7 @@ module.ReadyPhase.EnterEvent:Connect(EnterReadyState)
 local function EnterInGameState()
     print("InGame")
     SoundManager:InitSound("InGame")
-    Init_GameState(LocalPlayer:GetRemotePlayer())
+    Init_GameState(player)
     Init_GameUI()
 end
 module.InGamePhase.EnterEvent:Connect(EnterInGameState)

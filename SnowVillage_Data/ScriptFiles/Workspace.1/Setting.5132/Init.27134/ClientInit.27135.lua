@@ -59,3 +59,10 @@ function InitPlayerData(player)
 end
 InitPlayerData( LocalPlayer:GetRemotePlayer() )
 
+
+
+
+
+
+
+
