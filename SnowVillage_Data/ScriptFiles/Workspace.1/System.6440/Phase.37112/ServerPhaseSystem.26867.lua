@@ -36,7 +36,13 @@ end
 
 --# 목적 : 리워드 상태 진입시 (처음 진입 시 상태 세팅)
 function Init_RewardState()
-    LocatePlayer_Reward()
+
+    for i = 1, #g_InGamePlayList do
+        local playerID = g_InGamePlayList[i]:GetPlayerID()
+        LocatePlayer_Reward(i)
+        Game:SendEventToClient(playerID, "InitServer_RewardState")
+    end
+    
 end
 
 

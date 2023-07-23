@@ -9,12 +9,15 @@ local Toy = Toybox.StormItem
 local SpawnList = Script.Parent.SpawnList:GetChildList()
 
 
+
+
 function StormItemSpawner:Spawn()
     if not IsSpawn and not IsGain then
         IsSpawn = true
     
         local index = math.random(1, #SpawnList)
         local SpawnPos = SpawnList[math.floor(index)].Location
+        --local FXPos = Vector.new( math.random(-30000, 30000) , math.random(-30000, 30000) , 4000 )
         local FXPos = Vector.new( math.random(-3000, 3000) , math.random(-3000, 3000) , 4000 )
         
         local obj = Game:CreateSyncObject(Toy, SpawnPos)
@@ -31,16 +34,25 @@ function StormItemSpawner:Spawn()
         fxObj.Track:PlayTransformTrack("Move", Enum.TransformPlayType.Repeat , 1)
         
         local cor = coroutine.create(function(obj)
-            wait(3+1)
+            wait(5+1.5)
             obj.BoxCollider.Spray:Play()
             obj.Sound.Sound:Play()
             Game:BroadcastEvent("StormItemSpawnComplete")
         end)
+        coroutine.resume(cor, obj)
+        
+        
+        --obj.BoxCollider.Collision:SetCharacterCollisionResponse(Enum.CollisionResponse.Overlap)
+        obj.BoxCollider.Collision.OnCollisionEvent:Connect(function(self, target)
+            if target == nil or not target:IsCharacter() then;    return;    end;
+            
+            local player = target:GetPlayer()
+            GainOwner(player)
+            Game:DeleteObject(self.Parent)
+        end)
         
     end
 end
-
-
 
 
 

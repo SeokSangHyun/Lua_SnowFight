@@ -14,14 +14,17 @@ local ListPopup = UIRoot.LobbyUI.F_ListPopupPanel
 function Update_InformUI()
     --SurfaceUI
     local toy = Root_Infomation
+    local cnt = g_InGamePlayCount
     local clock = math.floor(Game.GameTime * 10) /10
-    toy.SurfaceUI_Condition.Text:SetText(clock)
+    
+    
+    toy.SurfaceUI_Condition.Text:SetText("참가 인원 : " .. tostring(cnt) .. "\n 남은시간 : " .. tostring(clock))
 end
 
 
 function Update_TimerUI(state)
     
-    if state == "Lobby" then
+    if Game.GameState == "Lobby" then
         local totla_time = g_Phase.LobbyTime
         local ui = UIRoot.LobbyUI.F_NoticePanel
         ui.Contents_Time:SetText( math.floor(totla_time - Game.GameTime) )
@@ -177,7 +180,18 @@ end)
 
 
 --!---------------------------- 캐릭터 관련 UI 처리 ------------------------------
-function SetCharacterHP(playerID, targetID, IsAlive, nowHP)
+function SetCharacterHP(playerID, nowHP)
+    local ShotCharacter = Game:GetRemotePlayerCharacter(playerID)
+    local characterHUD = ShotCharacter:GetPlayerHUD("HPBar")
+    local hpHUD = characterHUD.HPBar
+    
+    hpHUD:SetPercent(nowHP/100)
+end
+Game:ConnectEventFunction("SetCharacterHP_cTos", SetCharacterHP)
+
+
+
+function SetHitCharacterHP(playerID, targetID, IsAlive, nowHP)
     local ShotCharacter = Game:GetRemotePlayerCharacter(playerID)
     local TargetCharacter = Game:GetRemotePlayerCharacter(targetID)
     local characterHUD = TargetCharacter:GetPlayerHUD("HPBar")
@@ -189,7 +203,7 @@ function SetCharacterHP(playerID, targetID, IsAlive, nowHP)
     end
     
 end
-Game:ConnectEventFunction("SetCharacterHP_cTos", SetCharacterHP)
+Game:ConnectEventFunction("SetHitCharacterHP_cTos", SetHitCharacterHP)
 
 
 

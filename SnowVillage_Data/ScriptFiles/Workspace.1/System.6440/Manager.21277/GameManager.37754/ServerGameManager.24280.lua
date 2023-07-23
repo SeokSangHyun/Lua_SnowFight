@@ -7,6 +7,8 @@ local Utility = require(ScriptModule.DefaultModules.Utility)
 --전역
 local DEF_READY_PLAYER = Script.ReadyPlayerCnt
 
+local RewardGroup = Workspace.World.Reward
+
 
 
 
@@ -32,6 +34,10 @@ end
 
 
 
+
+
+
+
 --!---------------------------- 피격 처리 ------------------------------
 function GameManager:HitCharacter(player, targetID, damage)
     local playerID = player:GetPlayerID()
@@ -42,7 +48,7 @@ function GameManager:HitCharacter(player, targetID, damage)
     
     --캐릭터 체력 처리
     local IsAlive = DamageModule:ApplyDamage(hitCharacter, damage)--g_BulletList[bullet_index].BulletDamage)
-    Game:BroadcastEvent("SetCharacterHP_cTos",playerID, targetID, IsAlive, hitCharacter.HP)
+    Game:BroadcastEvent("SetHitCharacterHP_cTos",playerID, targetID, IsAlive, hitCharacter.HP)
 end
 Game:ConnectEventFunction("HitCharacter_cTos", function(player, targetID, damage) GameManager:HitCharacter(player, targetID, damage) end)
 
@@ -63,7 +69,7 @@ function GameManager:HitCharacter_Rolling(playerID, obj)
             
             --캐릭터 체력 처리
             local IsAlive = DamageModule:ApplyDamage(hitCharacter, g_BulletList[3].BulletDamage)
-            Game:BroadcastEvent("SetCharacterHP_cTos",playerID, targetID, IsAlive, hitCharacter.HP)
+            Game:BroadcastEvent("SetHitCharacterHP_cTos",playerID, targetID, IsAlive, hitCharacter.HP)
         end
     end
     
@@ -77,45 +83,24 @@ end
 
 
 --!---------------------------- 리워드 상태 ------------------------------
-local RewardGroup = Script.reward
-function LocatePlayer_Reward()
-    local Score1 = 0    local list_Score1 = {}
-    local Score2 = 0    local list_Score2 = {}
-    local Score3 = 0    local list_Score3 = {}
-    local list_other = {}
-     
-    local place = RewardGroup.PlayerPlace:GetChildList()
-     
+local temp_kill = 1
+local temp_freeze = 1
+local temp_tornado = 1
 
-    for i = 1 , #g_InGamePlayList do
-        if Score1 < g_InGamePlayList[i].GamePoint then
-            Score3 = Score2
-            Score2 = Score1
-            Score1 = GamePoint
-        elseif Score2 < g_InGamePlayList[i].GamePoint then
-            Score3 = Score2
-            Score2 = GamePoint
-        elseif Score3 < g_InGamePlayList[i].GamePoint then
-            Score3 = GamePoint
-        end
+function LocatePlayer_Reward(index)
+    local place = RewardGroup.PlayerPlace:GetChildList()
+    local pos = place[4].Location
+    
+    if g_InGamePlayList[index] >= temp_kill then
+        pos = place[1].Location
+    elseif g_InGamePlayList[index] >= temp_freeze then
+        pos = place[2].Location
+    elseif g_InGamePlayList[index] >= temp_tornado then
+        pos = place[3].Location
     end
-     
-     
-    for i = 1 , #g_InGamePlayList do
-        if Score1 >= g_InGamePlayList[i].GamePoint then
-            g_InGamePlayList[i]:GetCharacter().Location = place[1].Location
-            table.insert(list_Score1, g_InGamePlayList[i])
-        elseif Score2 >= g_InGamePlayList[i].GamePoint then
-            g_InGamePlayList[i]:GetCharacter().Location = place[2].Location
-            table.insert(list_Score2, g_InGamePlayList[i])
-        elseif Score3 >= g_InGamePlayList[i].GamePoint then
-            g_InGamePlayList[i]:GetCharacter().Location = place[3].Location
-            table.insert(list_Score3, g_InGamePlayList[i])
-        else
-            g_InGamePlayList[i]:GetCharacter().Location = place[4].Location
-            table.insert(list_other, g_InGamePlayList[i])
-        end
-    end
+    
+    
+    g_InGamePlayList[index] = pos
 end
 
 

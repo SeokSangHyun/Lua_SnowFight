@@ -53,11 +53,31 @@ end
 
 
 
+
+
+function sRollingModule:ResetRolling()
+
+        self.RolllAct = false
+        self.WeaponObject.SFX_Broken:Play()
+        
+        wait(2)
+        
+        self.WeaponObject.Enable = false
+        self.WeaponObject.Location = Vector.new(0, 0, 0)
+        self.WeaponObject.HitCollider.Location = Vector.new(0, 0, 0)
+        
+end
+
+
+
+
+
+
 --# 목적 : 초기화 검사
 function sRollingModule:RollingScaleUp(waittime, forX, forY)
     local player = Game:GetPlayer(self.playerID)
     local pos = player:GetCharacter().Location 
-    scale = Vector.new( self.StartScale.X + 0.23*waittime , self.StartScale.Y + 0.23*waittime , self.StartScale.Z + 0.23*waittime )
+    scale = Vector.new( self.StartScale.X + 0.25*waittime , self.StartScale.Y + 0.25*waittime , self.StartScale.Z + 0.25*waittime )
 
     self.WeaponObject.Location = pos + Vector.new(forX*250, forY*250, 20)
     self.WeaponObject.Scale = scale
@@ -80,14 +100,22 @@ function sRollingModule:RollingThrow(forX, forY, forZ)
         self.RolllAct = true
         while self.RolllAct do
             self.WeaponObject.HitCollider.Location = self.WeaponObject.Location + Vector.new(0, 0, 20)
+            if self.WeaponObject:GetPathFollowingStatus() <= 0 then
+                break;
+            end
+            
             wait(0.1)
         end
         
-        self.WeaponObject.HitCollider.Location = Vector.new(0, 0, 0)
+        self:ResetRolling()
     end)
     coroutine.resume(self.Cor)
     
 end
+
+
+
+
 
 function sRollingModule:DisActive()
     self.WeaponObject.Enable = true

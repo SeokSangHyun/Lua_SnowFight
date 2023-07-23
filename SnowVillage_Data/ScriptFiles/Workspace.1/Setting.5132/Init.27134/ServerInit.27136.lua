@@ -51,7 +51,9 @@ function InitPlayerData(player)
     player.PlayState = 1
     
     
-    player.GamePoint = 0.0
+    player.KillPoint = 0
+    player.FreezingPoint = 0
+    player.TornadoPoint = 0
     
     player.DeathStoneIndex = 0
     player.DeathStoneCount = 5

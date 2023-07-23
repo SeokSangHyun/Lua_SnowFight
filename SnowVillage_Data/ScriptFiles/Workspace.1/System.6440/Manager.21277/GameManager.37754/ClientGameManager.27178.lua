@@ -11,6 +11,11 @@ function GetActionKey()    return IsActionKey;    end;
 
 
 
+--!---------------------------- <페이즈 별 처리> ------------------------------
+
+
+
+
 --!----------------------------  ------------------------------
 ---# 시스템 콜백 함수 처리
 --? 유저 스폰되었을 때 처리
@@ -20,13 +25,6 @@ local function SpawnCharacter(character)
     ui.Visible = true
 end
 Game.OnSpawnCharacter:Connect(SpawnCharacter)
-
-
-
-
--- Input:DeactiveGroup("DefaultInput")
--- InputSetting()
-
 
 
 
