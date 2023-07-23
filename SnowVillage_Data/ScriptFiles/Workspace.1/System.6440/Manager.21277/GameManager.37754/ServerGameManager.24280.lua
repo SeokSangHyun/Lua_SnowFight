@@ -8,7 +8,7 @@ local Utility = require(ScriptModule.DefaultModules.Utility)
 local DEF_READY_PLAYER = Script.ReadyPlayerCnt
 
 local RewardGroup = Workspace.World.Reward
-
+local MinStartPlayer = 1
 
 
 
@@ -31,7 +31,8 @@ end
 
 
 
-
+--!---------------------------- Getter/Setter ------------------------------
+function GameManager:GetMinPlayer() return MinStartPlayer   end
 
 
 
@@ -43,7 +44,7 @@ function GameManager:HitCharacter(player, targetID, damage)
     local playerID = player:GetPlayerID()
     local hitCharacter = Game:GetPlayerCharacter(targetID)
     
-    Game:SendEventToClient(targetID, "HitCharacterCamera_sToc", damage)
+    Game:SendEventToClient(targetID, "HitCharacterCamera_sToc", 1, 2)
     
     
     --캐릭터 체력 처리
@@ -65,7 +66,7 @@ function GameManager:HitCharacter_Rolling(playerID, obj)
         if dist <= g_BulletList[3].HitScale then
             local targetID = g_InGamePlayList[i]:GetPlayerID()
             local hitCharacter = g_InGamePlayList[i]:GetCharacter()
-            Game:SendEventToClient(targetID, "HitCharacterCamera_sToc", 3)
+            Game:SendEventToClient(targetID, "HitCharacterCamera_sToc", 2, 1)
             
             --캐릭터 체력 처리
             local IsAlive = DamageModule:ApplyDamage(hitCharacter, g_BulletList[3].BulletDamage)
@@ -100,7 +101,7 @@ function LocatePlayer_Reward(index)
     end
     
     
-    g_InGamePlayList[index]:GetCharacter.Location = pos
+    g_InGamePlayList[index]:GetCharacter().Location = pos
 end
 
 

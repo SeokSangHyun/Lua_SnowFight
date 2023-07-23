@@ -11,7 +11,6 @@ function Init_LobbyState(player)
     Init_ReadyChairState()
     PlayerControl:SetCharacterControl(true)
     ChangeCamera(Workspace.MainCamera, player:GetCharacter())
-    SetCharacterHP(player:GetPlayerID(), 100)
 end
 
 function InitServer_LobbyState(playerCnt)

@@ -16,7 +16,6 @@ function cTrowModule.new(object)
     t.WeaponObject = object
 
     t.Damage = object.BulletDamage
-    t.ColdOffset = object.ColdOffset
     t.Distance = object.BulletDistance
     t.Speed = object.BulletSpeed
     t.Angle = object.Angle
@@ -65,14 +64,14 @@ end
 
 --!---------------------------- 발사 시스템 ------------------------------
 --# ----- 목적 : 총알 발사 시스템
-function cTrowModule:FireObject(playerID, posX, posY, posZ, forX, forY)
+function cTrowModule:FireObject(playerID, pos, forward)
     local character = Game:GetRemotePlayerCharacter(playerID)
     local player = character:GetPlayer()
 
-    local stPos = Vector.new(posX, posY, posZ)
-    local endPos = Vector.new( forX * self.Distance
-    , forY * self.Distance
-    , posZ - 100)
+    local stPos = pos
+    local endPos = Vector.new( pos.X + forward.X * self.Distance
+    , pos.Y + forward.Y * self.Distance
+    , pos.Z - 100)
 
 -- 총알 발사 로직
     local mybullet = ProjectileModule:Launcher(self.WeaponObject, stPos, endPos, self.Speed, Vector.new(0,0,self.Angle))

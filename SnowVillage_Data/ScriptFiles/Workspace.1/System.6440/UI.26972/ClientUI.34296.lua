@@ -195,7 +195,7 @@ function SetCharacterHP(playerID, nowHP)
     
     hpHUD:SetPercent(nowHP/100)
 end
-Game:ConnectEventFunction("SetCharacterHP_cTos", SetCharacterHP)
+Game:ConnectEventFunction("SetCharacterHP", SetCharacterHP)
 
 
 
@@ -207,7 +207,7 @@ function SetHitCharacterHP(playerID, targetID, IsAlive, nowHP)
     
     hpHUD:SetPercent(nowHP/100)
     if not IsAlive then
-        AddWarLog("kill", ShotCharacter:GetPlayerNickName(), TargetCharacter:GetPlayerNickName())
+        WarLog:AddWarLog("kill", ShotCharacter:GetPlayerNickName(), TargetCharacter:GetPlayerNickName())
     end
     
 end

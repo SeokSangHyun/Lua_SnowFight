@@ -66,23 +66,50 @@ Game:ConnectEventFunction("Toggle_RollingGuage_sToc", Toggle_RollingGuage)
 --!---------------------------- 공격 버튼 처리 ------------------------------
 --# 목적 : 눈덩이 굴리기
 local function SnowBallButtonDownEvent(self)
-    BulletThrowStart(1)
+    local BulletIndex = 1
+    local player = LocalPlayer:GetRemotePlayer()
+    player.BulletIndex = BulletIndex
+
+    SetIsRolling(false)
+    SetIsSnowBall(false)
+
+    player.SnowBallRolling:Initialize()
+    Game:AddTimeEvent("CheckRolling", 0.1, CheckRolling)
 end
 BulletButtonList.Btn_Snowball.OnPressEvent:Connect(SnowBallButtonDownEvent)
 
 
 --# 눈덩이 
 local function SnowBallButtonUpEvent(self)
-    BulletThrowEnd(1)
+    local BulletIndex = 1
+    local player = LocalPlayer:GetRemotePlayer()
+    player.BulletIndex = BulletIndex
+
+    if not player.SnowBall:CheckFire() then;    return;    end;
+
+    if not GetIsRolling() then
+        SetIsRolling(true)
+        local character = LocalPlayer:GetRemotePlayer():GetCharacter()
+        character:ChangeAnimState("Throw")    
+    else
+        RollingThrow()
+    end
+
 end
 BulletButtonList.Btn_Snowball.OnUpEvent:Connect(SnowBallButtonUpEvent)
 
 
 
 
---# 목적 : 
+--# 목적 : 고드름
 local function IcicleButtonEvent(self)
-    BulletThrowEnd(2)
+    local BulletIndex = 2
+    local player = LocalPlayer:GetRemotePlayer()
+    player.BulletIndex = BulletIndex
+
+
+    local character = LocalPlayer:GetRemotePlayer():GetCharacter()
+    character:ChangeAnimState("Throw")
 end
 BulletButtonList.Btn_Icicle.OnUpEvent:Connect(IcicleButtonEvent)
 

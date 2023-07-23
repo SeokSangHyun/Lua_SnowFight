@@ -1,6 +1,7 @@
 
 g_DeathStone = {}
 local StoneIndex = 1
+local StonrParent = Script.Parent.StoneParent
 
 
 --! ------------------------------ <DeathStone> ------------------------------
@@ -18,18 +19,23 @@ end
 function AddDeathStone()
     local obj = Game:CreateSyncObject(Toybox.DeathStone, Vector.new(0,0,0))
     obj.Enable = false
+    obj.Parent = StonrParent
     table.insert(g_DeathStone, obj)
 end
 
 
 --# -----요약 : 게임 중 캐릭터 사망시
 function CreateDeathStone(player)
+    player.DeathStoneIndex = StoneIndex
+
     local pos = player:GetCharacter().Location
     g_DeathStone[StoneIndex].Location = pos
     g_DeathStone[StoneIndex].Enable = true
 
     player.DeathStoneCount = 5
     player.DeathStoneIndex = StoneIndex
+
+    Game:SendEventToClient(player:GetPlayerID(), "CreateDeathStone", player.DeathStoneIndex)
     StoneIndex = StoneIndex + 1
     if #g_DeathStone >= StoneIndex then
         StoneIndex = 1
@@ -42,14 +48,16 @@ end
 
 --# -----요약 : 사망한 캐릭터 부활 시
 function RemoveDeathStone(player)
-    g_DeathStone[StoneIndex].Location = Vector.new(0,0,0)
-    g_DeathStone[StoneIndex].Enable = false
+    Game:SendEventToClient(player:GetPlayerID(), "FrozingBroken_sToc")
+    Game:SendEventToClient(player:GetPlayerID(), "RemoveDeathStone", player.DeathStoneIndex)
+    g_DeathStone[player.DeathStoneIndex].Location = Vector.new(0,0,0)
+    g_DeathStone[player.DeathStoneIndex].Enable = false
     
+
+    
+    DepOwner(player:GetPlayerID())
     player.DeathStoneCount = 0
     player.DeathStoneIndex = 0
-    
-    DepOwner()
-    Game:SendEventToClient(player:GetPlayerID(), "FrozingBroken_sToc")
 end
 
 

@@ -42,7 +42,9 @@ end
 
 
 --# -----요약 : 토네이도 소유권 박탈
-function DepOwner()
+function DepOwner(playerID)
+    if playerID ~= Tonado:GetOwnerPlayer() then;    return;    end;
+    
     Tonado:SetOwnerPlayer(0)
     Tonado.Location = Vector.new(0,0,-10000)
     Tonado.HitCollider.Collision:SetCharacterCollisionResponse(Enum.CollisionResponse.Ignore)

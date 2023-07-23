@@ -54,11 +54,8 @@ Game:ConnectEventFunction("SnowBallRooling_sToc", SnowBallRooling)
 
 
 --!---------------------------- 카메라 효과 ------------------------------
-local function HitCharacterCamera(bullet_index)
-    local index = math.floor(bullet_index)
-    Camera:PlayCameraShake(g_BulletList[index].ShakeTime, g_BulletList[index].ShakeScale)
-    
-    print(index)
+local function HitCharacterCamera(shake_time, shake_scale)
+    Camera:PlayCameraShake(shake_time, shake_scale)
 end
 Game:ConnectEventFunction("HitCharacterCamera_sToc", HitCharacterCamera)
 
@@ -73,7 +70,7 @@ function LocatePlayer_StartPoint()
         g_InGamePlayList[i]:GetCharacter().Location = ReturnGroup.Location
 end
 
-Game:ConnectEventFunction("HitCharacterCamera_sToc", HitCharacterCamera)
+Game:ConnectEventFunction("LocatePlayer_StartPoint", LocatePlayer_StartPoint)
 
 
 

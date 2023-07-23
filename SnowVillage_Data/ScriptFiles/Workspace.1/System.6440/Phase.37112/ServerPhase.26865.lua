@@ -13,6 +13,7 @@ local function EnterLobbyState()
     InitTime("Lobby")
     local allplayer = Game:GetAllPlayer()
     for i = 1, #allplayer do
+        Game:BroadcastEvent("SetCharacterHP", allplayer[i]:GetPlayerID(), 100)
         PlayerData:SetPlayerState(allplayer[i], "None")
     end
     Init_LobbyState()

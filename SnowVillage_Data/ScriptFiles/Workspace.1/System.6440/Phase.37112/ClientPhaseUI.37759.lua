@@ -50,8 +50,8 @@ function Init_GameUI()
         ui.F_Timer.Visible = true
         ui.F_RollingGuage.Visible = true
         ui.F_Death.Visible = true
-        
 
+        ui.F_CrystalButton.Visible = false
         ui.F_Death.Visible = false
         ui.F_RollingGuage.Visible = false
         ui.F_NoticePanel.Visible = false
@@ -62,6 +62,8 @@ function Init_GameUI()
         ui.F_Timer.Visible = false
         ui.F_RollingGuage.Visible = false
         ui.F_Death.Visible = false
+        ui.F_CrystalButton.Visible = false
+
 
         ui.F_Death.Visible = false
         ui.F_RollingGuage.Visible = false

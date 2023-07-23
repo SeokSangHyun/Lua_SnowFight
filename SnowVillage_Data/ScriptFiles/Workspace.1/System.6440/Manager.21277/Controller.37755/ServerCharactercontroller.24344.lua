@@ -5,8 +5,6 @@ local IsRollingAct = false  --롤링 시스템이 완성 됬는지 확인
 local IsRolling = false                     -- 굴리기 중인지 확인
 local IsSnowBall = false                    -- 던지기 했는지 확인
 
-g_PlayerList = {}
-
 
 
 
@@ -35,10 +33,7 @@ Game:ConnectEventFunction("SetIsRollingAct", SetIsRollingAct)
 
 
 
-function GetIsRolling()
-    return IsRolling
-end
-
+function GetIsRolling();    return IsRolling;   end;
 function SetIsRolling(state)
     IsRolling = state
 end
@@ -54,18 +49,18 @@ end
 
 --!---------------------------- 총알 시스템 ------------------------------
 --# ----- 목적 : 총알 생성
-local function RequestFire(player, num, st, forward)
-    
+local function RequestFire(player, index, st_pos, forward)
     --발사 전 처리
+    player.BulletIndex = index
     local playerID = player:GetPlayerID()
     
-        if index == 1 then
+    if index == 1 then
         player.SnowBall:BulletFire()
     elseif index == 2 then
         player.Icicle:BulletFire()
     else
     end
-    Game:BroadcastEvent("BulletFire_sToc", playerID, num, st, forward)
+    Game:BroadcastEvent("BulletFire_sToc", playerID, index, st_pos, forward)
 end
 Game:ConnectEventFunction("RequestFire_cTos", RequestFire)
 
@@ -112,10 +107,8 @@ end
 
 --!---------------------------- 롤링 시스템 ------------------------------
 local function RollingSystemStart(player)
-    local playerID = player:GetPlayerID()
+    SetIsRolling(true)
     player.SnowBallRolling:Initialize()
-    
-    IsRolling = true 
     --Game:SendEventToClient(playerID, "Toggle_RollingGuage_sToc", true)
 end
 Game:ConnectEventFunction("RollingSystemStart_cTos", RollingSystemStart)
@@ -131,7 +124,7 @@ local function RollingThrow(player, forX, forY, forZ)
     local playerID = player:GetPlayerID()
     player.SnowBallRolling:RollingThrow(forX, forY, forZ)
 
-    IsRolling = false 
+    SetIsRolling(false)
     Game:SendEventToClient(playerID, "Toggle_RollingGuage_sToc", false)
 end
 Game:ConnectEventFunction("RollingThrow_cTos", RollingThrow)

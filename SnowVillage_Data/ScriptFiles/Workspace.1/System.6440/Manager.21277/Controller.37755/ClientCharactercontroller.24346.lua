@@ -1,7 +1,4 @@
 
---# 전역 및 대표 참조
-g_Player = {}                   -- 클라이언트 클래스 객체
-
 
 --# Rolling 관련 변수
 --* 변화량 관련 변수
@@ -60,24 +57,25 @@ end
 
 
 
---! ------------------------------  ------------------------------
+--! ------------------------------ Getter / Setter ------------------------------
 local function HitProcess(playerID)
     
 end
 Game:ConnectEventFunction("HitProcess_sToc", HitProcess)
 
 
-function GetIsRolling()
-    return IsRolling
-end
-
+--# ----- 목적 : 굴리기 변수
+function GetIsRolling();    return IsRolling;   end;
 function SetIsRolling(state)
     IsRolling = state
 end
 
 
-
-
+--# ----- 목적 : 던지기 변수
+function GetIsSnowBall();   return IsSnowBall;  end;
+function SetIsSnowBall(state)
+    IsSnowBall = state
+end
 
 
 
@@ -87,7 +85,6 @@ end
 --# ----- 목적 : 총알 생성
 function RequestFire()
     local player = LocalPlayer:GetRemotePlayer()
-    
     local inven = player:GetEquipItem("Gloves_slot")
     local StartPos = inven.Location
     local lookfor = LocalPlayer:GetCameraForward()
@@ -99,21 +96,15 @@ end
 
 
 --# ----- 목적 : 총알발사
-function BulletFire(playerID, num, st, forward)--posX, posY, posZ, forX, forY)
+local function BulletFire(playerID, BulletIndex, st_pos, forward)--posX, posY, posZ, forX, forY)
     local player = LocalPlayer:GetRemotePlayer()
 
-
-    if num == 1 then
-        player.SnowBall:FireObject(playerID, st.X, st.Y, st.Z, forward.X, forward.Y)
-    elseif num == 2 then
-        player.Icicle:FireObject(playerID, st.X, st.Y, st.Z, forward.X, forward.Y)
-    elseif num == 3 then
-        print(1)
-    elseif num == 4 then
-        --player.SnowBallRolling
+    if BulletIndex == 1 then
+        player.SnowBall:FireObject(playerID, st_pos, forward)
+    elseif BulletIndex == 2 then
+        player.Icicle:FireObject(playerID, st_pos, forward)
     end
 
-    
 end
 Game:ConnectEventFunction("BulletFire_sToc", BulletFire)
 
@@ -183,14 +174,14 @@ end
 
 --! ------------------------------ 실행 ------------------------------
 --# -----목적 : 키를 누르고 있는지 확인
-local function CheckRolling()
-    local DeltaTime = time() - RollingStartTime
+function CheckRolling()
+    local player = LocalPlayer:GetRemotePlayer()
+    local DeltaTime = player.SnowBallRolling:TimeDelta()
     
-    if IsSnowBall or IsRolling then;    return;    end;
-    
+    if GetIsSnowBall() or GetIsRolling() then;    return;    end;
 
     if DeltaTime > MAX_INPUTTIME then
-        IsRolling = true
+        SetIsRolling(true)
         
         local player = LocalPlayer:GetRemotePlayer()
         player.BulletIndex = 0
@@ -222,39 +213,6 @@ end
 
 
 
-function BulletThrowEnd(BulletNum)
-    local player = LocalPlayer:GetRemotePlayer()
-    player.BulletIndex = BulletNum
-
-    if not CheckBulletCount(player) then;    return;    end;
-
-    if BulletNum == 1 then
-        if not IsRolling then
-            IsSnowBall = true
-            local character = LocalPlayer:GetRemotePlayer():GetCharacter()
-            character:ChangeAnimState("Throw")    
-        else
-            RollingThrow()
-        end
-        
-    elseif BulletNum == 2 then
-        local character = LocalPlayer:GetRemotePlayer():GetCharacter()
-        character:ChangeAnimState("Throw")
-        
-    elseif BulletNum == 3 then
-        local character = LocalPlayer:GetRemotePlayer():GetCharacter()
-        character:ChangeAnimState("SkillAnim")
-        
-        
-        
-        
-    end
-
-end
-
-
-
-
 
 
 function RollingScallingUp(WaitTime)
@@ -266,8 +224,9 @@ end
 
 
 function RollingThrow()
-    IsSnowBall = false
-    IsRolling = false
+    SetIsRolling(false)
+    SetIsSnowBall(false)
+
     local forward = LocalPlayer:GetRemotePlayer():GetCharacter().Transform:GetForward()
     Game:SendEventToServer("RollingThrow_cTos", forward.X, forward.Y, forward.Z)
 end

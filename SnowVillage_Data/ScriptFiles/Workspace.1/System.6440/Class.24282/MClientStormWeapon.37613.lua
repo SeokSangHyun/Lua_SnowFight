@@ -14,7 +14,6 @@ function cStormModule.new(object)
     t.WeaponObject = object
 
     t.Damage = object.BulletDamage
-    t.ColdOffset = object.ColdOffset
     t.Speed = object.BulletSpeed
 
     t.IsGain = false

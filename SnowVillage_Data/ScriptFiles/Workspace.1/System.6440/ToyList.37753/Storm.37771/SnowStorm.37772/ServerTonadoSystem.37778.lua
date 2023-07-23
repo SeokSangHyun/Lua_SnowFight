@@ -4,7 +4,7 @@ local list_IntTonado = {}    -- 토네이도 안에 있는 캐릭터
 local OwnerPlayerID = nil
 
 
-
+function Item:GetOwnerPlayer();    return OwnerPlayerID;    end;
 function Item:SetOwnerPlayer(playerID)
     OwnerPlayerID = playerID
 end

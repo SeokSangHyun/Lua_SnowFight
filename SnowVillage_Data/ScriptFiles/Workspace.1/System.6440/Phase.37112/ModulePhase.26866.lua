@@ -26,8 +26,10 @@ end
 --! ---------- ServerPhase 스크립트에서 사용
 function PhaseModule:NextPhase()
     local phase = Game:GetCurPhase()
-    Game.GameState = phase.Name
+
     if phase.Name == "Result" then
+        Game:ChangePhaseByName("Lobby")
+    elseif phase.Name == "Lobby" and (#g_ReadyPlayerList + #g_InGamePlayList) < GameManager:GetMinPlayer() then
         Game:ChangePhaseByName("Lobby")
     else
         Game:ChangeToNextPhase()

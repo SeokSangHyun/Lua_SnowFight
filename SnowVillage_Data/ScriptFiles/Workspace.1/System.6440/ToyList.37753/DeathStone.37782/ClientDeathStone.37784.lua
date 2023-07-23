@@ -1,30 +1,30 @@
 
---! ------------------------------ <> ------------------------------
---g_DeathStone = {}
+local StonrParent = Script.Parent.StoneParent
 
 
 
 --! ------------------------------ <DeathStone> ------------------------------
---# -----요약 : 
---[[
-function Init_DeathStone(playerID)
-    local obj = Game:CreateObject(Toybox.DeathStone, Vector.new(0,0,0))
-    table.insert(g_DeathStone, {playerID, obj})
+--# -----요약 : 게임 중 캐릭터 사망시
+function CreateDeathStone(StoneIndex)
+    local stone = StonrParent:GetChildList()
+    ChangeCamera(stone[StoneIndex].Camera, stone[StoneIndex])
 end
-Game:ConnectEventFunction("Init_DeathStone_sToc", Init_DeathStone)
-]]--
+Game:ConnectEventFunction("CreateDeathStone", CreateDeathStone)
 
 
 
---# -----요약 : 
---[[
-function Exit_DeathStone()
-    for i = 1 , #g_DeathStone do
-        Game:DeleteObject(g_DeathStone[i][2])
-    end
-    
-    g_DeathStone = {}
+
+
+--# -----요약 : 사망한 캐릭터 부활 시
+function RemoveDeathStone(StoneIndex)
+    local player = LocalPlayer:GetRemotePlayer()
+    ChangeCamera(Workspace.MainCamera, player:GetCharacter())
 end
-]]--
+Game:ConnectEventFunction("RemoveDeathStone", RemoveDeathStone)
+
+
+
+
+
 
 
