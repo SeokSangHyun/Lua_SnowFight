@@ -117,7 +117,7 @@ function ReadySleighAction(player)
     end
     
     readysit.WaitPos.SitPos:DetachAllCharacter(Vector.new(0, 0, 0))
-    character:SetMaxSpeed(1200)
+    character:SetMaxSpeed(DEF_SLEIGH_SPEED)
     
     AddReadyPlayerList(player)
 end

@@ -108,6 +108,7 @@ end
 --!---------------------------- 롤링 시스템 ------------------------------
 local function RollingSystemStart(player)
     SetIsRolling(true)
+    --player.SnowBallRolling.WeaponObject.HitCollider.Collision:SetCharacterCollisionResponse(Enum.CollisionResponse.Ignore)
     player.SnowBallRolling:Initialize()
     --Game:SendEventToClient(playerID, "Toggle_RollingGuage_sToc", true)
 end

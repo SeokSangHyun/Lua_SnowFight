@@ -39,7 +39,7 @@ local function BeginCollisionEvent(self, target)
     local playerID = target:GetPlayerID()
     if OwnerPlayerID == playerID then;    return;    end;
     
-    target:SetMaxSpeed(250)
+    target:SetMaxSpeed(DEF_SLOW_SPEED)
     table.insert(list_IntTonado, target)
 end
 Item.HitCollider.Collision.OnBeginOverlapEvent:Connect(BeginCollisionEvent)
@@ -53,7 +53,7 @@ local function EndCollisionEvent(self, target)
     local playerID = target:GetPlayerID()
     if OwnerPlayerID == playerID then;    return;    end;
 
-    target:SetMaxSpeed(400)
+    target:SetMaxSpeed(DEF_DEFAULT_SPEED)
     for i = 1 , #list_IntTonado do
         if list_IntTonado[i].Name == target.Name then
             table.remove(list_IntTonado, i)

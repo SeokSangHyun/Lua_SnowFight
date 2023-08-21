@@ -12,8 +12,10 @@ local function InputAddKeyEvent()
     ActionInput:AddAxisKeyEvent("MoveForward", Enum.Key.S, -1)
     ActionInput:AddAxisKeyEvent("MoveRight", Enum.Key.A, -1)
     ActionInput:AddAxisKeyEvent("MoveRight", Enum.Key.D, 1)
+--[[
     ActionInput:AddAxisKeyEvent("Turn", Enum.Key.A, -1)
     ActionInput:AddAxisKeyEvent("Turn", Enum.Key.D, 1)
+]]--
     ActionInput:AddAxisKeyEvent("Turn", Enum.Key.MouseX, 1)
     ActionInput:AddAxisKeyEvent("LookUp", Enum.Key.MouseY, -1)
     ActionInput:AddActionKeyEvent("Jump", Enum.Key.SpaceBar)

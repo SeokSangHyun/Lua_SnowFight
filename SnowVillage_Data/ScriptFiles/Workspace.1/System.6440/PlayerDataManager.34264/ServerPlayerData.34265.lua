@@ -159,7 +159,7 @@ function GameStartPlayerList()
        AddDeathStone(g_ReadyPlayerList[i])
        AddInGamePlayerList(g_ReadyPlayerList[i])
        local character = g_ReadyPlayerList[i]:GetCharacter()
-       character:SetMaxSpeed(600)
+       character:SetMaxSpeed(DEF_DEFAULT_SPEED)
        --AddDeathStone(g_ReadyPlayerList[i])
     end
     

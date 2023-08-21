@@ -31,20 +31,24 @@ function sRollingModule:Initialize()
     local pos = player:GetCharacter().Location+ Vector.new(0,0,50)
 
     self.WeaponObject.Enable = true
+    self.RolllAct = false
     self.WeaponObject.Location = pos
-    self.StartScale = Vector.new(1.5,1.5,1.5)
+    self.StartScale = Vector.new(1.0, 1.0, 1.0)
    
     
 --충돌
-    self.WeaponObject.HitCollider.Collision:SetCharacterCollisionResponse(Enum.CollisionResponse.Overlap)
+    self.WeaponObject.HitCollider.Collision:SetCharacterCollisionResponse(Enum.CollisionResponse.Ignore)
     self.WeaponObject.HitCollider.Collision.OnBeginOverlapEvent:Connect( function(ball, target)
-    print(target)
+        --print(tostring(self.RolllAct) .. target)
+        if not self.RolllAct then;    return;    end;
+        --print(tostring(self.RolllAct) .. target.Name)
         if target == nil or not target:IsCharacter() then;    return;    end;
+        print(target)
             
         local playerID = target:GetPlayerID()
         if self.playerID == playerID then;    return;    end;
         
-        self.RolllAct = false
+        --self.RolllAct = false
         self.Cor = nil
         GameManager:HitCharacter_Rolling(self.playerID, self.WeaponObject)
     end)
@@ -95,6 +99,7 @@ function sRollingModule:RollingThrow(forX, forY, forZ)
     --print(pos)
     --print(target_pos)
     self.WeaponObject:MoveToLocation(target_pos)
+    self.WeaponObject.HitCollider.Collision:SetCharacterCollisionResponse(Enum.CollisionResponse.Overlap)
     --self.WeaponObject:RunPlay(forZ, forX, forY)
     
     self.Cor = coroutine.create(function()

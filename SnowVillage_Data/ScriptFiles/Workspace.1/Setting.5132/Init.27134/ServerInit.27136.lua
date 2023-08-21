@@ -27,7 +27,9 @@ g_Phase = Workspace.System.Phase
 --! ------------------------------ 상수형 ------------------------------
 DEF_MAX_BulletCount = 1000
 
-
+DEF_SLEIGH_SPEED = 1200
+DEF_DEFAULT_SPEED = 650
+DEF_SLOW_SPEED = 300
 
 
 
